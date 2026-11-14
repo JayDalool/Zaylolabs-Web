@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { products, studio, type Product } from '../../data/products'
 import { PhoneFrame, ProductGlyph, ProductMedia, WindowFrame } from '../../media/ProductMedia'
 import { Exploded } from './exploded/Exploded'
+import { useImmerse } from './immerse'
 import { pins, roman } from './showcase'
 import { BASE, ButtonLink, DrawRule, EASE, Fig, FocusList, hueVars, Reveal, SectionHead, StageBadge, Tag } from './ui'
 
@@ -85,8 +86,18 @@ function IndexStrip() {
 /* ——————————————————————————— plates ——————————————————————————— */
 
 function Plate({ product, children, dark }: { product: Product; children: ReactNode; dark?: boolean }) {
+  // The plate takes on the app's own colours while the visitor is in it.
+  const { ref, on } = useImmerse<HTMLElement>()
   return (
-    <section id={product.slug} className={`sp-plate ${dark ? 'sp-dark' : ''}`} data-hue="" style={{ ...hueVars(product), scrollMarginTop: '4rem' }} aria-labelledby={`${product.slug}-name`}>
+    <section
+      ref={ref}
+      id={product.slug}
+      className={`sp-plate sp-immersive ${dark ? 'sp-dark' : ''}`}
+      data-hue=""
+      data-immersed={on || undefined}
+      style={{ ...hueVars(product), scrollMarginTop: '4rem' }}
+      aria-labelledby={`${product.slug}-name`}
+    >
       <div className="sp-wrap">
         <div className="sp-plate-head">
           <span className="sp-plate-no">Plate {plateNo(product)}</span>
