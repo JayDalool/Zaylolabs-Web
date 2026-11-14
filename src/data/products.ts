@@ -43,6 +43,12 @@ export interface Product {
   /** Drives the placeholder schematic and the product glyph. */
   motif: Motif
   hue: ProductHue
+  /**
+   * The app's real brand colour, once known (any CSS colour, ideally a deep tone).
+   * A section takes this colour while the visitor is in it. Until it is set, a deep
+   * tone is derived from `hue`. TODO(owner): supply each app's real colours.
+   */
+  brandField?: string
   /** Extra caution shown wherever the product appears in detail. */
   caution?: string
 }

@@ -1,7 +1,6 @@
 /* Self-hosted variable fonts (latin subset only). Each face is downloaded only
-   when a concept that uses it is on screen. */
+   when text that uses it is on screen. */
 
-/* Concept 01 — Specimen */
 @font-face {
   font-family: 'Fraunces';
   font-style: normal;
@@ -39,58 +38,4 @@
   font-weight: 500;
   font-display: swap;
   src: url('../../node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-500-normal.woff2') format('woff2');
-}
-
-/* Concept 02 — Z-Axis */
-@font-face {
-  font-family: 'Archivo';
-  font-style: normal;
-  font-weight: 100 900;
-  font-stretch: 62% 125%;
-  font-display: swap;
-  src: url('../../node_modules/@fontsource-variable/archivo/files/archivo-latin-standard-normal.woff2')
-    format('woff2-variations');
-}
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 100 800;
-  font-display: swap;
-  src: url('../../node_modules/@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2')
-    format('woff2-variations');
-}
-
-/* Concept 03 — Studio OS */
-@font-face {
-  font-family: 'Bricolage Grotesque';
-  font-style: normal;
-  font-weight: 200 800;
-  font-stretch: 75% 100%;
-  font-display: swap;
-  src: url('../../node_modules/@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-standard-normal.woff2')
-    format('woff2-variations');
-}
-@font-face {
-  font-family: 'DM Mono';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('../../node_modules/@fontsource/dm-mono/files/dm-mono-latin-400-normal.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'DM Mono';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url('../../node_modules/@fontsource/dm-mono/files/dm-mono-latin-500-normal.woff2') format('woff2');
-}
-
-/* Concept 04 — Plain View */
-@font-face {
-  font-family: 'Schibsted Grotesk';
-  font-style: normal;
-  font-weight: 400 900;
-  font-display: swap;
-  src: url('../../node_modules/@fontsource-variable/schibsted-grotesk/files/schibsted-grotesk-latin-wght-normal.woff2')
-    format('woff2-variations');
 }

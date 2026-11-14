@@ -1,10 +1,12 @@
-# ZayloLabs — website design prototype
+# ZayloLabs — website
 
-Standalone design prototype. Four concepts, a comparison page with an
-independent usefulness review, and full builds of two of them.
-**Chosen direction so far: Concept 02 — Z-Axis.** Concept 04 — Plain View was
-added afterwards as the middle ground between Specimen and Z-Axis. **Not deployed anywhere** — nothing
-here touches zaylolabs.com, DNS, email, or any production system.
+The ZayloLabs studio site, in its design stage. Direction: **Specimen** — a warm
+paper "software lab" where every product is shown at its real stage, and each
+app's section takes on that app's own colours while the visitor is in it.
+
+**Not deployed.** Nothing here touches zaylolabs.com, DNS, email or any
+production system. Product images are marked placeholders until real
+screenshots are added.
 
 ## Run it
 
@@ -18,67 +20,61 @@ npm run build        # type-check + production build → dist/
 npm run build:single # one self-contained HTML file → dist-single/index.html
 ```
 
-## What is where
+## Pages
 
 | Route (hash) | What |
 | --- | --- |
-| `#/` | Comparison page: rationale, identity, strengths, recommendation, quality review |
-| `#/specimen` | **Concept 01 — Specimen** (also built out): full homepage |
-| `#/specimen/work` | Catalogue — index-card drawer gallery + table view |
-| `#/specimen/work/samvisionai` | Flagship product showcase |
-| `#/specimen/work/<slug>` | Every other product, from the same template |
-| `#/specimen/system` | Design system reference |
-| `#/z-axis` | **Concept 02 — Z-Axis** (chosen): WebGL depth-flight homepage |
-| `#/z-axis/work` | Work index — every product as a row on the axis, with a depth-stack preview |
-| `#/z-axis/work/samvisionai` | Flagship product page |
-| `#/z-axis/work/<slug>` | Every other product, from the same template |
-| `#/z-axis/system` | Z-Axis design system reference |
-| `#/studio-os` | **Concept 03 — Studio OS**: desktop-metaphor homepage |
-| `#/plain-view` | **Concept 04 — Plain View** (the middle ground): plain-language homepage with one display case; no WebGL |
-| `#/plain-view/products/<slug>` | A page per product, from one template |
+| `#/` | Home: what the studio is, the five-product index, one section per product, studio, contact |
+| `#/work` | All products: index-card drawer and a plain list |
+| `#/work/<slug>` | A page per product, from one template — fully in that app's colours |
+| `#/system` | Design system reference |
 
-Append `?nowebgl` before the hash (e.g. `/?nowebgl#/specimen`) to force the
-no-WebGL fallbacks.
+Append `?nowebgl` before the hash to force the no-WebGL fallback of the exploded view.
+
+## Structure
 
 ```
 src/
-  data/products.ts        single source of truth for products + studio copy
-  media/                  reusable media kit
-    manifest.ts           discovers real captures in src/assets/products/**
-    schematic.ts          stamped PLACEHOLDER schematics for empty slots
-    ProductMedia.tsx      ProductMedia · ProductVideo · WindowFrame · PhoneFrame · ProductGlyph
-  assets/products/<slug>/{desktop,mobile,video}/   drop real captures here
-  concepts/specimen/      Concept 01 (design system, pages, exploded-view WebGL)
-  concepts/zaxis/         Concept 02 (flight scene + shaders, site kit, work, product, system pages)
-  concepts/studio-os/     Concept 03
-  concepts/plainview/     Concept 04 (Home, Product, Case = the CSS-3D display case, ui, pv.css)
-  hub/                    comparison page (review chrome)
-  shared/                 env hooks (WebGL / reduced motion / viewport), concept switcher
+  data/products.ts     single source of truth for products + studio copy
+  media/               media kit: ProductMedia, frames, zoom dialog, placeholder schematics
+  assets/products/<slug>/{desktop,mobile,video}/   drop real screenshots here
+  site/                the site: pages, design system (specimen.css), exploded view, immersion
+  shared/              environment hooks (WebGL, reduced motion, viewport)
 ```
+
+## Immersion (an app's colours take over its section)
+
+`src/site/immerse.ts` + the IMMERSION block in `src/site/specimen.css`.
+
+- Mouse: while the pointer is over an app's section. Keyboard: while focus is in it.
+  Touch: while it is the section on screen.
+- Product pages are in their app's colours throughout.
+- Colours come from each product's `hue` in `products.ts`. Set `brandField` on a
+  product to use the app's real brand colour instead.
 
 ## Adding real screenshots
 
 See `src/assets/products/README.md`. Drop files into the product's folder,
-prefixed `01-`, `02-`, …; they replace the placeholders everywhere, in every
-concept, including WebGL textures. No code changes.
+prefixed `01-`, `02-`, …; they replace the placeholders everywhere. No code changes.
+Check every capture for customer data, credentials and internal detail first.
 
 ## Content rules baked into the code
 
-- Product copy comes only from `src/data/products.ts`, which restates the
-  company brief. Nothing invents customers, statistics, awards or availability.
-- Stage labels for SamVisionAI, MyFamilyExpenses and GYST are set to a
-  conservative "In development / not publicly available yet" and are marked
-  `TODO(owner)` — **confirm or correct them**.
-- `studio.contactEmail` is `null`; the contact block says so rather than
-  inventing an address.
-- An empty capture slot always renders a stamped schematic, never a fake UI.
+- Stages and availability come from `products.ts` and are never embellished.
+  Three are marked `TODO(owner)` to confirm.
+- No invented customers, statistics, history, awards or capabilities.
+- Empty image slots show a stamped placeholder, never a fictional interface.
+- There is no public contact address yet (`studio.contactEmail` is `null`).
 
-## Before production
+## Before launch
 
-- Remove `src/shared/ConceptSwitcher`, the `hub/` route and the concepts you
-  are not shipping; mount `concepts/zaxis` at `/`.
-- Measure the flight on real phones and GPUs (only software rendering was
-  available while building) and tune particle counts / DPR from that.
-- Pre-render the routes (e.g. React Router framework mode or vite-ssg) so the
-  content is in the HTML without JavaScript; the `<noscript>` block is a stopgap.
-- Replace hash routing with path routing.
+- Confirm stages, availability and the contact address.
+- Add real screenshots and each app's real colours.
+- Switch from hash routing to path routing with pre-rendered pages (search engines, sharing).
+- Remove the `noindex` meta tag and the "design prototype" notes.
+
+## History
+
+The four directions explored before choosing Specimen (Specimen, Z-Axis, Studio OS,
+Plain View), with the comparison page and review results, are preserved at the
+`concepts-archive` tag.
