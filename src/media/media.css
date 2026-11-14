@@ -1,0 +1,226 @@
+/* Reusable media primitives. Concepts restyle them through custom properties:
+   --frame-bg, --frame-bar, --frame-border, --frame-ink, --frame-radius, --frame-shadow
+   --sch-paper, --sch-ink, --sch-line, --sch-accent, --sch-font            */
+
+.zm-media {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  object-position: top center;
+  user-select: none;
+}
+.zm-placeholder {
+  position: relative;
+  overflow: hidden;
+  background: var(--sch-paper, #f1ede3);
+}
+.zm-placeholder > svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.zm-video-empty {
+  aspect-ratio: 16 / 9;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 1.1rem;
+  text-align: center;
+  background: repeating-linear-gradient(
+      135deg,
+      transparent 0 14px,
+      color-mix(in srgb, var(--sch-ink, #1a1915) 5%, transparent) 14px 15px
+    ),
+    var(--sch-paper, #f1ede3);
+  color: var(--sch-ink, #1a1915);
+  font: 500 0.72rem/1.6 var(--sch-font, ui-monospace, Menlo, monospace);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.zm-video-empty b {
+  color: var(--sch-accent, #e8431c);
+  font-weight: 600;
+}
+.zm-video-play {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  position: relative;
+}
+.zm-video-play::after {
+  content: '';
+  position: absolute;
+  left: 54%;
+  top: 50%;
+  translate: -50% -50%;
+  border-left: 1rem solid currentColor;
+  border-block: 0.62rem solid transparent;
+}
+
+.zm-window {
+  margin: 0;
+  border-radius: var(--frame-radius, 12px);
+  border: 1px solid var(--frame-border, rgba(20, 19, 15, 0.9));
+  background: var(--frame-bg, #fbf9f4);
+  box-shadow: var(--frame-shadow, 0 30px 60px -30px rgba(20, 19, 15, 0.35));
+  overflow: hidden;
+}
+.zm-window-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  height: 2.1rem;
+  padding: 0 0.85rem;
+  border-bottom: 1px solid var(--frame-border, rgba(20, 19, 15, 0.9));
+  background: var(--frame-bar, transparent);
+  color: var(--frame-ink, #1a1915);
+}
+.zm-dots {
+  display: inline-flex;
+  gap: 0.34rem;
+}
+.zm-dots i {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  opacity: 0.7;
+}
+.zm-window-title {
+  font: 500 0.68rem/1 var(--sch-font, ui-monospace, Menlo, monospace);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 0.8;
+}
+.zm-window-body {
+  position: relative;
+}
+
+.zm-phone {
+  margin: 0;
+  position: relative;
+  padding: 0.5rem;
+  border-radius: var(--frame-radius-phone, 2.4rem);
+  border: 1px solid var(--frame-border, rgba(20, 19, 15, 0.9));
+  background: var(--frame-bg, #fbf9f4);
+  box-shadow: var(--frame-shadow, 0 30px 60px -30px rgba(20, 19, 15, 0.35));
+}
+.zm-phone-body {
+  border-radius: calc(var(--frame-radius-phone, 2.4rem) - 0.5rem);
+  overflow: hidden;
+  border: 1px solid var(--frame-border, rgba(20, 19, 15, 0.9));
+}
+.zm-phone-island {
+  position: absolute;
+  z-index: 2;
+  top: 1.05rem;
+  left: 50%;
+  translate: -50% 0;
+  width: 26%;
+  height: 0.95rem;
+  border-radius: 1rem;
+  background: var(--frame-ink, #1a1915);
+}
+
+/* ——— ZoomDialog ——— */
+.zm-zoom {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: var(--zoom-bg, #101012);
+  color: var(--zoom-ink, #f2f1ed);
+}
+.zm-zoom::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+.zm-zoom-bar {
+  position: absolute;
+  z-index: 2;
+  inset: 0 0 auto 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  min-height: 3.6rem;
+  padding: 0.6rem clamp(1rem, 4vw, 3rem);
+  border-bottom: 1px solid var(--zoom-rule, rgba(255, 255, 255, 0.16));
+  background: var(--zoom-bg, #101012);
+  font: 500 0.7rem/1.4 var(--sch-font, ui-monospace, Menlo, monospace);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+.zm-zoom-title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.zm-zoom-title b {
+  font-weight: 500;
+  color: var(--zoom-accent, currentColor);
+}
+.zm-zoom-title span {
+  opacity: 0.65;
+}
+.zm-zoom-controls {
+  display: inline-flex;
+  flex: none;
+  border: 1px solid currentColor;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.zm-zoom-controls button {
+  min-width: 2.4rem;
+  min-height: 2.1rem;
+  padding: 0 0.7rem;
+  border: 0;
+  border-left: 1px solid currentColor;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+}
+.zm-zoom-controls button:first-child {
+  border-left: 0;
+}
+.zm-zoom-controls button:hover,
+.zm-zoom-controls .zm-zoom-close {
+  background: var(--zoom-ink, #f2f1ed);
+  color: var(--zoom-bg, #101012);
+}
+.zm-zoom-view {
+  position: absolute;
+  inset: 3.6rem 0 0 0;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  cursor: grab;
+  touch-action: none;
+}
+.zm-zoom-view:active {
+  cursor: grabbing;
+}
+.zm-zoom-view > div {
+  width: min(92vw, 148dvh);
+  border: 1px solid var(--zoom-rule, rgba(255, 255, 255, 0.3));
+  will-change: transform;
+}
+.zm-zoom-view > div[data-surface='mobile'] {
+  width: min(80vw, 40dvh);
+}
