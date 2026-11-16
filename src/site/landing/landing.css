@@ -753,3 +753,170 @@ button.app-cover[aria-pressed='true']::before {
   outline: 2px solid #f4f4f1;
   outline-offset: 2px;
 }
+
+/* ————————————————— Screen viewer (product pages) ————————————————— */
+.vw-head {
+  display: grid;
+  gap: 0.6rem 3rem;
+  align-items: end;
+  margin-bottom: clamp(1rem, 2.4vh, 1.8rem);
+}
+@media (min-width: 900px) {
+  .vw-head {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+  .vw-head p {
+    justify-self: end;
+    text-align: right;
+  }
+}
+.vw-head p {
+  margin: 0;
+  max-width: 30em;
+}
+.vw-frame {
+  border: 1px solid var(--ink);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--paper-hi);
+}
+.vw-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--ink);
+  background: var(--paper);
+}
+.vw-tabs button {
+  flex: 1 1 11rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-height: 3.2rem;
+  padding: 0.55rem 1rem;
+  border: 0;
+  border-right: 1px solid var(--rule-2);
+  margin-bottom: -1px;
+  border-bottom: 1px solid var(--rule-2);
+  background: transparent;
+  color: var(--ink-2);
+  font: 500 0.98rem/1.2 var(--sans);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background var(--t-fast),
+    color var(--t-fast);
+}
+.vw-tabs button:hover {
+  background: color-mix(in srgb, var(--hue-wash) 45%, transparent);
+  color: var(--ink);
+}
+.vw-tabs button[aria-pressed='true'] {
+  background: var(--ink);
+  color: var(--paper);
+}
+.vw-n {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 1.55rem;
+  height: 1.55rem;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font: 500 0.68rem/1 var(--mono);
+}
+.vw-stage {
+  position: relative;
+  height: min(60vh, 38rem);
+  padding: clamp(0.8rem, 2.4vh, 1.8rem) clamp(0.8rem, 3vw, 2.5rem);
+  background:
+    linear-gradient(var(--rule) 1px, transparent 1px) 0 -1px / 100% 2.5rem,
+    linear-gradient(90deg, var(--rule) 1px, transparent 1px) -1px 0 / 2.5rem 100%;
+}
+.vw-stage-item,
+.vw-stage .app-media {
+  height: 100%;
+}
+.vw-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1rem;
+  padding: 0.55rem 0.6rem;
+  border-top: 1px solid var(--ink);
+  background: var(--paper);
+}
+.vw-caption {
+  flex: 1 1 16rem;
+  display: grid;
+  gap: 0.1rem;
+  margin: 0;
+  min-width: 0;
+  font-size: 0.98rem;
+  line-height: 1.35;
+  color: var(--ink-2);
+}
+.vw-caption b {
+  font-weight: 550;
+  color: var(--ink);
+}
+.vw-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.9rem;
+}
+.vw-note {
+  font-size: 0.86rem;
+  color: var(--ink-3);
+}
+.vw-tools .sp-seg button {
+  min-height: 2.5rem;
+  padding-inline: 0.9rem;
+}
+.vw-arrow,
+.vw-enlarge {
+  display: inline-grid;
+  place-items: center;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  padding: 0 0.9rem;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  font: 500 0.92rem/1 var(--sans);
+  cursor: pointer;
+  transition:
+    background var(--t-fast),
+    color var(--t-fast);
+}
+.vw-arrow {
+  padding: 0;
+  font-size: 1.1rem;
+}
+.vw-arrow:hover,
+.vw-enlarge:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+@media (max-width: 700px) {
+  .vw-tabs button {
+    flex-basis: 45%;
+    min-height: 2.9rem;
+    padding-inline: 0.7rem;
+    font-size: 0.9rem;
+  }
+  .vw-stage {
+    height: clamp(13rem, 40dvh, 22rem);
+  }
+  .vw-note {
+    display: none;
+  }
+  .vw-caption {
+    order: -1;
+    flex-basis: 100%;
+  }
+  .vw-bar {
+    justify-content: space-between;
+  }
+}

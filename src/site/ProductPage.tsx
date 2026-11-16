@@ -7,7 +7,7 @@
  * product page costs one catalogue entry and a folder of captures.
  */
 import { useEffect, useRef, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { productBySlug, products, type Product } from '../data/products'
 import { hasRealMedia } from '../media/manifest'
 import { PhoneFrame, ProductMedia, ProductVideo, WindowFrame } from '../media/ProductMedia'
@@ -17,6 +17,7 @@ import { LAYERS } from './exploded/layers'
 import { pins as allPins, tours, tourTitles } from './showcase'
 import { BASE, Fig, FocusList, hueVars, Reveal, SectionHead, StageBadge, Tag } from './ui'
 import { useImmerse } from './immerse'
+import { Viewer } from './Viewer'
 
 function ZoomButton({ onClick }: { onClick: () => void }) {
   return (
@@ -268,6 +269,9 @@ export default function ProductPage() {
   const hasTour = !!tours[product.slug]
   // An app's own page is in that app's colours throughout; the hook only tracks the pointer for the light.
   const { ref } = useImmerse<HTMLElement>()
+  // Review only: `?view=layers` brings back the earlier layered view for comparison.
+  const [params, setParams] = useSearchParams()
+  const layers = params.get('view') === 'layers'
 
   return (
     <article key={product.slug} ref={ref} className="sp-immersive sp-immersive-field sp-product" data-hue="" data-immersed="" style={hueVars(product)}>
@@ -311,25 +315,27 @@ export default function ProductPage() {
             </div>
           ))}
         </dl>
-        <Bench product={product} />
+        {layers ? <Bench product={product} /> : <Viewer product={product} />}
       </div>
 
-      <section className="sp-section" style={{ borderTop: 0 }} aria-labelledby="focus-h">
-        <div className="sp-wrap">
-          <SectionHead
-            label="Focus"
-            title={
-              <span id="focus-h">
-                What it <em>covers.</em>
-              </span>
-            }
-          />
-          <Annotated product={product} />
-          <div style={{ marginTop: '1.2rem' }}>
-            <Fig n="B">{allPins[product.slug] ? 'Annotated capture — numbers match the list' : 'Primary capture'}</Fig>
+      {layers && (
+        <section className="sp-section" style={{ borderTop: 0 }} aria-labelledby="focus-h">
+          <div className="sp-wrap">
+            <SectionHead
+              label="Focus"
+              title={
+                <span id="focus-h">
+                  What it <em>covers.</em>
+                </span>
+              }
+            />
+            <Annotated product={product} />
+            <div style={{ marginTop: '1.2rem' }}>
+              <Fig n="B">{allPins[product.slug] ? 'Annotated capture — numbers match the list' : 'Primary capture'}</Fig>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {hasTour && (
         <section className="sp-section" aria-labelledby="tour-h">
@@ -382,6 +388,15 @@ export default function ProductPage() {
           </span>
           <span className="sp-name">{next.name}</span>
         </Link>
+      </div>
+      <div className="landing-switch" role="group" aria-label="Top of the page (review only)">
+        <span>Screens</span>
+        <button type="button" aria-pressed={!layers} onClick={() => setParams({}, { replace: true })}>
+          New viewer
+        </button>
+        <button type="button" aria-pressed={layers} onClick={() => setParams({ view: 'layers' }, { replace: true })}>
+          Old layered view
+        </button>
       </div>
     </article>
   )
