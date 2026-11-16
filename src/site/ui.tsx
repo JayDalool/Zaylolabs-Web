@@ -117,22 +117,6 @@ export function Reveal({
   )
 }
 
-/** A hairline that draws itself from the left. */
-export function DrawRule({ className = 'sp-plate-rule' }: { className?: string }) {
-  const reduce = useReducedMotion()
-  if (reduce) return <span className={className} aria-hidden="true" />
-  return (
-    <motion.span
-      className={className}
-      aria-hidden="true"
-      initial={{ scaleX: 0 }}
-      whileInView={{ scaleX: 1 }}
-      viewport={{ once: true }}
-      transition={{ duration: 1.2, ease: EASE }}
-    />
-  )
-}
-
 export function FocusList({
   product,
   active,

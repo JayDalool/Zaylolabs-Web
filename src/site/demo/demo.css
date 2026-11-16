@@ -708,3 +708,20 @@ button.dm-file {
     opacity: 1;
   }
 }
+
+/* a whole row that is the next thing to click */
+.dm-rowbtn {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+}
+.dm-rowbtn .dm-row {
+  border-color: var(--hue-ink);
+  background: color-mix(in srgb, var(--hue-wash) 60%, var(--paper));
+}

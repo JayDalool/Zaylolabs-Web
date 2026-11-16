@@ -8,8 +8,7 @@
  * Files are ordered by name, so prefix them 01-, 02-, … to control which slot
  * each one fills. Any slot without a file falls back to a marked placeholder.
  */
-import type { Product, Surface } from '../data/products'
-import { schematicDataUrl, type SchematicOptions, type SchematicTone } from './schematic'
+import type { Surface } from '../data/products'
 
 const files = import.meta.glob('/src/assets/products/*/*/*.{png,jpg,jpeg,webp,avif,mp4,webm}', {
   eager: true,
@@ -37,17 +36,3 @@ export function mediaCount(slug: string, kind: MediaKind): number {
 
 export const hasRealMedia = (slug: string) =>
   (['desktop', 'mobile', 'video'] as MediaKind[]).some((k) => mediaCount(slug, k) > 0)
-
-/**
- * Image source for WebGL textures: the real capture when present, otherwise the
- * stamped placeholder schematic rendered with explicit colours.
- */
-export function textureSource(
-  product: Product,
-  surface: Surface,
-  tone: SchematicTone,
-  opts: SchematicOptions = {},
-): { src: string; placeholder: boolean } {
-  const real = realMedia(product.slug, surface, opts.index ?? 1)
-  return real ? { src: real, placeholder: false } : { src: schematicDataUrl(product, surface, tone, opts), placeholder: true }
-}

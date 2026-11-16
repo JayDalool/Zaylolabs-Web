@@ -10,16 +10,16 @@
  * The hook only reports on/off and tracks the pointer; all colour lives in CSS
  * (`.sp-immersive[data-immersed]` in specimen.css), driven by the product's hue.
  */
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useMediaQuery } from '../shared/env'
 
 export function useImmerse<T extends HTMLElement>() {
-  const ref = useRef<T>(null)
+  // The element is held in state so the listeners follow it if it is replaced (e.g. one product page to the next).
+  const [el, ref] = useState<T | null>(null)
   const [on, setOn] = useState(false)
   const canHover = useMediaQuery('(hover: hover) and (pointer: fine)')
 
   useEffect(() => {
-    const el = ref.current
     if (!el) return
     if (!canHover) {
       const io = new IntersectionObserver(([e]) => setOn(e.isIntersecting), { rootMargin: '-46% 0px -46% 0px' })
@@ -33,13 +33,24 @@ export function useImmerse<T extends HTMLElement>() {
       window.clearTimeout(timer)
       timer = window.setTimeout(() => setOn(hovered || focused), delay)
     }
-    const enter = () => ((hovered = true), settle(110))
-    const leave = () => ((hovered = false), settle(180))
+    const enter = () => {
+      hovered = true
+      settle(110)
+    }
+    const leave = () => {
+      hovered = false
+      settle(180)
+    }
     const focusIn = (e: FocusEvent) => {
       // only keyboard focus counts; a click inside is already a hover
-      if ((e.target as HTMLElement).matches?.(':focus-visible')) (focused = true), settle(0)
+      if (!(e.target as HTMLElement).matches?.(':focus-visible')) return
+      focused = true
+      settle(0)
     }
-    const focusOut = () => ((focused = false), settle(120))
+    const focusOut = () => {
+      focused = false
+      settle(120)
+    }
     const move = (e: PointerEvent) => {
       const r = el.getBoundingClientRect()
       el.style.setProperty('--mx', `${Math.round(e.clientX - r.left)}px`)
@@ -58,7 +69,7 @@ export function useImmerse<T extends HTMLElement>() {
       el.removeEventListener('focusin', focusIn)
       el.removeEventListener('focusout', focusOut)
     }
-  }, [canHover])
+  }, [el, canHover])
 
   return { ref, on }
 }

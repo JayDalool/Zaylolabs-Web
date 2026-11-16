@@ -24,12 +24,11 @@ npm run build:single # one self-contained HTML file → dist-single/index.html
 
 | Route (hash) | What |
 | --- | --- |
-| `#/` | Home: what the studio is, the five-product index, one section per product, studio, contact |
+| `#/` | Home: the landing, one one-screen section per product, studio, contact |
+| `#/?landing=a` | The alternative, scroll-driven landing (kept for review until one is chosen) |
 | `#/work` | All products: index-card drawer and a plain list |
-| `#/work/<slug>` | A page per product, from one template — fully in that app's colours |
+| `#/work/<slug>` | A page per product, from one template — fully in that app's colours, with the screen viewer and step-by-step demos |
 | `#/system` | Design system reference |
-
-Append `?nowebgl` before the hash to force the no-WebGL fallback of the exploded view.
 
 ## Structure
 
@@ -38,8 +37,10 @@ src/
   data/products.ts     single source of truth for products + studio copy
   media/               media kit: ProductMedia, frames, zoom dialog, placeholder schematics
   assets/products/<slug>/{desktop,mobile,video}/   drop real screenshots here
-  site/                the site: pages, design system (specimen.css), exploded view, immersion
-  shared/              environment hooks (WebGL, reduced motion, viewport)
+  site/                pages, design system (specimen.css), immersion, screen viewer
+  site/landing/        the two landings, the one-screen app sections, scroll settle
+  site/demo/           the demo player, its building blocks, and the demo scripts (demos.tsx)
+  shared/              small environment hooks
 ```
 
 ## Immersion (an app's colours take over its section)
@@ -51,6 +52,13 @@ src/
 - Product pages are in their app's colours throughout.
 - Colours come from each product's `hue` in `products.ts`. Set `brandField` on a
   product to use the app's real brand colour instead.
+
+## Demos (step-by-step walkthroughs)
+
+`src/site/demo/demos.tsx` holds one main demo per product and short demos for its
+other tools. They are illustrations with made-up data, labelled as such on the page.
+They are marked `TODO(owner)`: check each step against the real app, and remove
+anything the app does not actually do.
 
 ## Adding real screenshots
 
@@ -69,7 +77,8 @@ Check every capture for customer data, credentials and internal detail first.
 ## Before launch
 
 - Confirm stages, availability and the contact address.
-- Add real screenshots and each app's real colours.
+- Add real screenshots and each app's real colours; correct the demo scripts against the real apps.
+- Choose a landing and delete the other with the review switch (`src/site/landing/LandingSwitch.tsx`).
 - Switch from hash routing to path routing with pre-rendered pages (search engines, sharing).
 - Remove the `noindex` meta tag and the "design prototype" notes.
 

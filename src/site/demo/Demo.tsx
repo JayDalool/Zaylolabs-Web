@@ -111,8 +111,6 @@ function Player({ demo, product }: { demo: Demo; product: Product }) {
   )
 }
 
-export const hasDemo = (slug: string) => !!demos[slug]?.length
-
 /** The demo section of a product page: the main demo, plus tabs when the app has more tools to show. */
 export function DemoSection({ product }: { product: Product }) {
   const list = demos[product.slug]

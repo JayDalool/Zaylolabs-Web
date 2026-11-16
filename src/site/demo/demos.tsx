@@ -173,6 +173,163 @@ const myfamilyexpenses: Demo[] = [
       },
     ],
   },
+  {
+    id: 'shared-household',
+    label: 'The shared household',
+    summary: 'Who spent what this month, in one shared picture.',
+    device: 'phone',
+    steps: [
+      {
+        title: 'Open the household',
+        note: 'Spending is recorded by the household, for the household.',
+        scene: (go) => (
+          <>
+            <Head sub="March · sample household">Our household</Head>
+            <Kv k="Spent this month" v="$1,368.30" strong />
+            <Row title="Corner Market" meta="Groceries · Alex" value="$84.20" clip />
+            {household}
+            <Btn go={go} wide>
+              See who spent what
+            </Btn>
+          </>
+        ),
+      },
+      {
+        title: 'See it by person',
+        note: 'The same month, split by who paid.',
+        scene: (go) => (
+          <>
+            <Head sub="March · sample figures">By person</Head>
+            <Bars
+              rows={[
+                ['Alex', '$742.10', 100],
+                ['Jordan', '$626.20', 84],
+              ]}
+            />
+            <Btn go={go} wide>
+              See it by category
+            </Btn>
+          </>
+        ),
+      },
+      {
+        title: 'See it by category',
+        note: 'One shared picture of where the month went.',
+        scene: () => (
+          <>
+            <Head sub="March · sample figures">By category</Head>
+            <Bars
+              rows={[
+                ['Groceries', '$512.40', 100],
+                ['Bills', '$398.00', 78],
+                ['Kids', '$281.60', 55],
+                ['Transport', '$176.30', 34],
+              ]}
+            />
+            <Kv k="Spent this month" v="$1,368.30" strong />
+          </>
+        ),
+      },
+    ],
+  },
+  {
+    id: 'find-a-receipt',
+    label: 'Find a receipt',
+    summary: 'A receipt from months ago, found from the expense it belongs to.',
+    device: 'phone',
+    steps: [
+      {
+        title: 'Search the expenses',
+        note: 'Receipts are kept with their expenses, so you look for the expense.',
+        scene: (go) => (
+          <>
+            <Head sub="Sample household">Search</Head>
+            <Field label="Search" value="Corner Market" type />
+            <Btn go={go} wide>
+              Search
+            </Btn>
+          </>
+        ),
+      },
+      {
+        title: 'Pick the expense',
+        note: 'Every match shows whether a receipt is attached.',
+        scene: (go) => (
+          <>
+            <Head sub="2 results">Corner Market</Head>
+            <button type="button" className="dm-rowbtn dm-hot" onClick={go}>
+              <Row title="Corner Market" meta="12 March · Groceries · Alex" value="$84.20" clip />
+            </button>
+            <Row title="Corner Market" meta="2 February · Groceries · Jordan" value="$61.75" />
+          </>
+        ),
+      },
+      {
+        title: 'The receipt is right there',
+        note: 'The photo opens from the expense, however long ago it was.',
+        scene: () => (
+          <>
+            <Head sub="12 March · $84.20">Corner Market</Head>
+            <Receipt />
+            <Note>receipt.jpg · added by Alex</Note>
+          </>
+        ),
+      },
+    ],
+  },
+  {
+    id: 'monthly-report',
+    label: 'A monthly report',
+    summary: 'Any month, turned into a report.',
+    device: 'phone',
+    steps: [
+      {
+        title: 'Choose the period',
+        note: 'A report can cover a month or the whole year.',
+        scene: (go) => (
+          <>
+            <Head sub="Sample household">Reports</Head>
+            <Chips items={['January', 'February', 'March', 'Full year']} on={[2]} />
+            <Btn go={go} wide>
+              Build report
+            </Btn>
+          </>
+        ),
+      },
+      {
+        title: 'Read where the money went',
+        note: 'Reports that show where the money went.',
+        scene: (go) => (
+          <>
+            <Head sub="March · sample figures">Monthly report</Head>
+            <Kv k="Total spent" v="$1,368.30" strong />
+            <Bars
+              rows={[
+                ['Groceries', '$512.40', 100],
+                ['Bills', '$398.00', 78],
+                ['Kids', '$281.60', 55],
+                ['Transport', '$176.30', 34],
+              ]}
+            />
+            <Btn go={go} wide>
+              Send report
+            </Btn>
+          </>
+        ),
+      },
+      {
+        title: 'The report is sent',
+        note: 'The month, in one document.',
+        scene: () => (
+          <>
+            <Head>Monthly report</Head>
+            <Toast>Report sent</Toast>
+            <Doc title="Household report — March" sections={['Summary', 'By category', 'Receipts']} />
+          </>
+        ),
+      },
+    ],
+  },
 ]
 
 /* ————————————————— SamVisionAI ————————————————— */
@@ -497,6 +654,146 @@ const gyst: Demo[] = [
       },
     ],
   },
+  {
+    id: 'tasks',
+    label: 'Tasks',
+    summary: 'What needs doing, added and ticked off in one place.',
+    device: 'window',
+    steps: [
+      {
+        title: 'See what needs doing',
+        note: 'Everything outstanding, in one list.',
+        scene: (go) => (
+          <>
+            <Head sub="Sample data">Tasks</Head>
+            <Row tick={false} title="Book dentist" meta="Tuesday" />
+            <Row tick={false} title="Renew passport" meta="Thursday" />
+            <Row tick={false} title="Call the plumber" meta="Friday" />
+            <Btn go={go}>Tick off “Book dentist”</Btn>
+          </>
+        ),
+      },
+      {
+        title: 'Tick it off',
+        note: 'Done things leave the list of what is left.',
+        scene: (go) => (
+          <>
+            <Head sub="Sample data">Tasks</Head>
+            <Row tick title="Book dentist" meta="Tuesday · done" fresh />
+            <Row tick={false} title="Renew passport" meta="Thursday" />
+            <Row tick={false} title="Call the plumber" meta="Friday" />
+            <Btn go={go}>See what is left</Btn>
+          </>
+        ),
+      },
+      {
+        title: 'See what is left',
+        note: 'The week, reduced to what still needs doing.',
+        scene: () => (
+          <>
+            <Head sub="2 left this week">Tasks</Head>
+            <Row tick={false} title="Renew passport" meta="Thursday" />
+            <Row tick={false} title="Call the plumber" meta="Friday" />
+            <Kv k="Done this week" v="1 of 3" strong />
+          </>
+        ),
+      },
+    ],
+  },
+  {
+    id: 'routines',
+    label: 'Routines',
+    summary: 'A recurring thing, set once and kept in rhythm.',
+    device: 'window',
+    steps: [
+      {
+        title: 'Create a routine',
+        note: 'The recurring things, given a rhythm.',
+        scene: (go) => (
+          <>
+            <Head sub="Sample data">New routine</Head>
+            <Field label="Routine" value="Water the plants" type />
+            <Field label="Repeats" value="Every Sunday" type delay={600} />
+            <Btn go={go}>Save routine</Btn>
+          </>
+        ),
+      },
+      {
+        title: 'It appears on its days',
+        note: 'It shows up by itself whenever it is due.',
+        scene: (go) => (
+          <>
+            <Head sub="Sample data">Routines</Head>
+            <Row title="Morning walk" meta="Every weekday · 7:00" />
+            <Row title="Water the plants" meta="Every Sunday" fresh />
+            <Btn go={go}>Open Sunday</Btn>
+          </>
+        ),
+      },
+      {
+        title: 'Do it, and it comes back next time',
+        note: 'Ticking it off today leaves next week’s in place.',
+        scene: () => (
+          <>
+            <Head sub="Sample data">Sunday</Head>
+            <Row tick title="Water the plants" meta="Routine · done today" fresh />
+            <Kv k="Next due" v="Next Sunday" strong />
+          </>
+        ),
+      },
+    ],
+  },
+  {
+    id: 'connected',
+    label: 'Connected data',
+    summary: 'A plan, with everything that belongs to it in one place.',
+    device: 'window',
+    steps: [
+      {
+        title: 'Open a plan',
+        note: 'A plan gathers the pieces that belong together.',
+        scene: (go) => (
+          <>
+            <Head sub="Sample data">Plans</Head>
+            <button type="button" className="dm-rowbtn dm-hot" onClick={go}>
+              <Row title="Trip in June" meta="Plan · 4 tasks · 1 routine" />
+            </button>
+            <Row title="Home repairs" meta="Plan · 2 tasks" />
+          </>
+        ),
+      },
+      {
+        title: 'See what is linked to it',
+        note: 'The pieces are linked rather than scattered.',
+        scene: (go) => (
+          <>
+            <Head sub="Plan">Trip in June</Head>
+            <Card title="Tasks">
+              <Row tick={false} title="Renew passport" meta="Thursday" />
+              <Row tick title="Book flights" meta="Done" />
+            </Card>
+            <Card title="Routines">
+              <Row title="Put money aside" meta="Every Friday" />
+            </Card>
+            <Btn go={go}>Open “Renew passport”</Btn>
+          </>
+        ),
+      },
+      {
+        title: 'And the link works both ways',
+        note: 'From the task, you can see the plan it serves.',
+        scene: () => (
+          <>
+            <Head sub="Task">Renew passport</Head>
+            <Kv k="Day" v="Thursday" />
+            <Card title="Linked to">
+              <Row title="Trip in June" meta="Plan · 4 tasks · 1 routine" />
+            </Card>
+          </>
+        ),
+      },
+    ],
+  },
 ]
 
 /* ————————————————— CommandCenter (internal) ————————————————— */
@@ -565,6 +862,170 @@ const commandcenter: Demo[] = [
             <Row tick title="Assigned to an agent" />
             <Row tick title="Checks passed" />
             <Row tick title="Approved" />
+          </>
+        ),
+      },
+    ],
+  },
+  {
+    id: 'project',
+    label: 'Project management',
+    summary: 'An illustration of work moving across a board. No real project is shown.',
+    device: 'window',
+    steps: [
+      {
+        title: 'The work, laid out',
+        note: 'Work is tracked where the work happens.',
+        scene: (go) => (
+          <>
+            <Head sub="Made-up example">Sample project</Head>
+            <Cols>
+              <Card title="To do">
+                <Row title="Update the footer link" />
+              </Card>
+              <Card title="In progress">
+                <Row title="Fix the date format" />
+              </Card>
+              <Card title="Done">
+                <Row title="Rename a label" />
+              </Card>
+            </Cols>
+            <Btn go={go}>Start “Update the footer link”</Btn>
+          </>
+        ),
+      },
+      {
+        title: 'It moves as it is worked on',
+        note: 'The board follows the work, not the other way round.',
+        scene: (go) => (
+          <>
+            <Head sub="Made-up example">Sample project</Head>
+            <Cols>
+              <Card title="To do">
+                <Note>Nothing waiting</Note>
+              </Card>
+              <Card title="In progress">
+                <Row title="Update the footer link" fresh />
+                <Row title="Fix the date format" />
+              </Card>
+              <Card title="Done">
+                <Row title="Rename a label" />
+              </Card>
+            </Cols>
+            <Btn go={go}>Finish it</Btn>
+          </>
+        ),
+      },
+      {
+        title: 'And lands in done',
+        note: 'What is finished is plain to see.',
+        scene: () => (
+          <>
+            <Head sub="Made-up example">Sample project</Head>
+            <Cols>
+              <Card title="To do">
+                <Note>Nothing waiting</Note>
+              </Card>
+              <Card title="In progress">
+                <Row title="Fix the date format" />
+              </Card>
+              <Card title="Done">
+                <Row title="Update the footer link" fresh />
+                <Row title="Rename a label" />
+              </Card>
+            </Cols>
+          </>
+        ),
+      },
+    ],
+  },
+  {
+    id: 'approvals',
+    label: 'Approvals',
+    summary: 'An illustration of sign-off as a step. No real change is shown.',
+    device: 'window',
+    steps: [
+      {
+        title: 'Changes wait for a person',
+        note: 'Sign-off is a step in the flow.',
+        scene: (go) => (
+          <>
+            <Head sub="Made-up example">Waiting for approval</Head>
+            <button type="button" className="dm-rowbtn dm-hot" onClick={go}>
+              <Row title="Update the footer link" meta="Checks: 3 of 3 passed" />
+            </button>
+            <Row title="Fix the date format" meta="Checks: running" />
+          </>
+        ),
+      },
+      {
+        title: 'Read what is being approved',
+        note: 'The change and its checks, side by side.',
+        scene: (go) => (
+          <>
+            <Head sub="Update the footer link">Approval</Head>
+            <Kv k="Checks" v="3 of 3 passed" />
+            <Kv k="Done by" v="An agent" />
+            <Kv k="Waiting for" v="Approval" strong />
+            <Btn go={go}>Approve</Btn>
+          </>
+        ),
+      },
+      {
+        title: 'Approved, and on record',
+        note: 'Who signed off, and when, stays with the change.',
+        scene: () => (
+          <>
+            <Head sub="Update the footer link">Approval</Head>
+            <Toast>Approved</Toast>
+            <Row tick title="Checks passed" />
+            <Row tick title="Approved by a person" />
+          </>
+        ),
+      },
+    ],
+  },
+  {
+    id: 'ci',
+    label: 'CI operations',
+    summary: 'An illustration of checks running on a change. No real system is shown.',
+    device: 'window',
+    steps: [
+      {
+        title: 'Start the checks',
+        note: 'Continuous integration, operated from one surface.',
+        scene: (go) => (
+          <>
+            <Head sub="Made-up example">Checks</Head>
+            <Row tick={false} title="Build" meta="Not started" />
+            <Row tick={false} title="Tests" meta="Not started" />
+            <Row tick={false} title="Lint" meta="Not started" />
+            <Btn go={go}>Run checks</Btn>
+          </>
+        ),
+      },
+      {
+        title: 'They run',
+        note: 'Each check reports as it goes.',
+        auto: 2400,
+        scene: () => (
+          <>
+            <Head sub="Made-up example">Checks</Head>
+            <Log lines={['Build started', 'Tests started', 'Lint started']} />
+            <Progress label="Running 3 checks" />
+          </>
+        ),
+      },
+      {
+        title: 'And report back',
+        note: 'The result is in one place, ready for approval.',
+        scene: () => (
+          <>
+            <Head sub="Made-up example">Checks</Head>
+            <Row tick title="Build" meta="Passed" />
+            <Row tick title="Tests" meta="Passed" />
+            <Row tick title="Lint" meta="Passed" />
+            <Toast>3 of 3 passed</Toast>
           </>
         ),
       },
@@ -659,6 +1120,56 @@ const gauzemate: Demo[] = [
             <Head sub="Prototype · sample data">Medications</Head>
             <Toast>Taken today at 8:00</Toast>
             <Row tick title="Sample medication 250 mg" meta="Every day · 8:00" />
+          </>
+        ),
+      },
+    ],
+  },
+  {
+    id: 'today',
+    label: 'Today at a glance',
+    summary: 'The day’s reminders in one list, ticked off as they are taken.',
+    device: 'phone',
+    steps: [
+      {
+        title: 'Open today',
+        note: 'Every reminder due today, in order.',
+        scene: (go) => (
+          <>
+            <Head sub="Prototype · sample data">Today</Head>
+            <Row tick title="Sample medication 250 mg" meta="8:00 · taken" />
+            <Row tick={false} title="Second sample medication" meta="13:00" />
+            <Row tick={false} title="Sample medication 250 mg" meta="20:00" />
+            <Btn go={go} wide>
+              Mark the 13:00 one as taken
+            </Btn>
+          </>
+        ),
+      },
+      {
+        title: 'Tick it off',
+        note: 'A prompt at the moment it matters, then a record that it happened.',
+        scene: (go) => (
+          <>
+            <Head sub="Prototype · sample data">Today</Head>
+            <Row tick title="Sample medication 250 mg" meta="8:00 · taken" />
+            <Row tick title="Second sample medication" meta="13:00 · taken" fresh />
+            <Row tick={false} title="Sample medication 250 mg" meta="20:00" />
+            <Btn go={go} wide>
+              See the day so far
+            </Btn>
+          </>
+        ),
+      },
+      {
+        title: 'The day so far',
+        note: 'What has been taken, and what is still to come.',
+        scene: () => (
+          <>
+            <Head sub="Prototype · sample data">Today</Head>
+            <Kv k="Taken" v="2 of 3" strong />
+            <Kv k="Next" v="20:00" />
+            <Note>This demo contains no medical information.</Note>
           </>
         ),
       },

@@ -50,7 +50,7 @@ const TYPE = [
   ['Subhead', 'sp-h3', 'Property analysis that ends in a decision.', 'Fraunces 420'],
   ['Lede', 'sp-lede', 'An independent software development studio.', 'Instrument Sans 400'],
   ['Body', 'sp-body', 'Describe only what the product actually is.', 'Instrument Sans 400 · 17/26'],
-  ['Label', 'sp-mono', 'Plate I — ZL-001', 'IBM Plex Mono 500 · +9% · caps'],
+  ['Label', 'sp-mono', 'Product 1 of 5', 'IBM Plex Mono 500 · +9% · caps'],
 ] as const
 
 const ADD_PRODUCT = `// 1 — src/data/products.ts
@@ -76,7 +76,8 @@ src/assets/products/newproduct/desktop/01-overview.png
 src/assets/products/newproduct/mobile/01-home.png
 src/assets/products/newproduct/video/01-tour.mp4
 
-// 3 — optional: pins + tour in src/concepts/specimen/showcase.ts`
+// 3 — optional: a step-by-step demo in src/site/demo/demos.tsx
+//     (made-up data only; it must not show anything the app cannot do)`
 
 export default function System() {
   const sam = products[0]
@@ -102,7 +103,7 @@ export default function System() {
           </li>
           <li>
             <b>Label everything.</b>
-            <span>Catalogue number, class and stage travel with every product. Stage uses a shape and a word, never colour alone.</span>
+            <span>What it is, its stage and its availability travel with every product. Stage uses a shape and a word, never colour alone.</span>
           </li>
           <li>
             <b>Never fake it.</b>
@@ -217,10 +218,24 @@ export default function System() {
         <Fig n="S1">Empty slots — stamped placeholders, never fictional screenshots</Fig>
       </Block>
 
-      <Block title="Lists" note="FocusList pairs with annotation pins on a capture.">
+      <Block title="Lists" note="A product’s “what it covers” list. The same list drives the screen viewer and the home sections.">
         <div data-hue="" style={{ ...hueVars(sam), maxWidth: '30rem' }}>
           <FocusList product={sam} active={1} />
         </div>
+      </Block>
+
+      <Block title="Immersion" note="A section that belongs to one app takes that app’s colours while the visitor is in it: on hover, on keyboard focus, or on touch when it is the section on screen. Product pages are in their app’s colours throughout.">
+        <div className="sp-ds-row" style={{ gap: 0, border: '1px solid var(--ink)', borderRadius: 'var(--radius)', overflow: 'hidden' }}>
+          {products.map((p) => (
+            <button key={p.slug} type="button" className="sp-immerse-hover" data-hue="" style={{ ...hueVars(p), flex: '1 1 9rem', minHeight: '4.5rem', padding: '0.8rem 1rem', border: 0, textAlign: 'left', font: 'inherit', cursor: 'default' }}>
+              <span className="sp-mono" style={{ display: 'block', color: 'var(--ink-3)' }}>
+                Point here
+              </span>
+              <b style={{ fontWeight: 550 }}>{p.name}</b>
+            </button>
+          ))}
+        </div>
+        <Fig n="S2">Colours come from each product’s hue; set brandField on a product to use the app’s real colour</Fig>
       </Block>
 
       <Block title="Motion" note="Measured, never bouncy. Scroll-linked where it explains something; removed entirely under prefers-reduced-motion.">
@@ -241,7 +256,7 @@ export default function System() {
         </div>
       </Block>
 
-      <Block title="Adding a product" note="A new specimen page needs one catalogue entry and, when they exist, a folder of captures.">
+      <Block title="Adding a product" note="A new product needs one catalogue entry and, when they exist, a folder of screenshots. Its home section, page, viewer and colours follow from that.">
         <pre className="sp-code" tabIndex={0}>
           {ADD_PRODUCT}
         </pre>

@@ -6,8 +6,7 @@
  * interfaces, and every one carries a visible PLACEHOLDER stamp — a fictional
  * mockup must never be mistaken for a genuine product screenshot.
  *
- * Output is a plain SVG string so the same source can be inlined in the DOM or
- * loaded as a WebGL texture via `schematicDataUrl`.
+ * Output is a plain SVG string, inlined in the DOM.
  */
 import type { Motif, Product, Surface } from '../data/products'
 
@@ -394,6 +393,3 @@ ${
 }
 
 /** Explicit colours are required here — CSS variables do not resolve inside an image. */
-export function schematicDataUrl(product: Product, surface: Surface, tone: SchematicTone, opts: SchematicOptions = {}) {
-  return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(schematicSvg(product, surface, { ...opts, tone }))}`
-}
