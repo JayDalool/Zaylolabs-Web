@@ -1,0 +1,755 @@
+/* ————————————————————————————————————————————————————————————————
+   LANDING — two versions of the first screens, plus the one-screen app
+   sections they share. Sizes come from the viewport height so a whole
+   section fits on screen; the page settles on each one.
+   ———————————————————————————————————————————————————————————————— */
+
+/* .sp-snap marks the start of a one-screen section; settle.ts finishes a scroll that stops near one */
+.sp-snap {
+  scroll-margin-top: 4rem;
+}
+
+/* ——— one app in words ——— */
+.app-copy {
+  display: grid;
+  gap: clamp(0.45rem, 1.5vh, 0.95rem);
+  align-content: center;
+  min-width: 0;
+}
+.app-kicker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 1.1rem;
+  margin: 0;
+}
+.app-kicker-n {
+  color: var(--hue-ink);
+}
+.sp .app-name {
+  font-size: min(5rem, 9.4vh, calc(70vw / var(--n, 12)));
+  overflow-wrap: anywhere;
+}
+.app-name small {
+  font: 500 0.7rem/1 var(--mono);
+  font-style: normal;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  vertical-align: 1.1em;
+  margin-left: 0.6em;
+  font-variation-settings: normal;
+  white-space: nowrap;
+}
+.app-tagline {
+  margin: 0;
+  font: 380 clamp(1.15rem, min(1.9vw, 3.3vh), 1.7rem) / 1.2 var(--serif);
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.app-summary {
+  margin: 0;
+  max-width: 36em;
+  font-size: 0.98rem;
+  color: var(--ink-2);
+}
+.app-covers {
+  list-style: none;
+  margin: 0.15rem 0 0;
+  padding: 0;
+  border-top: 1px solid var(--rule);
+}
+.app-covers li {
+  border-bottom: 1px solid var(--rule);
+}
+.app-cover {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 12rem) minmax(0, 1fr);
+  gap: 0.1rem 1rem;
+  align-items: baseline;
+  width: 100%;
+  min-height: 2.5rem;
+  padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+  border: 0;
+  background: none;
+  text-align: left;
+  font: inherit;
+  font-size: 0.93rem;
+  line-height: 1.35;
+  color: var(--ink-2);
+}
+.app-cover b {
+  font-weight: 550;
+  color: var(--ink);
+}
+/* a plain list gets a dash; a list you can choose from gets a round marker that fills */
+.app-cover::before {
+  content: '';
+  position: absolute;
+  left: 0.2rem;
+  top: 1.15rem;
+  width: 0.6rem;
+  height: 2px;
+  background: var(--hue-ink);
+}
+button.app-cover {
+  cursor: pointer;
+  transition: background var(--t-fast);
+}
+button.app-cover::before {
+  top: 0.95rem;
+  width: 0.62rem;
+  height: 0.62rem;
+  border: 1.5px solid var(--hue-ink);
+  border-radius: 50%;
+  background: transparent;
+}
+button.app-cover:hover {
+  background: color-mix(in srgb, var(--hue-wash) 35%, transparent);
+}
+button.app-cover[aria-pressed='true'] {
+  background: color-mix(in srgb, var(--hue-wash) 70%, transparent);
+}
+button.app-cover[aria-pressed='true']::before {
+  background: var(--hue-ink);
+}
+.app-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.9rem;
+  margin: 0.15rem 0 0;
+  font-size: 0.95rem;
+  color: var(--ink-2);
+}
+.app-go {
+  margin-top: 0.1rem;
+}
+/* shorter screens: keep the facts, drop the commentary */
+@media (max-height: 800px) {
+  .app-cover {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .app-cover span {
+    display: none;
+  }
+}
+@media (max-height: 680px) {
+  .app-summary {
+    display: none;
+  }
+}
+
+/* ——— one app's screens ——— */
+.app-media {
+  container-type: size;
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  height: min(66vh, 40rem);
+
+  --frame-radius-phone: 2.4cqw;
+}
+.app-pose {
+  position: relative;
+  width: min(100%, 148cqh);
+  aspect-ratio: 16 / 10.4;
+  perspective: 1400px;
+}
+.app-pose > * {
+  position: absolute;
+}
+.app-pose .zm-phone,
+.la-stage .zm-phone {
+  padding: 0.3rem;
+}
+.app-pose .zm-phone-island,
+.la-stage .zm-phone-island {
+  top: 0.62rem;
+  height: 0.5rem;
+}
+.app-pose[data-pose='desk-phone'] .app-win {
+  left: 0;
+  top: 5%;
+  width: 86%;
+  transform: rotateY(10deg) rotateX(2deg);
+  transform-origin: 20% 50%;
+}
+.app-pose[data-pose='desk-phone'] .app-phone {
+  right: 0;
+  bottom: -1%;
+  width: 20%;
+  transform: translateZ(90px) rotateY(-13deg);
+}
+.app-pose[data-pose='desk-phone'][data-flip] .app-win {
+  left: auto;
+  right: 0;
+  transform: rotateY(-10deg) rotateX(2deg);
+  transform-origin: 80% 50%;
+}
+.app-pose[data-pose='desk-phone'][data-flip] .app-phone {
+  right: auto;
+  left: 0;
+  transform: translateZ(90px) rotateY(13deg);
+}
+.app-pose[data-pose='phone-desk'] .app-win {
+  right: 0;
+  top: 13%;
+  width: 70%;
+  transform: translateZ(-60px) rotateY(-12deg);
+  transform-origin: 80% 50%;
+}
+.app-pose[data-pose='phone-desk'] .app-phone {
+  left: 9%;
+  top: -2%;
+  width: 29%;
+  transform: translateZ(70px) rotateY(12deg);
+}
+.app-pose[data-pose='phone-desk'][data-flip] .app-win {
+  right: auto;
+  left: 0;
+  transform: translateZ(-60px) rotateY(12deg);
+  transform-origin: 20% 50%;
+}
+.app-pose[data-pose='phone-desk'][data-flip] .app-phone {
+  left: auto;
+  right: 9%;
+  transform: translateZ(70px) rotateY(-12deg);
+}
+.app-pose[data-pose='desk'] .app-win {
+  left: 4%;
+  top: 4%;
+  width: 92%;
+  transform: rotateX(6deg);
+  transform-origin: 50% 100%;
+}
+.app-pose[data-pose='phones'] .app-phone {
+  left: 27%;
+  top: -2%;
+  width: 29%;
+  transform: translateZ(70px) rotateY(14deg);
+}
+.app-pose[data-pose='phones'] .app-phone-back {
+  left: 50%;
+  top: 6%;
+  width: 26%;
+  transform: translateZ(-70px) rotateY(-14deg);
+  filter: brightness(0.9);
+}
+.app-hatch {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(135deg, color-mix(in srgb, var(--paper-hi) 88%, transparent) 0 14px, color-mix(in srgb, var(--paper-hi) 42%, transparent) 14px 28px);
+}
+.app-seal {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  padding: 0.55em 0.9em;
+  border: 1px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  font: 500 clamp(0.6rem, 1.7cqw, 0.72rem) / 1 var(--mono);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ——— a whole app on one screen ——— */
+.app-screen {
+  display: grid;
+  align-items: center;
+  min-height: calc(100dvh - 4rem);
+  padding-block: clamp(1rem, 3.4vh, 2.6rem);
+  border-top: 1px solid var(--rule);
+}
+.app-screen-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(0.9rem, 2.6vh, 2rem) clamp(2rem, 5vw, 5rem);
+  align-items: center;
+}
+@media (min-width: 900px) {
+  .app-screen-grid {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  }
+  .app-screen[data-flip] .app-screen-grid {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  }
+  .app-screen[data-flip] .app-copy {
+    order: 2;
+  }
+}
+/* narrow screens: name, then the picture, then the facts — still one screen */
+@media (max-width: 899.98px) {
+  .app-screen .app-copy {
+    display: contents;
+  }
+  .app-screen .app-kicker {
+    order: 1;
+  }
+  .app-screen .app-name {
+    order: 2;
+  }
+  .app-screen .app-tagline {
+    order: 3;
+  }
+  .app-screen .app-media {
+    order: 4;
+    height: clamp(10.5rem, 30dvh, 20rem);
+  }
+  .app-screen .app-covers {
+    order: 5;
+  }
+  .app-screen .app-status {
+    order: 6;
+  }
+  .app-screen .app-go {
+    order: 7;
+  }
+  .app-screen-grid {
+    gap: clamp(0.5rem, 1.5dvh, 0.9rem);
+  }
+  .app-summary {
+    display: none;
+  }
+  .sp .app-name {
+    font-size: min(3.4rem, 6.4dvh, calc(168vw / var(--n, 12)));
+  }
+  /* what it covers becomes a row of choices */
+  .app-covers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    border: 0;
+  }
+  .app-covers li {
+    border: 0;
+  }
+  .app-cover {
+    display: inline-flex;
+    align-items: center;
+    width: auto;
+    min-height: 2.5rem;
+    padding: 0 0.8rem 0 1.55rem;
+    border: 1px solid var(--rule-2);
+    border-radius: 999px;
+    font-size: 0.86rem;
+  }
+  .app-cover span {
+    display: none;
+  }
+  .app-cover::before,
+  button.app-cover::before {
+    left: 0.6rem;
+    top: 50%;
+    translate: 0 -50%;
+  }
+}
+
+/* ————————————————— Landing B — the simple one ————————————————— */
+.lb {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  min-height: calc(100dvh - 4rem);
+  padding-bottom: clamp(0.8rem, 2.2vh, 1.6rem);
+}
+.lb-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.2rem clamp(2rem, 5vw, 5rem);
+  align-items: center;
+  padding-block: clamp(1rem, 3.5vh, 2.6rem);
+}
+@media (min-width: 900px) {
+  .lb-main {
+    grid-template-columns: minmax(0, 6.3fr) minmax(0, 5.7fr);
+  }
+}
+.lb-kicker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.5rem;
+  margin: 0 0 clamp(0.8rem, 2.4vh, 1.8rem);
+}
+.sp .lb-h {
+  font-size: clamp(2.6rem, min(5vw, 9.6vh), 5.6rem);
+}
+.lb .sp-lede,
+.la .sp-lede {
+  margin-top: clamp(0.9rem, 2.4vh, 1.8rem);
+}
+.lb-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: clamp(1.1rem, 3vh, 2.2rem);
+}
+.lb-show {
+  position: relative;
+  height: min(54vh, 34rem);
+}
+.lb-show-item {
+  position: absolute;
+  inset: 0;
+}
+.lb-show .app-media {
+  height: 100%;
+}
+@media (max-width: 899.98px) {
+  .lb-show {
+    display: none;
+  }
+}
+.lb-strip {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+}
+.lb-strip a {
+  display: grid;
+  gap: clamp(0.4rem, 1.4vh, 0.9rem);
+  align-content: space-between;
+  min-height: clamp(5.4rem, 13vh, 7.6rem);
+  padding: 0.8rem 1rem 0.9rem;
+  border-left: 1px solid var(--rule);
+  text-decoration: none;
+  color: var(--ink);
+  transition:
+    background 0.3s var(--ease),
+    color 0.3s var(--ease);
+}
+.lb-strip a:first-child {
+  border-left: 0;
+}
+.lb-strip-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.6rem;
+  color: var(--ink-3);
+}
+.lb-strip-name {
+  font: italic 380 clamp(1.05rem, 1.7vw, 1.6rem) / 1 var(--serif);
+  letter-spacing: -0.02em;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  overflow-wrap: anywhere;
+}
+.lb-strip-stage {
+  color: var(--ink-3);
+}
+/* the app being pointed at: its tile inverts, the rest of the screen takes its colours */
+.lb-strip a[data-on] {
+  background: var(--ink);
+  color: var(--paper);
+}
+.lb-strip a[data-on] .lb-strip-top,
+.lb-strip a[data-on] .lb-strip-stage {
+  color: color-mix(in srgb, var(--paper) 78%, var(--ink));
+}
+@media (max-width: 899.98px) {
+  .lb-strip {
+    grid-template-columns: 1fr;
+  }
+  .lb-strip a {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    min-height: 2.9rem;
+    padding: 0.35rem 0.2rem;
+    border-left: 0;
+    border-top: 1px solid var(--rule);
+    gap: 0.1rem 1rem;
+  }
+  .lb-strip a:first-child {
+    border-top: 0;
+  }
+  .lb-strip-top {
+    display: none;
+  }
+  .lb-strip-name {
+    font-size: 1.2rem;
+  }
+}
+
+/* ————————————————— Landing A — the showpiece ————————————————— */
+.la {
+  position: relative;
+}
+.la-rest {
+  position: absolute;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+.la-pin {
+  position: sticky;
+  top: 4rem;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  height: calc(100dvh - 4rem);
+  overflow: hidden;
+}
+.la-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 0.6rem clamp(2rem, 4.5vw, 4.5rem);
+  min-height: 0;
+  padding-block: clamp(0.8rem, 3vh, 2.2rem) 0;
+}
+@media (min-width: 900px) {
+  .la-grid {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    grid-template-rows: minmax(0, 1fr);
+    align-items: center;
+  }
+}
+.la-copy {
+  position: relative;
+  z-index: 2;
+  min-width: 0;
+}
+.la-stage {
+  position: relative;
+  container-type: size;
+  min-height: 0;
+  height: 100%;
+  perspective: 2400px;
+
+  --frame-radius-phone: 2.2cqw;
+}
+.la-sheet {
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  width: min(84cqw, 124cqh);
+  translate: -50% -50%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  will-change: transform, opacity;
+}
+.la-sheet[data-front] {
+  cursor: default;
+}
+.la-sheet .zm-window {
+  overflow: visible;
+}
+/* the phone stands proud of the sheet, so the sheet must not clip it */
+.la-sheet .zm-window-body {
+  overflow: visible;
+}
+.la-sheet .zm-window-body > .zm-media,
+.la-sheet .zm-window-body > .la-bench,
+.la-sheet .app-hatch {
+  border-radius: 0 0 calc(var(--frame-radius) - 1px) calc(var(--frame-radius) - 1px);
+}
+.la-sheet:not([data-front]):hover .zm-window,
+.la-sheet:not([data-front]):focus-visible .zm-window {
+  border-color: var(--hue-ink);
+  box-shadow: 0 0 0 2px var(--hue-ink);
+}
+.la-side-phone {
+  position: absolute;
+  right: -5%;
+  bottom: -7%;
+  width: 21%;
+  z-index: 2;
+  transition: opacity 0.5s var(--ease) 0.25s;
+}
+.la-bench {
+  position: relative;
+  aspect-ratio: 1600 / 1000;
+  background:
+    radial-gradient(circle at center, var(--rule-2) 1px, transparent 1.4px) 0 0 / 1.2rem 1.2rem,
+    var(--paper-hi);
+}
+.la-bench-phone {
+  position: absolute;
+  left: 30%;
+  top: 6%;
+  width: 22%;
+}
+.la-bench-phone-2 {
+  left: 54%;
+  top: 12%;
+  width: 19.5%;
+  opacity: 0.85;
+}
+/* steps along the bottom of the pinned screen */
+.la-rail {
+  border-top: 1px solid var(--rule);
+}
+.la-rail-in {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.2rem, 1.6vw, 1.6rem);
+  min-height: 3.1rem;
+}
+.la-rail button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0 0.3rem;
+  border: 0;
+  background: none;
+  color: var(--ink-3);
+  font: 500 0.68rem/1 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.la-rail button i {
+  width: 0.5rem;
+  height: 0.5rem;
+  rotate: 45deg;
+  border: 1.5px solid currentColor;
+}
+.la-rail button:hover,
+.la-rail button[aria-current] {
+  color: var(--ink);
+}
+.la-rail button[aria-current] i {
+  background: var(--hue-ink);
+  border-color: var(--hue-ink);
+}
+.la-rail button[aria-current] {
+  box-shadow: inset 0 -2px 0 var(--ink);
+}
+.la-rail-cue {
+  margin-left: auto;
+  color: var(--ink-3);
+}
+/* very small phones: trim so a whole section still fits */
+@media (max-width: 899.98px) and (max-height: 700px) {
+  .app-screen .app-media {
+    height: clamp(8rem, 23dvh, 12rem);
+  }
+  .app-screen .app-tagline {
+    font-size: 1.05rem;
+  }
+  .app-cover {
+    min-height: 2.2rem;
+    font-size: 0.8rem;
+  }
+  .lb .sp-lede {
+    display: none;
+  }
+  .lb-strip a {
+    min-height: 2.5rem;
+  }
+  .lb-strip-name {
+    font-size: 1.08rem;
+  }
+}
+@media (max-width: 899.98px) {
+  /* on small screens the steps along the bottom do the navigating; the stack is scenery */
+  .la-sheet {
+    pointer-events: none;
+  }
+  .la-rail button:not([aria-current]) span {
+    display: none;
+  }
+  .la-rail button:not([aria-current]) {
+    min-width: 2rem;
+    justify-content: center;
+  }
+  .la-rail-cue {
+    display: none;
+  }
+  .la-sheet {
+    top: 44%;
+    width: min(80cqw, 120cqh);
+  }
+  .sp .la .lb-h {
+    font-size: clamp(2.4rem, min(11vw, 7.4dvh), 4rem);
+  }
+  .la .sp-lede {
+    font-size: 1rem;
+  }
+  .sp .la .app-name {
+    font-size: min(3.2rem, 5.6dvh, calc(168vw / var(--n, 12)));
+  }
+  .la .app-summary {
+    display: none;
+  }
+  .la .app-covers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    border: 0;
+  }
+  .la .app-covers li {
+    border: 0;
+  }
+  .la .app-cover {
+    display: inline-flex;
+    align-items: center;
+    width: auto;
+    min-height: 2.4rem;
+    padding: 0 0.75rem 0 1.5rem;
+    border: 1px solid var(--rule-2);
+    border-radius: 999px;
+    font-size: 0.84rem;
+  }
+  .la .app-cover span {
+    display: none;
+  }
+  .la .app-cover::before,
+  .la button.app-cover::before {
+    left: 0.58rem;
+    top: 50%;
+    translate: 0 -50%;
+  }
+}
+
+/* ——— review-only switch between the two landings ——— */
+.landing-switch {
+  position: fixed;
+  z-index: 90;
+  left: 50%;
+  bottom: max(0.75rem, env(safe-area-inset-bottom));
+  translate: -50% 0;
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.25rem 0.3rem 0.25rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(16, 16, 18, 0.94);
+  color: #f4f4f1;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.55);
+  font: 500 0.76rem/1 ui-sans-serif, system-ui, sans-serif;
+  white-space: nowrap;
+}
+.landing-switch span {
+  opacity: 0.75;
+  margin-right: 0.3rem;
+}
+.landing-switch button {
+  min-height: 2.2rem;
+  padding: 0 0.8rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.landing-switch button[aria-pressed='true'] {
+  background: #f4f4f1;
+  color: #101012;
+}
+.landing-switch button:focus-visible {
+  outline: 2px solid #f4f4f1;
+  outline-offset: 2px;
+}
