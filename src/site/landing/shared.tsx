@@ -112,6 +112,9 @@ export function AppCopy({ product, slot, onSlot, heading = 'h2' }: { product: Pr
       </p>
       <div className="app-go">
         <ButtonLink to={`${BASE}/work/${product.slug}`}>Open {product.name}</ButtonLink>
+        <ButtonLink ghost className="sp-btn sp-btn-ghost app-go-demo" to={`${BASE}/work/${product.slug}#demo`}>
+          Watch the demo
+        </ButtonLink>
       </div>
     </div>
   )

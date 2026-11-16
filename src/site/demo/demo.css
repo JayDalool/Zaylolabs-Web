@@ -1,0 +1,710 @@
+/* ————————————————————————————————————————————————————————————————
+   DEMO — the illustrated app walkthroughs on product pages.
+   Colours come from the page's tokens, so a demo is in its app's colours.
+   ———————————————————————————————————————————————————————————————— */
+.dm-disclaimer {
+  max-width: 46em;
+  margin: 0 0 1.4rem;
+  padding: 0.8rem 1rem;
+  border: 1px dashed var(--rule-2);
+  border-radius: var(--radius);
+  color: var(--ink-2);
+  font-size: 0.98rem;
+}
+.dm-disclaimer b {
+  color: var(--ink);
+  font-weight: 600;
+}
+.dm-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.9rem;
+}
+.dm-tabs button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 2.75rem;
+  padding: 0 1rem;
+  border: 1px solid var(--rule-2);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  font: 500 0.95rem/1 var(--sans);
+  cursor: pointer;
+}
+.dm-tabs button[aria-pressed='true'] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+.dm-tab-main {
+  font: 500 0.62rem/1 var(--mono);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  padding: 0.25em 0.45em;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+}
+.dm-summary {
+  margin: 0 0 1.2rem;
+  font: 380 clamp(1.15rem, 1.8vw, 1.55rem) / 1.25 var(--serif);
+}
+
+.dm {
+  display: grid;
+  gap: 1.4rem clamp(1.5rem, 4vw, 4rem);
+  align-items: start;
+}
+@media (min-width: 900px) {
+  .dm {
+    grid-template-columns: minmax(0, 4.4fr) minmax(0, 7.6fr);
+  }
+}
+
+/* the steps, as a list you can jump around */
+.dm-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--rule-2);
+}
+.dm-steps li {
+  border-bottom: 1px solid var(--rule);
+}
+.dm-steps button {
+  display: grid;
+  grid-template-columns: 1.7rem minmax(0, 1fr);
+  gap: 0.7rem;
+  align-items: start;
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.6rem 0.5rem;
+  border: 0;
+  background: transparent;
+  color: var(--ink-2);
+  text-align: left;
+  font: inherit;
+  font-size: 0.98rem;
+  line-height: 1.3;
+  cursor: pointer;
+}
+.dm-steps b {
+  font-weight: 500;
+}
+.dm-steps small {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.9rem;
+  color: var(--ink-2);
+}
+.dm-step-n {
+  display: grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border: 1px solid var(--rule-2);
+  border-radius: 50%;
+  font: 500 0.68rem/1 var(--mono);
+}
+.dm-steps button[data-done] .dm-step-n {
+  background: var(--ink-3);
+  border-color: var(--ink-3);
+  color: var(--paper);
+}
+.dm-steps button[aria-current] {
+  background: color-mix(in srgb, var(--hue-wash) 60%, transparent);
+  color: var(--ink);
+}
+.dm-steps button[aria-current] b {
+  font-weight: 600;
+}
+.dm-steps button[aria-current] .dm-step-n {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+@media (max-width: 899.98px) {
+  /* small screens: the steps become a row of numbers; the current step is spelled out */
+  .dm-steps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    border: 0;
+  }
+  .dm-steps li {
+    border: 0;
+  }
+  .dm-steps li:has([aria-current]) {
+    order: 99;
+    flex-basis: 100%;
+  }
+  .dm-steps button:not([aria-current]) {
+    display: grid;
+    grid-template-columns: auto;
+    place-items: center;
+    width: 2.75rem;
+    padding: 0;
+  }
+  .dm-steps button:not([aria-current]) > span:last-child {
+    display: none;
+  }
+  .dm-steps button[aria-current] {
+    border-radius: var(--radius);
+  }
+}
+
+/* the app window */
+.dm-stage {
+  display: grid;
+  gap: 0.9rem;
+  justify-items: center;
+}
+.dm-device {
+  width: 100%;
+  border: 1px solid var(--ink);
+  border-radius: 14px;
+  background: var(--paper-hi);
+  overflow: hidden;
+  box-shadow: var(--frame-shadow);
+}
+.dm[data-device='phone'] .dm-device {
+  width: min(100%, 21rem);
+  border-radius: 28px;
+}
+.dm-chrome {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-height: 2.6rem;
+  padding: 0 0.9rem;
+  border-bottom: 1px solid var(--ink);
+  background: var(--paper);
+  font: 600 0.9rem/1 var(--sans);
+}
+.dm-dots {
+  display: inline-flex;
+  gap: 0.3rem;
+}
+.dm-dots i {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  opacity: 0.7;
+}
+.dm-badge {
+  margin-left: auto;
+  padding: 0.3em 0.55em;
+  border: 1px solid var(--hue-ink);
+  border-radius: 3px;
+  color: var(--hue-ink);
+  font: 500 0.6rem/1 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.dm-screen {
+  height: clamp(21rem, 52vh, 27rem);
+  padding: 1rem;
+  overflow: hidden;
+}
+.dm[data-device='phone'] .dm-screen {
+  height: clamp(26rem, 60vh, 31rem);
+}
+.dm-scene {
+  display: grid;
+  gap: 0.65rem;
+  align-content: start;
+  height: 100%;
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+
+/* ——— the pieces inside the window ——— */
+.dm-head {
+  display: grid;
+  gap: 0.1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+.dm-head b {
+  font: 380 1.45rem/1.1 var(--serif);
+  letter-spacing: -0.01em;
+}
+.dm-head span,
+.dm-note {
+  margin: 0;
+  font-size: 0.84rem;
+  color: var(--ink-3);
+}
+.dm-btn {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.6rem;
+  padding: 0 1.05rem;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  font: 500 0.92rem/1 var(--sans);
+  cursor: default;
+}
+.dm-btn[data-wide] {
+  justify-self: stretch;
+  margin-top: auto;
+}
+.dm-btn-ghost {
+  background: transparent;
+  color: var(--ink);
+}
+/* the control to click next */
+.dm-hot {
+  position: relative;
+  cursor: pointer;
+  animation: dm-pulse 1.8s ease-out infinite;
+}
+@keyframes dm-pulse {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--hue-ink) 55%, transparent);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 0.7rem transparent;
+  }
+}
+.dm-field {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.45rem 0.7rem 0.5rem;
+  border: 1px solid var(--rule-2);
+  border-radius: 8px;
+  background: var(--paper);
+}
+.dm-field span {
+  font: 500 0.6rem/1 var(--mono);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.dm-field b {
+  justify-self: start;
+  font-weight: 500;
+  min-height: 1.3em;
+}
+.dm-type {
+  clip-path: inset(0 100% 0 0);
+  animation: dm-type 0.7s steps(var(--n, 10)) forwards;
+}
+@keyframes dm-type {
+  to {
+    clip-path: inset(0 -2px 0 0);
+  }
+}
+.dm-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 2.6rem;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: var(--paper);
+}
+.dm-row > span {
+  flex: 1;
+  display: grid;
+  min-width: 0;
+}
+.dm-row b {
+  font-weight: 550;
+}
+.dm-row small {
+  font-size: 0.8rem;
+  color: var(--ink-3);
+}
+.dm-row em {
+  font-style: normal;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.dm-row[data-fresh] {
+  border-color: var(--hue-ink);
+  background: color-mix(in srgb, var(--hue-wash) 70%, var(--paper));
+  animation: dm-in 0.5s var(--ease) both;
+}
+@keyframes dm-in {
+  from {
+    opacity: 0;
+    transform: translateY(-0.5rem);
+  }
+}
+.dm-clip {
+  flex: none;
+  color: var(--hue-ink);
+}
+.dm-tick {
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+  border: 1.5px solid var(--ink-3);
+  border-radius: 4px;
+}
+.dm-tick[data-on] {
+  border-color: var(--hue-ink);
+  background: var(--hue-ink) linear-gradient(transparent, transparent);
+  box-shadow: inset 0 0 0 2.5px var(--paper);
+}
+.dm-kv {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.25rem 0;
+  color: var(--ink-2);
+}
+.dm-kv b {
+  font-weight: 550;
+  color: var(--ink);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.dm-kv[data-strong] b {
+  font: 380 1.3rem/1 var(--serif);
+}
+.dm-card {
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--rule-2);
+  border-radius: 10px;
+  background: var(--paper);
+  min-width: 0;
+}
+.dm-card-title {
+  margin: 0 0 0.25rem;
+  font: 500 0.6rem/1.2 var(--mono);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--hue-ink);
+}
+.dm-cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+  gap: 0.6rem;
+  align-items: center;
+}
+.dm-bars {
+  display: grid;
+  gap: 0.4rem;
+}
+.dm-bars > div {
+  display: grid;
+  grid-template-columns: minmax(0, 8.5rem) minmax(0, 1fr) auto;
+  gap: 0.6rem;
+  align-items: center;
+  font-size: 0.86rem;
+}
+.dm-bars i {
+  height: 0.6rem;
+  border-radius: 999px;
+  background: var(--rule);
+  overflow: hidden;
+}
+.dm-bars i b {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--hue-ink);
+  transform-origin: left;
+  animation: dm-grow 0.7s var(--ease) both;
+}
+@keyframes dm-grow {
+  from {
+    transform: scaleX(0);
+  }
+}
+.dm-bars em {
+  font-style: normal;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.dm-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+}
+.dm-table th {
+  padding: 0.3rem 0.5rem 0.3rem 0;
+  border-bottom: 1px solid var(--rule-2);
+  text-align: left;
+  font: 500 0.6rem/1.2 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.dm-table td {
+  padding: 0.42rem 0.5rem 0.42rem 0;
+  border-bottom: 1px solid var(--rule);
+  font-variant-numeric: tabular-nums;
+}
+.dm-table td:first-child {
+  font-weight: 550;
+}
+.dm-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.dm-chips span {
+  padding: 0.45rem 0.8rem;
+  border: 1px solid var(--rule-2);
+  border-radius: 999px;
+  background: var(--paper);
+}
+.dm-chips span[data-on] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+.dm-toast {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 10px;
+  background: var(--ink);
+  color: var(--paper);
+  font-weight: 550;
+  animation: dm-in 0.45s var(--ease) both;
+}
+.dm-receipt {
+  justify-self: center;
+  display: grid;
+  gap: 0.34rem;
+  width: 8.2rem;
+  padding: 0.7rem 0.7rem 0.8rem;
+  background: #fbfaf6;
+  color: #15140f;
+  border: 1px solid rgba(21, 20, 15, 0.5);
+  border-radius: 2px;
+  rotate: -3deg;
+  font: 500 0.56rem/1 var(--mono);
+  letter-spacing: 0.06em;
+  box-shadow: 0 10px 22px -12px rgba(0, 0, 0, 0.5);
+}
+.dm-receipt i {
+  height: 2px;
+  background: rgba(21, 20, 15, 0.35);
+}
+.dm-receipt i:nth-of-type(2) {
+  width: 78%;
+}
+.dm-receipt i:nth-of-type(4) {
+  width: 62%;
+}
+.dm-receipt span {
+  margin-top: 0.2rem;
+  font-weight: 500;
+}
+.dm-receipt[data-small] {
+  justify-self: start;
+  width: 4.2rem;
+  padding: 0.4rem;
+  gap: 0.22rem;
+  font-size: 0.34rem;
+  rotate: -4deg;
+}
+.dm-drop {
+  display: grid;
+  justify-items: center;
+  gap: 0.4rem;
+  padding: 1.4rem 1rem;
+  border: 1.5px dashed var(--rule-2);
+  border-radius: 12px;
+  background: var(--paper);
+  text-align: center;
+  color: var(--ink-2);
+}
+.dm-drop b {
+  color: var(--ink);
+  font-weight: 600;
+}
+.dm-drop span {
+  font-size: 0.84rem;
+}
+.dm-drop .dm-btn {
+  justify-self: center;
+  margin-top: 0.4rem;
+}
+.dm-files {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.7rem;
+  border: 1px solid var(--ink);
+  border-radius: 12px;
+  background: var(--paper);
+}
+.dm-files p {
+  margin: 0 0 0.15rem;
+  font: 500 0.62rem/1 var(--mono);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.dm-file {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 0.6rem;
+  align-items: center;
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+}
+button.dm-file {
+  border-color: var(--hue-ink);
+  background: color-mix(in srgb, var(--hue-wash) 60%, var(--paper));
+}
+.dm-file i {
+  width: 1.5rem;
+  height: 1.8rem;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  background: linear-gradient(135deg, transparent 72%, currentColor 72%);
+  opacity: 0.75;
+}
+.dm-file span {
+  font-size: 0.8rem;
+  color: var(--ink-3);
+}
+.dm-file[data-dim] {
+  opacity: 0.6;
+}
+.dm-progress {
+  display: grid;
+  gap: 0.4rem;
+  font-size: 0.86rem;
+  color: var(--ink-2);
+}
+.dm-progress i {
+  height: 0.5rem;
+  border-radius: 999px;
+  background: var(--rule);
+  overflow: hidden;
+}
+.dm-progress i b {
+  display: block;
+  height: 100%;
+  background: var(--hue-ink);
+  transform-origin: left;
+  animation: dm-grow 1.9s ease-in-out both;
+}
+.dm-doc {
+  display: grid;
+  gap: 0.6rem;
+  padding: 0.9rem 1rem;
+  background: #fbfaf6;
+  color: #15140f;
+  border: 1px solid rgba(21, 20, 15, 0.45);
+  border-radius: 4px;
+  box-shadow: 0 14px 26px -16px rgba(0, 0, 0, 0.5);
+}
+.dm-doc b {
+  font: 400 1.05rem/1.2 var(--serif);
+}
+.dm-doc div {
+  display: grid;
+  gap: 0.25rem;
+}
+.dm-doc span {
+  font: 500 0.56rem/1 var(--mono);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: rgba(21, 20, 15, 0.7);
+}
+.dm-doc i {
+  height: 2px;
+  background: rgba(21, 20, 15, 0.22);
+}
+.dm-doc i:last-child {
+  width: 70%;
+}
+.dm-log {
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.8rem;
+  border: 1px solid var(--rule-2);
+  border-radius: 10px;
+  background: var(--paper);
+  font: 500 0.78rem/1.4 var(--mono);
+}
+.dm-log p {
+  margin: 0;
+  opacity: 0;
+  animation: dm-in 0.4s var(--ease) forwards;
+}
+.dm-log p::before {
+  content: '› ';
+  color: var(--hue-ink);
+}
+
+/* playback */
+.dm-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+.dm-ctl {
+  min-height: 2.75rem;
+  padding: 0 1.1rem;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  font: 500 0.95rem/1 var(--sans);
+  cursor: pointer;
+}
+.dm-ctl:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.dm-ctl-main {
+  min-width: 9.5rem;
+  background: var(--ink);
+  color: var(--paper);
+}
+.dm-count {
+  margin: 0 0 0 0.5rem;
+  font: 500 0.68rem/1 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+@media (prefers-reduced-motion: reduce) {
+  .dm-hot,
+  .dm-type,
+  .dm-row[data-fresh],
+  .dm-bars i b,
+  .dm-toast,
+  .dm-progress i b,
+  .dm-log p {
+    animation: none;
+  }
+  .dm-type {
+    clip-path: none;
+  }
+  .dm-log p {
+    opacity: 1;
+  }
+}

@@ -123,7 +123,16 @@ button.app-cover[aria-pressed='true']::before {
   color: var(--ink-2);
 }
 .app-go {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
   margin-top: 0.1rem;
+}
+/* the second button is dropped where a whole app has to fit on a small screen */
+@media (max-width: 899.98px) {
+  .app-go-demo {
+    display: none;
+  }
 }
 /* shorter screens: keep the facts, drop the commentary */
 @media (max-height: 800px) {

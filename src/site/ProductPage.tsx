@@ -18,6 +18,7 @@ import { pins as allPins, tours, tourTitles } from './showcase'
 import { BASE, Fig, FocusList, hueVars, Reveal, SectionHead, StageBadge, Tag } from './ui'
 import { useImmerse } from './immerse'
 import { Viewer } from './Viewer'
+import { DemoSection, hasDemo } from './demo/Demo'
 
 function ZoomButton({ onClick }: { onClick: () => void }) {
   return (
@@ -337,7 +338,9 @@ export default function ProductPage() {
         </section>
       )}
 
-      {hasTour && (
+      <DemoSection product={product} />
+
+      {hasTour && !hasDemo(product.slug) && (
         <section className="sp-section" aria-labelledby="tour-h">
           <div className="sp-wrap">
             <SectionHead
