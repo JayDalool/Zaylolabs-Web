@@ -168,12 +168,10 @@ button.app-cover[aria-pressed='true']::before {
 .app-pose > * {
   position: absolute;
 }
-.app-pose .zm-phone,
-.la-stage .zm-phone {
+.app-pose .zm-phone {
   padding: 0.3rem;
 }
-.app-pose .zm-phone-island,
-.la-stage .zm-phone-island {
+.app-pose .zm-phone-island {
   top: 0.62rem;
   height: 0.5rem;
 }
@@ -337,7 +335,7 @@ button.app-cover[aria-pressed='true']::before {
   }
 }
 
-/* ————————————————— Landing B — the simple one ————————————————— */
+/* ————————————————— The landing ————————————————— */
 .lb {
   display: grid;
   grid-template-rows: minmax(0, 1fr) auto;
@@ -462,159 +460,6 @@ button.app-cover[aria-pressed='true']::before {
   }
 }
 
-/* ————————————————— Landing A — the showpiece ————————————————— */
-.la {
-  position: relative;
-}
-.la-rest {
-  position: absolute;
-  left: 0;
-  width: 1px;
-  height: 1px;
-  pointer-events: none;
-}
-.la-pin {
-  position: sticky;
-  top: 4rem;
-  display: grid;
-  grid-template-rows: minmax(0, 1fr) auto;
-  height: calc(100dvh - 4rem);
-  overflow: hidden;
-}
-.la-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: auto minmax(0, 1fr);
-  gap: 0.6rem clamp(2rem, 4.5vw, 4.5rem);
-  min-height: 0;
-  padding-block: clamp(0.8rem, 3vh, 2.2rem) 0;
-}
-@media (min-width: 900px) {
-  .la-grid {
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    grid-template-rows: minmax(0, 1fr);
-    align-items: center;
-  }
-}
-.la-copy {
-  position: relative;
-  z-index: 2;
-  min-width: 0;
-}
-.la-stage {
-  position: relative;
-  container-type: size;
-  min-height: 0;
-  height: 100%;
-  perspective: 2400px;
-
-  --frame-radius-phone: 2.2cqw;
-}
-.la-sheet {
-  position: absolute;
-  left: 50%;
-  top: 45%;
-  width: min(84cqw, 124cqh);
-  translate: -50% -50%;
-  padding: 0;
-  border: 0;
-  background: none;
-  color: inherit;
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
-  will-change: transform, opacity;
-}
-.la-sheet[data-front] {
-  cursor: default;
-}
-.la-sheet .zm-window {
-  overflow: visible;
-}
-/* the phone stands proud of the sheet, so the sheet must not clip it */
-.la-sheet .zm-window-body {
-  overflow: visible;
-}
-.la-sheet .zm-window-body > .zm-media,
-.la-sheet .zm-window-body > .la-bench,
-.la-sheet:not([data-front]):hover .zm-window,
-.la-sheet:not([data-front]):focus-visible .zm-window {
-  border-color: var(--hue-ink);
-  box-shadow: 0 0 0 2px var(--hue-ink);
-}
-.la-side-phone {
-  position: absolute;
-  right: -5%;
-  bottom: -7%;
-  width: 21%;
-  z-index: 2;
-  transition: opacity 0.5s var(--ease) 0.25s;
-}
-.la-bench {
-  position: relative;
-  aspect-ratio: 1600 / 1000;
-  background:
-    radial-gradient(circle at center, var(--rule-2) 1px, transparent 1.4px) 0 0 / 1.2rem 1.2rem,
-    var(--paper-hi);
-}
-.la-bench-phone {
-  position: absolute;
-  left: 30%;
-  top: 6%;
-  width: 22%;
-}
-.la-bench-phone-2 {
-  left: 54%;
-  top: 12%;
-  width: 19.5%;
-  opacity: 0.85;
-}
-/* steps along the bottom of the pinned screen */
-.la-rail {
-  border-top: 1px solid var(--rule);
-}
-.la-rail-in {
-  display: flex;
-  align-items: center;
-  gap: clamp(0.2rem, 1.6vw, 1.6rem);
-  min-height: 3.1rem;
-}
-.la-rail button {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  min-height: 2.75rem;
-  padding: 0 0.3rem;
-  border: 0;
-  background: none;
-  color: var(--ink-3);
-  font: 500 0.68rem/1 var(--mono);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  cursor: pointer;
-  white-space: nowrap;
-}
-.la-rail button i {
-  width: 0.5rem;
-  height: 0.5rem;
-  rotate: 45deg;
-  border: 1.5px solid currentColor;
-}
-.la-rail button:hover,
-.la-rail button[aria-current] {
-  color: var(--ink);
-}
-.la-rail button[aria-current] i {
-  background: var(--hue-ink);
-  border-color: var(--hue-ink);
-}
-.la-rail button[aria-current] {
-  box-shadow: inset 0 -2px 0 var(--ink);
-}
-.la-rail-cue {
-  margin-left: auto;
-  color: var(--ink-3);
-}
 /* very small phones: trim so a whole section still fits */
 @media (max-width: 899.98px) and (max-height: 700px) {
   .app-screen .app-media {
@@ -637,109 +482,6 @@ button.app-cover[aria-pressed='true']::before {
     font-size: 1.08rem;
   }
 }
-@media (max-width: 899.98px) {
-  /* on small screens the steps along the bottom do the navigating; the stack is scenery */
-  .la-sheet {
-    pointer-events: none;
-  }
-  .la-rail button:not([aria-current]) span {
-    display: none;
-  }
-  .la-rail button:not([aria-current]) {
-    min-width: 2rem;
-    justify-content: center;
-  }
-  .la-rail-cue {
-    display: none;
-  }
-  .la-sheet {
-    top: 44%;
-    width: min(80cqw, 120cqh);
-  }
-  .sp .la .lb-h {
-    font-size: clamp(2.4rem, min(11vw, 7.4dvh), 4rem);
-  }
-  .la .sp-lede {
-    font-size: 1rem;
-  }
-  .sp .la .app-name {
-    font-size: min(3.2rem, 5.6dvh, calc(168vw / var(--n, 12)));
-  }
-  .la .app-summary {
-    display: none;
-  }
-  .la .app-covers {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem;
-    border: 0;
-  }
-  .la .app-covers li {
-    border: 0;
-  }
-  .la .app-cover {
-    display: inline-flex;
-    align-items: center;
-    width: auto;
-    min-height: 2.4rem;
-    padding: 0 0.75rem 0 1.5rem;
-    border: 1px solid var(--rule-2);
-    border-radius: 999px;
-    font-size: 0.84rem;
-  }
-  .la .app-cover span {
-    display: none;
-  }
-  .la .app-cover::before,
-  .la button.app-cover::before {
-    left: 0.58rem;
-    top: 50%;
-    translate: 0 -50%;
-  }
-}
-
-/* ——— review-only switch between the two landings ——— */
-.landing-switch {
-  position: fixed;
-  z-index: 90;
-  left: 50%;
-  bottom: max(0.75rem, env(safe-area-inset-bottom));
-  translate: -50% 0;
-  display: flex;
-  align-items: center;
-  gap: 0.15rem;
-  padding: 0.25rem 0.3rem 0.25rem 0.85rem;
-  border-radius: 999px;
-  background: rgba(16, 16, 18, 0.94);
-  color: #f4f4f1;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.55);
-  font: 500 0.76rem/1 ui-sans-serif, system-ui, sans-serif;
-  white-space: nowrap;
-}
-.landing-switch span {
-  opacity: 0.75;
-  margin-right: 0.3rem;
-}
-.landing-switch button {
-  min-height: 2.2rem;
-  padding: 0 0.8rem;
-  border: 0;
-  border-radius: 999px;
-  background: transparent;
-  color: inherit;
-  font: inherit;
-  cursor: pointer;
-}
-.landing-switch button[aria-pressed='true'] {
-  background: #f4f4f1;
-  color: #101012;
-}
-.landing-switch button:focus-visible {
-  outline: 2px solid #f4f4f1;
-  outline-offset: 2px;
-}
-
 /* ————————————————— Screen viewer (product pages) ————————————————— */
 .vw-head {
   display: grid;

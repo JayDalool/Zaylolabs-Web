@@ -11,13 +11,19 @@ const ProductPage = lazy(() => import('./ProductPage'))
 const Plans = lazy(() => import('./Plans'))
 const System = lazy(() => import('./System'))
 
+/** The app whose own page (or plans page) is open, if any. */
+function useRouteApp() {
+  const { pathname } = useLocation()
+  return productBySlug(pathname.match(/^\/work\/([^/]+)/)?.[1])
+}
+
 function Header() {
   const [stuck, setStuck] = useState(false)
   const [open, setOpen] = useState(false)
   const { pathname } = useLocation()
   // On an app's own pages the header is that app's; elsewhere it follows the section on screen.
   const here = useCurrentApp()
-  const app = productBySlug(pathname.match(/^\/work\/([^/]+)/)?.[1] ?? here ?? undefined)
+  const app = useRouteApp() ?? productBySlug(here ?? undefined)
 
   useEffect(() => {
     const on = () => setStuck(window.scrollY > 8)
@@ -57,8 +63,9 @@ function Header() {
 }
 
 function Footer() {
+  const app = useRouteApp()
   return (
-    <footer className="sp-footer">
+    <footer className="sp-footer sp-immersive" data-hue={app ? '' : undefined} data-immersed={app ? '' : undefined} style={app ? hueVars(app) : undefined}>
       <div className="sp-wrap">
         <p className="sp-footer-word" aria-hidden="true">
           Zaylo<em>Labs</em>

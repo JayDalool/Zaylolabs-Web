@@ -10,7 +10,7 @@ src/assets/products/<slug>/desktop-light/…             # the app's other theme
 src/assets/products/<slug>/mobile-light/…
 ```
 
-- Slugs: `realtorlab`, `myexpenses`, `commandcenter`, `gyst`.
+- Slugs: `estatelab`, `myexpenses`, `commandcenter`, `gyst`.
 - Files fill slots in name order, and slot N belongs to the product's Nth
   "what it covers" topic in `src/data/products.ts`. Prefix them `01-`, `02-`, …
 - Formats: png, jpg, webp, avif. WebP at the sizes above keeps the site light.
@@ -20,8 +20,9 @@ src/assets/products/<slug>/mobile-light/…
 
 Each app was run locally on made-up data; nothing came from a live site or a real database.
 
-- **RealtorLab** — the app's own synthetic demo data (invented sales and neighbourhoods),
-  a made-up agent and subject property. The product name was changed locally for the captures.
+- **EstateLab** — the app's own synthetic demo data (invented sales and neighbourhoods),
+  a made-up agent and subject property. The app's screens still say SamVision in its
+  repository; the new name was applied to a local copy for the captures.
 - **My Expenses** — a made-up household, with expenses added through the real wizard
   from the app's synthetic test receipts, so the receipt reading is genuine.
 - **Command Center** — the app's own test harness with an entirely fictional data set

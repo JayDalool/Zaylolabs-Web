@@ -64,9 +64,9 @@ export interface Product {
 
 export const products: Product[] = [
   {
-    slug: 'realtorlab',
+    slug: 'estatelab',
     catalog: 'ZL-001',
-    name: 'RealtorLab',
+    name: 'EstateLab',
     discipline: 'Real-estate pricing',
     tagline: 'Comparable-sales pricing a REALTOR can defend.',
     summary:
@@ -194,7 +194,7 @@ export interface PlanTier {
   includes: string[]
 }
 export const plans: Record<string, { tiers: PlanTier[] }> = {
-  realtorlab: { tiers: [] },
+  estatelab: { tiers: [] },
   myexpenses: { tiers: [] },
   commandcenter: { tiers: [] },
   gyst: { tiers: [] },
@@ -211,6 +211,4 @@ export const studio = {
     { title: 'Business automation', note: 'Repetitive work turned into running systems.' },
     { title: 'Specialised solutions', note: 'Digital solutions for problems that don’t fit a template.' },
   ],
-  /** TODO(owner): set the public contact address before launch. Never invented here. */
-  contactEmail: null as string | null,
 }

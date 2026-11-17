@@ -4,7 +4,7 @@ The ZayloLabs studio site, in its design stage. Direction: **Specimen** — a wa
 paper "software lab" where every product is shown as it really is, and each
 app's section takes on that app's own colours while the visitor is in it.
 
-Four products: **RealtorLab**, **My Expenses**, **Command Center** (a full
+Four products: **EstateLab**, **My Expenses**, **Command Center** (a full
 section each) and **GYST** (a shorter mention). All are shown as Live, with
 access by invitation and a Plans page each.
 
@@ -27,11 +27,10 @@ npm run build:single # one self-contained HTML file → dist-single/index.html
 
 | Route (hash) | What |
 | --- | --- |
-| `#/` | Home: the landing, one one-screen section per product, studio, contact |
-| `#/?landing=a` | The alternative, scroll-driven landing (kept for review until one is chosen) |
+| `#/` | Home: the landing, one one-screen section per product, studio, contact form |
 | `#/work` | All products: index-card drawer and a plain list |
 | `#/work/<slug>` | A page per product, from one template — fully in that app's colours, with real screenshots and step-by-step demos |
-| `#/work/<slug>/plans` | Plans and access for a Live product (no prices until they exist) |
+| `#/work/<slug>/plans` | Plans and access for a Live product: a request-access form, and plans (no prices until they exist) |
 | `#/system` | Design system reference |
 
 ## Structure
@@ -42,7 +41,7 @@ src/
   media/               media kit: ProductMedia, frames, zoom dialog, placeholder schematics
   assets/products/<slug>/{desktop,mobile}/   real screenshots
   site/                pages, design system (specimen.css), immersion, screen viewer
-  site/landing/        the two landings, the one-screen app sections, scroll settle
+  site/landing/        the landing, the one-screen app sections, scroll settle
   site/demo/           the demo player, its building blocks (kit.tsx), each app's design (skins.css)
   site/demo/apps/      the demo scripts, one file per app
   shared/              small environment hooks
@@ -61,6 +60,13 @@ src/
 - Colours come from each product's `hue` in `products.ts`, and those values are
   taken from the app's own code: `field` is the ground the section becomes,
   `bright` its accent on that ground, `ink` its accent on the site's paper.
+
+## Forms
+
+`src/site/inquiry.tsx` holds both forms. **Contact** (home page) asks what the
+inquiry is about (an app, custom software, or a general question), then name,
+email and a message. **Request access** (each Plans page) asks for a name and an
+email for that app. Nothing is stored in the browser.
 
 ## Demos (step-by-step walkthroughs)
 
@@ -84,15 +90,16 @@ Check every screenshot for customer data, credentials and internal detail first.
 - No invented customers, statistics, history, awards, prices or capabilities.
   Plans pages show marked empty slots until real plans exist.
 - Empty image slots show a stamped placeholder, never a fictional interface.
-- There is no public contact address yet (`studio.contactEmail` is `null`).
+- The contact and request-access forms are not connected yet (`INQUIRY_ENDPOINT` in
+  `src/site/inquiry.tsx` is `null`). They say so plainly and never pretend to have sent.
 
 ## Before launch
 
-- Set the contact address (`studio.contactEmail`) — "Request access" and "Contact" lead there.
+- Connect the forms: set `INQUIRY_ENDPOINT` in `src/site/inquiry.tsx` to an address that
+  receives the inquiries and forwards them to the studio's inbox.
 - Add plan names and prices to `plans` in `products.ts`, then attach hosted checkout
   (Stripe, PayPal) to the Plans pages. This needs the registered company and its accounts.
-- Check the name RealtorLab: REALTOR is a controlled trademark in Canada.
-- Choose a landing and delete the other with the review switch (`src/site/landing/LandingSwitch.tsx`).
+- Run a proper trademark and domain check on the name EstateLab (a quick web search found no company using it).
 - Switch from hash routing to path routing with pre-rendered pages (search engines, sharing).
 - Remove the `noindex` meta tag and the "design prototype" notes.
 

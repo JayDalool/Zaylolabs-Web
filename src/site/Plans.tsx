@@ -9,11 +9,12 @@ import { useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { plans, productBySlug } from '../data/products'
 import { useImmerse } from './immerse'
+import { InquiryForm } from './inquiry'
 import { BASE, ButtonLink, hueVars, SectionHead } from './ui'
 
 const STEPS = [
-  { title: 'Ask about access', note: 'Tell us who you are and what you would use it for.' },
-  { title: 'We reply', note: 'Access is by invitation, and it is not open to everyone yet. We will say plainly whether it is possible today.' },
+  { title: 'Request access', note: 'Leave your name and email below.' },
+  { title: 'We contact you', note: 'Access is by invitation, and it is not open to everyone yet. We will say plainly whether it is possible today.' },
   { title: 'Plans follow', note: 'Plans and prices have not been published yet. They will appear on this page.' },
 ]
 
@@ -61,7 +62,7 @@ export default function Plans() {
           {product.name} is live and in use, but it is not open for sign-up. Access is by invitation while plans are being set.
         </p>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem', marginTop: '1.6rem' }}>
-          <ButtonLink to="/#contact" viewTransition={false}>
+          <ButtonLink to="#access" viewTransition={false}>
             Request access
           </ButtonLink>
           <ButtonLink ghost to={`${BASE}/work/${product.slug}`}>
@@ -89,6 +90,20 @@ export default function Plans() {
               </li>
             ))}
           </ol>
+        </div>
+      </section>
+
+      <section id="access" className="sp-section" style={{ scrollMarginTop: '4rem' }} aria-labelledby="request-h">
+        <div className="sp-wrap">
+          <SectionHead
+            label="Request access"
+            title={
+              <span id="request-h">
+                Leave your name <em>and email.</em>
+              </span>
+            }
+          />
+          <InquiryForm kind="access" product={product} />
         </div>
       </section>
 

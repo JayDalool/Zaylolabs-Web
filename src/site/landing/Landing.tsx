@@ -1,5 +1,5 @@
 /**
- * Landing B — the simple one.
+ * The landing.
  *
  * One screen: the invitation, one app's screens, and the apps named along
  * the bottom. Pointing at an app floods the whole screen with its colours.
@@ -13,7 +13,7 @@ import { useReportApp } from '../immerse'
 import { BASE, ButtonLink, EASE, hueVars } from '../ui'
 import { AppPose, AppSection } from './shared'
 
-export default function LandingB() {
+export default function Landing() {
   const reduce = useReducedMotion()
   const [active, setActive] = useState(0)
   const [lit, setLit] = useState(false)
@@ -45,6 +45,17 @@ export default function LandingB() {
     )
     return () => timers.forEach(window.clearTimeout)
   }, [reduce])
+
+  // Scrolling away ends the arrival sweep: the hero must not keep colouring the header from off screen.
+  useEffect(() => {
+    const stop = () => {
+      if (window.scrollY < 40 || touched.current) return
+      touched.current = true
+      setLit(false)
+    }
+    window.addEventListener('scroll', stop, { passive: true })
+    return () => window.removeEventListener('scroll', stop)
+  }, [])
 
   const point = (i: number) => {
     touched.current = true

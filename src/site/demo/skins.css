@@ -1,7 +1,7 @@
 /* ————————————————————————————————————————————————————————————————
    SKINS — each redrawn screen wears its app's own design.
    Every value below is taken from the app's code (tokens, type, radii):
-     RealtorLab      design/preline/src/theme.css + components.css
+     EstateLab      design/preline/src/theme.css + components.css
      My Expenses     tailwind.config.ts + components/ui.tsx
      Command Center  web/app/src/hq/tokens.css (Engineering HQ)
      GYST            web/static/css/ui-tokens.css
@@ -47,8 +47,8 @@
   font-family: var(--sans);
 }
 
-/* ——— RealtorLab ——— */
-.dm-device[data-app='realtorlab'] .dm-screen {
+/* ——— EstateLab ——— */
+.dm-device[data-app='estatelab'] .dm-screen {
   --ap-bg: #f6f2ea;
   --ap-side: #ffffff;
   --paper: #ffffff;
@@ -89,7 +89,7 @@
   --violet-soft: #e7eaf9;
   --violet-line: #c6cdef;
 }
-.dm-device[data-app='realtorlab'][data-theme='dark'] .dm-screen {
+.dm-device[data-app='estatelab'][data-theme='dark'] .dm-screen {
   --ap-bg: #1c1917;
   --ap-side: #292524;
   --paper: #292524;
@@ -984,16 +984,16 @@ button.dm-tile {
 }
 
 /* ——— per-app character ——— */
-/* RealtorLab: one primary action per screen; uppercase mono tags */
-.dm-device[data-app='realtorlab'] .dm-table thead tr {
+/* EstateLab: one primary action per screen; uppercase mono tags */
+.dm-device[data-app='estatelab'] .dm-table thead tr {
   background: color-mix(in srgb, var(--ap-bg) 60%, var(--paper));
 }
-.dm-device[data-app='realtorlab'] .dm-pill:not([data-dot]) {
+.dm-device[data-app='estatelab'] .dm-pill:not([data-dot]) {
   font: 500 0.6rem/1.4 var(--mono);
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
-.dm-device[data-app='realtorlab'] .dm-pill[data-badge] {
+.dm-device[data-app='estatelab'] .dm-pill[data-badge] {
   padding: 0.3em 0.75em;
   font: 500 0.7rem/1.3 var(--sans);
   letter-spacing: 0;

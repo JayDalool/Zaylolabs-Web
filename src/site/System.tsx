@@ -46,7 +46,7 @@ const CORE = [
 const TYPE = [
   ['Display', 'sp-display', 'Layer by layer', 'Fraunces 360 · −3.5% · 0.9'],
   ['Heading', 'sp-h2', 'What the lab builds', 'Fraunces 370 · −2.8%'],
-  ['Name', 'sp-name', 'RealtorLab', 'Fraunces italic · SOFT 100 · WONK 1'],
+  ['Name', 'sp-name', 'EstateLab', 'Fraunces italic · SOFT 100 · WONK 1'],
   ['Subhead', 'sp-h3', 'Snap receipts. Track spending. Stay in sync.', 'Fraunces 420'],
   ['Lede', 'sp-lede', 'An independent software development studio.', 'Instrument Sans 400'],
   ['Body', 'sp-body', 'Describe only what the product actually is.', 'Instrument Sans 400 · 17/26'],

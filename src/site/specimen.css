@@ -1107,3 +1107,93 @@
   border-left: 2px solid var(--hue-ink);
   color: var(--ink-2);
 }
+
+/* ——— inquiry forms (contact, request access) ——— */
+.fm {
+  display: grid;
+  gap: 1rem;
+  max-width: 34rem;
+}
+.fm-row {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+}
+.fm-field {
+  display: grid;
+  gap: 0.4rem;
+}
+.fm-field label {
+  font: 500 0.68rem/1 var(--mono);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.fm-field input,
+.fm-field select,
+.fm-field textarea {
+  width: 100%;
+  min-height: 2.9rem;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--rule-2);
+  border-radius: var(--radius);
+  background: var(--paper-hi);
+  color: var(--ink);
+  font: 400 1rem/1.4 var(--sans);
+}
+.fm-field textarea {
+  resize: vertical;
+}
+.fm-field input:focus-visible,
+.fm-field select:focus-visible,
+.fm-field textarea:focus-visible {
+  border-color: var(--ink);
+}
+.fm-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem 1.2rem;
+}
+.fm-foot .sp-btn {
+  cursor: pointer;
+}
+.fm-foot .sp-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+.fm-note {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--ink-2);
+}
+.fm-status {
+  margin: 0;
+  min-height: 1.4em;
+  color: var(--ink-2);
+}
+.fm-status[data-state] {
+  padding: 0.8rem 1rem;
+  border: 1px dashed var(--rule-2);
+  border-radius: var(--radius);
+}
+.fm-status b,
+.fm-done b {
+  color: var(--ink);
+  font-weight: 600;
+}
+.fm-done {
+  max-width: 34rem;
+  margin: 0;
+  padding: 1rem 1.2rem;
+  border: 1px solid var(--ink);
+  border-radius: var(--radius);
+}
+/* the footer joins the page on an app's own pages */
+.sp-footer {
+  background: var(--paper);
+  color: var(--ink);
+}
+.sp-footer .sp-mono-dim {
+  color: var(--ink-2);
+}

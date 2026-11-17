@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-key -- table cells are keyed by the kit */
 /**
- * RealtorLab — redrawn from the app's own templates (valuation_new.html,
+ * EstateLab — redrawn from the app's own templates (valuation_new.html,
  * valuation_result.html, cma_worksheet.html, cme_report.html, _offer_panel.html,
  * imports_new.html, _review.html, valuation_summary.html).
  * All people, addresses, listing numbers and prices are made up.
@@ -15,7 +15,7 @@ const SUBJECT = '12 Example Street'
 
 function RL({ on = 'Pricing', title, tag, tool, actions, children }: { on?: string; title: string; tag: string; tool?: number; actions?: ReactNode; children: ReactNode }) {
   return (
-    <Shell brand="RealtorLab" sub="Winnipeg" nav={NAV} on={on} title={title} tag={tag} actions={actions} tabs={tool === undefined ? undefined : <Tabs items={TOOLS} on={tool} />}>
+    <Shell brand="EstateLab" sub="Winnipeg" nav={NAV} on={on} title={title} tag={tag} actions={actions} tabs={tool === undefined ? undefined : <Tabs items={TOOLS} on={tool} />}>
       {children}
     </Shell>
   )
@@ -70,7 +70,7 @@ const comparables = (go?: Go) => (
   </Card>
 )
 
-export const realtorlab: Demo[] = [
+export const estatelab: Demo[] = [
   {
     id: 'price-a-property',
     label: 'Price a property',

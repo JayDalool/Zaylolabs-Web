@@ -1,10 +1,9 @@
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import type { CSSProperties } from 'react'
 import { compact, studio, type Product } from '../data/products'
 import { useImmerse } from './immerse'
-import LandingA from './landing/LandingA'
-import LandingB from './landing/LandingB'
-import { LandingSwitch, type LandingKey } from './landing/LandingSwitch'
+import { InquiryForm } from './inquiry'
+import Landing from './landing/Landing'
 import './landing/landing.css'
 import { useSettle } from './landing/settle'
 import { BASE, ButtonLink, hueVars, Reveal, SectionHead, StageBadge } from './ui'
@@ -143,33 +142,20 @@ function Also({ product }: { product: Product }) {
 function Contact() {
   return (
     <section id="contact" className="sp-section" style={{ borderTop: 0, scrollMarginTop: '4rem' }} aria-labelledby="contact-h">
-      <div className="sp-wrap sp-grid" style={{ rowGap: '2rem', alignItems: 'end' }}>
-        <div className="col-span-12 lg:col-span-8">
+      <div className="sp-wrap sp-grid" style={{ rowGap: '2rem', alignItems: 'start' }}>
+        <div className="col-span-12 lg:col-span-6">
           <p className="sp-mono sp-signal" style={{ margin: '0 0 1.5rem' }}>
             Contact
           </p>
-          <h2 id="contact-h" className="sp-display" style={{ fontSize: 'clamp(2.8rem, 8vw, 8rem)' }}>
+          <h2 id="contact-h" className="sp-display" style={{ fontSize: 'clamp(2.6rem, 6.4vw, 6.4rem)' }}>
             Have a problem worth <em>building for?</em>
           </h2>
-        </div>
-        <div className="col-span-12 lg:col-span-4" style={{ display: 'grid', gap: '1.2rem' }}>
-          <p className="sp-body">
-            Alongside its own products, ZayloLabs is preparing to take on custom software development.
+          <p className="sp-body" style={{ marginTop: '1.4rem', maxWidth: '30em' }}>
+            Ask about one of our apps, or tell us what you need built. Alongside its own products, ZayloLabs is preparing to take on custom software development.
           </p>
-          {studio.contactEmail ? (
-            <a className="sp-btn" href={`mailto:${studio.contactEmail}`} style={{ width: 'fit-content' }}>
-              {studio.contactEmail}
-            </a>
-          ) : (
-            <p className="sp-mono" style={{ margin: 0, padding: '0.9rem 1rem', border: '1px dashed var(--rule-2)', lineHeight: 1.7 }}>
-              <span className="sp-signal">Prototype</span> — contact channel is wired in at launch.
-              <br />
-              <span className="sp-mono-dim">{studio.domain}</span>
-            </p>
-          )}
-          <Link className="sp-link" to={`${BASE}/work`} viewTransition style={{ width: 'fit-content' }}>
-            Or see all products first
-          </Link>
+        </div>
+        <div className="col-span-12 lg:col-span-5 lg:col-start-8">
+          <InquiryForm kind="contact" />
         </div>
       </div>
     </section>
@@ -177,26 +163,16 @@ function Contact() {
 }
 
 export default function Home() {
-  // Two versions of the landing are kept side by side for review; `?landing=a` selects the showpiece.
-  const [params, setParams] = useSearchParams()
-  const landing: LandingKey = params.get('landing') === 'a' ? 'a' : 'b'
   useSettle()
   return (
     <>
-      {landing === 'a' ? <LandingA /> : <LandingB />}
+      <Landing />
       {compact.map((p) => (
         <Also key={p.slug} product={p} />
       ))}
       <Practice />
       <Rules />
       <Contact />
-      <LandingSwitch
-        value={landing}
-        onChange={(v) => {
-          setParams(v === 'a' ? { landing: 'a' } : {}, { replace: true })
-          window.scrollTo({ top: 0 })
-        }}
-      />
     </>
   )
 }

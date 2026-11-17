@@ -15,9 +15,9 @@
 import { commandcenter } from './apps/commandcenter'
 import { gyst } from './apps/gyst'
 import { myexpenses } from './apps/myexpenses'
-import { realtorlab } from './apps/realtorlab'
+import { estatelab } from './apps/estatelab'
 import type { Demo } from './types'
 
 export type { Demo, DemoStep } from './types'
 
-export const demos: Record<string, Demo[]> = { realtorlab, myexpenses, commandcenter, gyst }
+export const demos: Record<string, Demo[]> = { estatelab, myexpenses, commandcenter, gyst }
