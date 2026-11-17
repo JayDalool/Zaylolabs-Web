@@ -1,7 +1,7 @@
 /**
  * Landing A — the showpiece.
  *
- * "Software, built layer by layer", made literal: the five apps are five sheets
+ * "Software, built layer by layer", made literal: each app is one sheet
  * in one exploded stack. The stack stays pinned while the visitor scrolls; each
  * step lifts one sheet out to face them, floods the screen with that app's
  * colours, and puts the whole of that app — what it is, what it covers, its
@@ -11,17 +11,16 @@
  */
 import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll } from 'motion/react'
 import { useRef, useState, type CSSProperties } from 'react'
-import { products, studio, type Product } from '../../data/products'
+import { featured as products, studio, type Product } from '../../data/products'
 import { PhoneFrame, ProductMedia, WindowFrame } from '../../media/ProductMedia'
 import { BASE, ButtonLink, EASE, hueVars } from '../ui'
 import LandingB from './LandingB'
-import { AppCopy, count, Withheld } from './shared'
+import { AppCopy, count } from './shared'
 
 const MID = (count - 1) / 2
 
 /** What is drawn on one sheet of the stack. */
 function Sheet({ product, slot, front }: { product: Product; slot: number; front: boolean }) {
-  const restricted = product.stage === 'internal'
   const label = product.focus[slot - 1]?.title
   const desktop = product.surfaces.includes('desktop')
   const mobile = product.surfaces.includes('mobile')
@@ -39,7 +38,6 @@ function Sheet({ product, slot, front }: { product: Product; slot: number; front
           </PhoneFrame>
         </div>
       )}
-      {restricted && <Withheld />}
       {desktop && mobile && (
         <PhoneFrame className="la-side-phone" style={{ opacity: front ? 1 : 0 }}>
           <ProductMedia product={product} surface="mobile" slot={product.primarySurface === 'mobile' ? slot : 1} />
@@ -78,7 +76,7 @@ export default function LandingA() {
       data-hue=""
       data-immersed={k >= 0 || undefined}
       style={{ ...hueVars(product), height: `calc(${count + 1} * 100dvh)` } as CSSProperties}
-      aria-label="ZayloLabs and its five products"
+      aria-label="ZayloLabs and its products"
     >
       {/* the page keeps one real heading while the pinned copy changes */}
       <h1 className="sr-only-focusable" tabIndex={-1}>

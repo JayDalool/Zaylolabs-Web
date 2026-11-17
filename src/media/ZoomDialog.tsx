@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import type { Product, Surface } from '../data/products'
+import type { Product, Surface, Theme } from '../data/products'
 import { ProductMedia } from './ProductMedia'
 
 /**
@@ -9,7 +9,7 @@ import { ProductMedia } from './ProductMedia'
  *
  * Themed through --zoom-bg, --zoom-ink, --zoom-rule, --zoom-accent and --sch-font.
  */
-export function ZoomDialog({ product, surface, slot = 1, label, onClose }: { product: Product; surface: Surface; slot?: number; label?: string; onClose: () => void }) {
+export function ZoomDialog({ product, surface, slot = 1, label, theme, onClose }: { product: Product; surface: Surface; slot?: number; label?: string; theme?: Theme; onClose: () => void }) {
   const ref = useRef<HTMLDialogElement>(null)
   const [t, setT] = useState({ x: 0, y: 0, z: 1 })
   const drag = useRef<{ x: number; y: number } | null>(null)
@@ -76,7 +76,7 @@ export function ZoomDialog({ product, surface, slot = 1, label, onClose }: { pro
         onDoubleClick={() => (t.z > 1 ? reset() : zoom(1))}
       >
         <div data-surface={surface} style={{ transform: `translate(${t.x}px, ${t.y}px) scale(${t.z})` }}>
-          <ProductMedia product={product} surface={surface} slot={slot} label={label} priority />
+          <ProductMedia theme={theme} product={product} surface={surface} slot={slot} label={label} priority />
         </div>
       </div>
     </dialog>

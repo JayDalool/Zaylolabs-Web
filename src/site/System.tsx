@@ -46,29 +46,31 @@ const CORE = [
 const TYPE = [
   ['Display', 'sp-display', 'Layer by layer', 'Fraunces 360 · −3.5% · 0.9'],
   ['Heading', 'sp-h2', 'What the lab builds', 'Fraunces 370 · −2.8%'],
-  ['Name', 'sp-name', 'SamVisionAI', 'Fraunces italic · SOFT 100 · WONK 1'],
-  ['Subhead', 'sp-h3', 'Property analysis that ends in a decision.', 'Fraunces 420'],
+  ['Name', 'sp-name', 'RealtorLab', 'Fraunces italic · SOFT 100 · WONK 1'],
+  ['Subhead', 'sp-h3', 'Snap receipts. Track spending. Stay in sync.', 'Fraunces 420'],
   ['Lede', 'sp-lede', 'An independent software development studio.', 'Instrument Sans 400'],
   ['Body', 'sp-body', 'Describe only what the product actually is.', 'Instrument Sans 400 · 17/26'],
-  ['Label', 'sp-mono', 'Product 1 of 5', 'IBM Plex Mono 500 · +9% · caps'],
+  ['Label', 'sp-mono', 'Product 1 of 3', 'IBM Plex Mono 500 · +9% · caps'],
 ] as const
 
 const ADD_PRODUCT = `// 1 — src/data/products.ts
 {
   slug: 'newproduct',
-  catalog: 'ZL-006',
+  catalog: 'ZL-005',
   name: 'NewProduct',
   discipline: 'What kind of software it is',
   tagline: 'One honest line.',
   summary: 'What it actually does — nothing more.',
-  stage: 'prototype',              // 'in-development' | 'internal' | 'prototype'
-  stageLabel: 'Prototype',
-  availability: 'Experimental prototype. Not released.',
+  stage: 'in-development',         // 'live' | 'in-development'
+  stageLabel: 'In development',
+  availability: 'Being built. Not available yet.',
   focus: [{ title: 'Focus area', note: 'One line.' }],
   surfaces: ['desktop', 'mobile'],
   primarySurface: 'desktop',
   motif: 'parcel',                 // placeholder schematic + glyph
-  hue: { name: 'Hue name', ink: '#…', bright: '#…', wash: '#…' },
+  // the app's own colours: accents on paper, and the field its section becomes
+  hue: { name: 'Hue name', ink: '#…', bright: '#…', wash: '#…', field: '#…', on: '#…' },
+  themes: ['light'],               // themes the app really has
 }
 
 // 2 — drop captures in (optional; placeholders render until you do)
@@ -76,8 +78,9 @@ src/assets/products/newproduct/desktop/01-overview.png
 src/assets/products/newproduct/mobile/01-home.png
 src/assets/products/newproduct/video/01-tour.mp4
 
-// 3 — optional: a step-by-step demo in src/site/demo/demos.tsx
-//     (made-up data only; it must not show anything the app cannot do)`
+// 3 — a step-by-step demo: src/site/demo/apps/newproduct.tsx, and its skin in skins.css
+//     (redrawn from the real screens, made-up data, nothing the app cannot do)
+// 4 — a Live product gets a Plans page automatically; add tiers to \`plans\` when prices exist`
 
 export default function System() {
   const sam = products[0]
@@ -235,7 +238,7 @@ export default function System() {
             </button>
           ))}
         </div>
-        <Fig n="S2">Colours come from each product’s hue; set brandField on a product to use the app’s real colour</Fig>
+        <Fig n="S2">Each section takes its app’s own ground and accent, taken from the app’s code (hue.field, hue.bright)</Fig>
       </Block>
 
       <Block title="Motion" note="Measured, never bouncy. Scroll-linked where it explains something; removed entirely under prefers-reduced-motion.">

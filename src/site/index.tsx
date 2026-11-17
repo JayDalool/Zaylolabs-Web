@@ -1,12 +1,13 @@
 import { lazy, Suspense, useEffect, useState } from 'react'
 import { Link, NavLink, Route, Routes, useLocation } from 'react-router-dom'
-import { studio } from '../data/products'
+import { products, studio } from '../data/products'
 import Home from './Home'
 import { BASE, ButtonLink, Logo } from './ui'
 import './specimen.css'
 
 const Catalogue = lazy(() => import('./Catalogue'))
 const ProductPage = lazy(() => import('./ProductPage'))
+const Plans = lazy(() => import('./Plans'))
 const System = lazy(() => import('./System'))
 
 function Header() {
@@ -66,9 +67,11 @@ function Footer() {
             <NavLink className="sp-link" to={`${BASE}/work`} viewTransition>
               Products
             </NavLink>
-            <NavLink className="sp-link" to={`${BASE}/work/samvisionai`} viewTransition>
-              SamVisionAI
-            </NavLink>
+            {products.map((p) => (
+              <NavLink key={p.slug} className="sp-link" to={`${BASE}/work/${p.slug}`} viewTransition>
+                {p.name}
+              </NavLink>
+            ))}
             <NavLink className="sp-link" to={`${BASE}/system`} viewTransition>
               Design system
             </NavLink>
@@ -108,6 +111,7 @@ export default function Specimen() {
             <Route index element={<Home />} />
             <Route path="work" element={<Catalogue />} />
             <Route path="work/:slug" element={<ProductPage />} />
+            <Route path="work/:slug/plans" element={<Plans />} />
             <Route path="system" element={<System />} />
             <Route path="*" element={<Home />} />
           </Routes>

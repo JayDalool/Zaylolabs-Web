@@ -1,0 +1,1278 @@
+/* ————————————————————————————————————————————————————————————————
+   SKINS — each redrawn screen wears its app's own design.
+   Every value below is taken from the app's code (tokens, type, radii):
+     RealtorLab      design/preline/src/theme.css + components.css
+     My Expenses     tailwind.config.ts + components/ui.tsx
+     Command Center  web/app/src/hq/tokens.css (Engineering HQ)
+     GYST            web/static/css/ui-tokens.css
+   The kit (kit.tsx) only knows these variables, never an app.
+   ———————————————————————————————————————————————————————————————— */
+
+/* ——— variables every skin sets ——— */
+.dm-screen {
+  --ap-bg: var(--paper-hi);
+  --ap-side: var(--paper);
+  --ap-nav-on: var(--hue-wash);
+  --ap-control: var(--rule);
+  --ap-primary: var(--ink);
+  --ap-on-primary: var(--paper);
+  --ap-field-line: var(--rule-2);
+  --ap-r: 10px;
+  --ap-rc: 8px;
+  --ap-shadow: none;
+  --ap-figure: var(--sans);
+  --lab: 600 0.7rem/1.2 var(--sans);
+  --lab-case: none;
+  --lab-track: 0;
+  --ok: #17753f;
+  --ok-soft: #e4f3ea;
+  --ok-line: #b9dcc6;
+  --warn: #8a6110;
+  --warn-soft: #fbf0d5;
+  --warn-line: #ead7a2;
+  --bad: #a33d2b;
+  --bad-soft: #fbe6e0;
+  --bad-line: #f0c6ba;
+  --info: #1f5f86;
+  --info-soft: #e1eff9;
+  --info-line: #bbd9ec;
+  --violet: #5b4a96;
+  --violet-soft: #ece9f8;
+  --violet-line: #d0c8ee;
+
+  padding: 0;
+  container-type: inline-size;
+  background: var(--ap-bg);
+  color: var(--ink);
+  font-family: var(--sans);
+}
+
+/* ——— RealtorLab ——— */
+.dm-device[data-app='realtorlab'] .dm-screen {
+  --ap-bg: #f6f2ea;
+  --ap-side: #ffffff;
+  --paper: #ffffff;
+  --ink: #15202b;
+  --ink-2: #41505e;
+  --ink-3: #4e5c6a;
+  --rule: #f0eae0;
+  --rule-2: #e9e2d6;
+  --hue-ink: #17553e;
+  --hue-wash: #e2f1e9;
+  --ap-nav-on: #e4f0e9;
+  --ap-control: #f0ebe0;
+  --ap-primary: #17553e;
+  --ap-on-primary: #ffffff;
+  --ap-field-line: #74838f;
+  --ap-r: 12px;
+  --ap-rc: 8px;
+  --ap-shadow: 0 1px 2px rgba(21, 32, 43, 0.06);
+  --sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+  --ap-figure: 'Newsreader', Georgia, serif;
+  --lab: 500 0.58rem/1.2 var(--mono);
+  --lab-case: uppercase;
+  --lab-track: 0.09em;
+  --ok: #17553e;
+  --ok-soft: #e2f1e9;
+  --ok-line: #bedfcd;
+  --warn: #8a6110;
+  --warn-soft: #fbf0d5;
+  --warn-line: #ead7a2;
+  --bad: #a33d2b;
+  --bad-soft: #fbe6e0;
+  --bad-line: #f0c6ba;
+  --info: #1f5f86;
+  --info-soft: #e1eff9;
+  --info-line: #bbd9ec;
+  --violet: #3b4e9b;
+  --violet-soft: #e7eaf9;
+  --violet-line: #c6cdef;
+}
+.dm-device[data-app='realtorlab'][data-theme='dark'] .dm-screen {
+  --ap-bg: #1c1917;
+  --ap-side: #292524;
+  --paper: #292524;
+  --ink: #e7e5e4;
+  --ink-2: #c4bfbb;
+  --ink-3: #b3ada8;
+  --rule: #332e2b;
+  --rule-2: #44403c;
+  --hue-ink: #6fbe9c;
+  --hue-wash: #173026;
+  --ap-nav-on: #173026;
+  --ap-control: #1c1917;
+  --ap-primary: #6fbe9c;
+  --ap-on-primary: #0c1e17;
+  --ap-field-line: #a8a29e;
+  --ap-shadow: none;
+  --ok: #6fbe9c;
+  --ok-soft: #173026;
+  --ok-line: #2a5442;
+  --warn: #d9ac50;
+  --warn-soft: #2e2510;
+  --warn-line: #5a4a1e;
+  --bad: #e79c8d;
+  --bad-soft: #331a15;
+  --bad-line: #63332a;
+  --info: #7fb4d4;
+  --info-soft: #132633;
+  --info-line: #2a4e66;
+  --violet: #a0aee8;
+  --violet-soft: #141834;
+  --violet-line: #38427a;
+}
+
+/* ——— My Expenses (light only) ——— */
+.dm-device[data-app='myexpenses'] .dm-screen {
+  --ap-bg: #f1f5f9;
+  --ap-side: #ffffff;
+  --paper: #ffffff;
+  --ink: #0f172a;
+  --ink-2: #475569;
+  --ink-3: #64748b;
+  --rule: #f1f5f9;
+  --rule-2: #e2e8f0;
+  --hue-ink: #1f5d3a;
+  --hue-wash: #d8f3e5;
+  --ap-nav-on: #f3faf7;
+  --ap-control: #f1f5f9;
+  --ap-primary: #267246;
+  --ap-on-primary: #ffffff;
+  --ap-field-line: #cbd5e1;
+  --ap-r: 16px;
+  --ap-rc: 14px;
+  --ap-shadow: 0 16px 48px rgba(15, 23, 42, 0.08);
+  --sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --lab: 600 0.72rem/1.2 var(--sans);
+  --ok: #047857;
+  --ok-soft: #ecfdf5;
+  --ok-line: #6ee7b7;
+  --warn: #b45309;
+  --warn-soft: #fffbeb;
+  --warn-line: #fcd34d;
+  --bad: #be123c;
+  --bad-soft: #fff1f2;
+  --bad-line: #fecdd3;
+  --info: #334155;
+  --info-soft: #f8fafc;
+  --info-line: #e2e8f0;
+}
+
+/* ——— Command Center · Engineering HQ ——— */
+.dm-device[data-app='commandcenter'] .dm-screen {
+  --ap-bg: #0f1012;
+  --ap-side: #0c0d0f;
+  --paper: #16171a;
+  --ink: #ececee;
+  --ink-2: #b0b1b7;
+  --ink-3: #8d8e95;
+  --rule: #1f2024;
+  --rule-2: #25262a;
+  --hue-ink: #ff7a45;
+  --hue-wash: rgba(255, 122, 69, 0.14);
+  --ap-nav-on: #1d1e22;
+  --ap-control: #1c1d21;
+  --ap-primary: #ff7a45;
+  --ap-on-primary: #0f1012;
+  --ap-field-line: #2f3036;
+  --ap-r: 8px;
+  --ap-rc: 6px;
+  --ap-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+  --sans: 'Geist', 'Segoe UI Variable Text', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --mono: 'Geist Mono', 'Cascadia Mono', Consolas, ui-monospace, monospace;
+  --lab: 500 0.68rem/1.2 var(--sans);
+  --ok: #46c37b;
+  --ok-soft: rgba(70, 195, 123, 0.12);
+  --ok-line: rgba(70, 195, 123, 0.4);
+  --warn: #e5a63a;
+  --warn-soft: rgba(229, 166, 58, 0.12);
+  --warn-line: rgba(229, 166, 58, 0.4);
+  --bad: #f0625a;
+  --bad-soft: rgba(240, 98, 90, 0.12);
+  --bad-line: rgba(240, 98, 90, 0.42);
+  --info: #6aa6e8;
+  --info-soft: rgba(106, 166, 232, 0.12);
+  --info-line: rgba(106, 166, 232, 0.4);
+  --violet: #a79bd8;
+  --violet-soft: rgba(167, 155, 216, 0.14);
+  --violet-line: rgba(167, 155, 216, 0.4);
+}
+.dm-device[data-app='commandcenter'][data-theme='light'] .dm-screen {
+  --ap-bg: #f5f5f3;
+  --ap-side: #efefec;
+  --paper: #ffffff;
+  --ink: #16171a;
+  --ink-2: #45464c;
+  --ink-3: #5f6066;
+  --rule: #ececea;
+  --rule-2: #e2e2de;
+  --hue-ink: #b23a0a;
+  --hue-wash: rgba(194, 65, 12, 0.1);
+  --ap-nav-on: #e9e9e5;
+  --ap-control: #efefec;
+  --ap-primary: #c2410c;
+  --ap-on-primary: #ffffff;
+  --ap-field-line: #d6d6d1;
+  --ap-shadow: 0 0 0 0.5px rgba(20, 20, 24, 0.08), 0 1px 2px rgba(20, 20, 24, 0.05);
+  --ok: #1f7a45;
+  --ok-soft: rgba(31, 122, 69, 0.1);
+  --ok-line: rgba(31, 122, 69, 0.35);
+  --warn: #8f5600;
+  --warn-soft: rgba(143, 86, 0, 0.1);
+  --warn-line: rgba(143, 86, 0, 0.35);
+  --bad: #c4302b;
+  --bad-soft: rgba(196, 48, 43, 0.08);
+  --bad-line: rgba(196, 48, 43, 0.35);
+  --info: #1f5fae;
+  --info-soft: rgba(31, 95, 174, 0.08);
+  --info-line: rgba(31, 95, 174, 0.35);
+  --violet: #6b55b8;
+  --violet-soft: rgba(107, 85, 184, 0.1);
+  --violet-line: rgba(107, 85, 184, 0.35);
+}
+
+/* ——— GYST ——— */
+.dm-device[data-app='gyst'] .dm-screen {
+  --ap-bg: #f8fafc;
+  --ap-side: #ffffff;
+  --paper: #ffffff;
+  --ink: #0f172a;
+  --ink-2: #566174;
+  --ink-3: #6b7280;
+  --rule: #eef1f6;
+  --rule-2: #e5e7eb;
+  --hue-ink: #2563eb;
+  --hue-wash: #eff6ff;
+  --ap-nav-on: #eff6ff;
+  --ap-control: #f1f5f9;
+  --ap-primary: #2563eb;
+  --ap-on-primary: #ffffff;
+  --ap-field-line: #64748b;
+  --ap-r: 16px;
+  --ap-rc: 12px;
+  --ap-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --sans: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', 'Inter', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --lab: 600 0.7rem/1.2 var(--sans);
+  --ok: #15803d;
+  --ok-soft: #e7f6ec;
+  --ok-line: #b6e2c4;
+  --warn: #b45309;
+  --warn-soft: #fdf1e1;
+  --warn-line: #f3d3a4;
+  --bad: #b91c1c;
+  --bad-soft: #fdeaea;
+  --bad-line: #f5c2c2;
+  --info: #2563eb;
+  --info-soft: #e8f0ff;
+  --info-line: #bcd0fb;
+  --violet: #6d5dfc;
+  --violet-soft: #eeecff;
+  --violet-line: #cfc9ff;
+}
+.dm-device[data-app='gyst'][data-theme='dark'] .dm-screen {
+  --ap-bg: #0f172a;
+  --ap-side: #182235;
+  --paper: #182235;
+  --ink: #f8fafc;
+  --ink-2: #b5c0d0;
+  --ink-3: #a9b3c4;
+  --rule: #253247;
+  --rule-2: #344155;
+  --hue-ink: #93c5fd;
+  --hue-wash: #203553;
+  --ap-nav-on: #203553;
+  --ap-control: #253247;
+  --ap-field-line: #94a3b8;
+  --ap-shadow: none;
+  --ok: #6ee7a0;
+  --ok-soft: #10301f;
+  --ok-line: #1f5a3a;
+  --warn: #fcd062;
+  --warn-soft: #33260c;
+  --warn-line: #6a5118;
+  --bad: #fca5a5;
+  --bad-soft: #3a1618;
+  --bad-line: #7a2c30;
+  --info: #93c5fd;
+  --info-soft: #15284a;
+  --info-line: #2c4f8a;
+  --violet: #a99bff;
+  --violet-soft: #231f45;
+  --violet-line: #463f86;
+}
+
+/* ——— meaning → colour (each skin supplies the colours) ——— */
+.dm-screen [data-tone='ok'] {
+  --tone: var(--ok);
+  --tone-soft: var(--ok-soft);
+  --tone-line: var(--ok-line);
+}
+.dm-screen [data-tone='warn'] {
+  --tone: var(--warn);
+  --tone-soft: var(--warn-soft);
+  --tone-line: var(--warn-line);
+}
+.dm-screen [data-tone='bad'] {
+  --tone: var(--bad);
+  --tone-soft: var(--bad-soft);
+  --tone-line: var(--bad-line);
+}
+.dm-screen [data-tone='info'] {
+  --tone: var(--info);
+  --tone-soft: var(--info-soft);
+  --tone-line: var(--info-line);
+}
+.dm-screen [data-tone='violet'] {
+  --tone: var(--violet);
+  --tone-soft: var(--violet-soft);
+  --tone-line: var(--violet-line);
+}
+.dm-screen [data-tone='accent'] {
+  --tone: var(--hue-ink);
+  --tone-soft: var(--hue-wash);
+  --tone-line: color-mix(in srgb, var(--hue-ink) 45%, transparent);
+}
+.dm-screen [data-tone='idle'] {
+  --tone: var(--ink-3);
+  --tone-soft: var(--ap-control);
+  --tone-line: var(--rule-2);
+}
+
+/* ——— the app's frame ——— */
+.dm-screen .dm-scene {
+  display: block;
+  height: 100%;
+  font-size: 0.84rem;
+  line-height: 1.35;
+}
+.ap {
+  display: grid;
+  height: 100%;
+  min-height: 0;
+  background: var(--ap-bg);
+}
+.ap[data-shell='rail'] {
+  grid-template-columns: 9rem minmax(0, 1fr);
+}
+.ap-rail {
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+  padding: 0.8rem 0.5rem;
+  background: var(--ap-side);
+  border-right: 1px solid var(--rule-2);
+  font-size: 0.76rem;
+  overflow: hidden;
+}
+.ap-brand {
+  font: 600 0.98rem/1.1 var(--sans);
+  letter-spacing: -0.01em;
+}
+.ap-rail .ap-brand {
+  padding: 0 0.45rem;
+}
+.ap-rail small {
+  padding: 0.1rem 0.45rem 0;
+  margin-bottom: 0.45rem;
+  font: 500 0.54rem/1.4 var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.ap-rail em {
+  padding: 0.55rem 0.45rem 0.2rem;
+  font: 500 0.52rem/1 var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.ap-rail .ap-nav {
+  padding: 0.3rem 0.45rem;
+  border-radius: var(--ap-rc);
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+.ap-rail .ap-nav[data-on] {
+  background: var(--ap-nav-on);
+  color: var(--hue-ink);
+  font-weight: 600;
+}
+.ap-main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+.ap-top {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.3rem 0.6rem;
+  min-height: 2.5rem;
+  padding: 0.35rem 0.9rem;
+  border-bottom: 1px solid var(--rule-2);
+}
+.ap-top > b {
+  font: 600 0.98rem/1.2 var(--sans);
+  letter-spacing: -0.01em;
+}
+.ap-top > span {
+  font: var(--lab);
+  text-transform: var(--lab-case);
+  letter-spacing: var(--lab-track);
+  color: var(--ink-3);
+}
+.ap-top > div {
+  display: flex;
+  gap: 0.35rem;
+  margin-left: auto;
+}
+.ap-body {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  gap: 0.55rem;
+  align-content: start;
+  padding: 0.75rem 0.9rem;
+  overflow: hidden;
+}
+@container (max-width: 34rem) {
+  .ap[data-shell='rail'] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .ap-rail {
+    display: none;
+  }
+}
+/* phone: header, page, tab bar */
+.ap[data-shell='phone'] {
+  grid-template-rows: auto minmax(0, 1fr) auto;
+}
+.ap-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.5rem;
+  padding: 0.3rem 0.8rem;
+  background: var(--ap-side);
+  border-bottom: 1px solid var(--rule-2);
+}
+.ap-bar > span {
+  margin-left: auto;
+  font-size: 0.7rem;
+  color: var(--ink-3);
+}
+.ap[data-shell='phone'] .ap-body {
+  padding: 0.75rem 0.8rem;
+}
+.ap-tabbar {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  padding: 0.35rem 0.2rem 0.4rem;
+  background: var(--ap-side);
+  border-top: 1px solid var(--rule-2);
+  font-size: 0.58rem;
+  color: var(--ink-3);
+}
+.ap-tabbar .ap-nav {
+  display: grid;
+  justify-items: center;
+  gap: 0.18rem;
+  white-space: nowrap;
+}
+.ap-tabbar i {
+  width: 1rem;
+  height: 1rem;
+  border: 1.6px solid currentColor;
+  border-radius: 0.3rem;
+}
+.ap-tabbar .ap-nav[data-on] {
+  color: var(--hue-ink);
+  font-weight: 600;
+}
+
+/* ——— the kit, in the app's design ——— */
+.dm-screen .dm-field > span,
+.dm-screen .dm-card-title,
+.dm-screen .dm-table th,
+.dm-screen .dm-kpis span,
+.dm-screen .dm-figure span,
+.dm-screen .dm-files p {
+  font: var(--lab);
+  text-transform: var(--lab-case);
+  letter-spacing: var(--lab-track);
+  color: var(--ink-3);
+}
+.dm-screen .dm-head {
+  padding-bottom: 0.4rem;
+}
+.dm-screen .dm-head b {
+  font: 600 1.02rem/1.2 var(--sans);
+  letter-spacing: -0.01em;
+}
+.dm-screen .dm-head span,
+.dm-screen .dm-note {
+  font-size: 0.76rem;
+}
+.dm-screen .dm-btn {
+  min-height: 2.15rem;
+  padding: 0 0.95rem;
+  border-radius: var(--ap-rc);
+  border-color: var(--ap-primary);
+  background: var(--ap-primary);
+  color: var(--ap-on-primary);
+  font: 600 0.8rem/1 var(--sans);
+}
+.dm-screen .dm-btn[data-small] {
+  min-height: 1.75rem;
+  padding: 0 0.65rem;
+  font-size: 0.74rem;
+}
+.dm-screen .dm-btn-ghost {
+  border-color: var(--ap-field-line);
+  background: var(--paper);
+  color: var(--ink);
+}
+.dm-screen .dm-field {
+  padding: 0.4rem 0.65rem 0.45rem;
+  border-color: var(--ap-field-line);
+  border-radius: var(--ap-rc);
+  background: var(--paper);
+}
+.dm-screen .dm-field[data-tone] {
+  border-color: var(--tone-line);
+  background: var(--tone-soft);
+}
+.dm-field > span {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.5rem;
+}
+.dm-field-chip {
+  padding: 0.15em 0.55em;
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--tone);
+  font: 600 0.62rem/1.3 var(--sans);
+  font-style: normal;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.dm-field small {
+  font-size: 0.7rem;
+  color: var(--ink-3);
+}
+.dm-screen .dm-card {
+  padding: 0.55rem 0.7rem;
+  border-color: var(--rule-2);
+  border-radius: var(--ap-r);
+  background: var(--paper);
+  box-shadow: var(--ap-shadow);
+}
+.dm-screen .dm-card-title {
+  margin-bottom: 0.3rem;
+}
+.dm-screen .dm-row {
+  min-height: 2.2rem;
+  border-color: var(--rule-2);
+  border-radius: var(--ap-rc);
+  background: var(--paper);
+}
+.dm-screen .dm-row small {
+  font-size: 0.72rem;
+}
+.dm-screen .dm-chips span {
+  padding: 0.3rem 0.7rem;
+  border-color: var(--rule-2);
+  background: var(--paper);
+  font-size: 0.78rem;
+}
+.dm-screen .dm-chips span[data-on] {
+  border-color: var(--hue-ink);
+  background: var(--hue-wash);
+  color: var(--hue-ink);
+  font-weight: 600;
+}
+.dm-screen .dm-toast {
+  border: 1px solid var(--ok-line);
+  border-radius: var(--ap-r);
+  background: var(--ok-soft);
+  color: var(--ok);
+  font-size: 0.82rem;
+}
+.dm-screen .dm-table {
+  font-size: 0.76rem;
+}
+.dm-screen .dm-table th,
+.dm-screen .dm-table td {
+  padding: 0.32rem 0.5rem 0.32rem 0;
+}
+.dm-table [data-num] {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.dm-screen .dm-table td[data-num] {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+}
+.dm-table tr[data-mark] td {
+  background: var(--hue-wash);
+}
+.dm-table tr[data-dim] td {
+  opacity: 0.42;
+}
+.dm-screen .dm-bars > div {
+  font-size: 0.78rem;
+}
+.dm-screen .dm-bars i,
+.dm-screen .dm-progress i {
+  background: var(--ap-control);
+}
+.dm-screen .dm-drop,
+.dm-screen .dm-files,
+.dm-screen .dm-log {
+  border-radius: var(--ap-r);
+  border-color: var(--rule-2);
+  background: var(--paper);
+}
+.dm-screen .dm-drop {
+  padding: 0.9rem 0.8rem;
+  border-color: var(--ap-field-line);
+}
+.dm-screen .dm-log {
+  font-size: 0.72rem;
+}
+
+/* status words */
+.dm-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.18em 0.6em;
+  border: 1px solid var(--tone-line);
+  border-radius: 999px;
+  background: var(--tone-soft);
+  color: var(--tone);
+  font: 600 0.68rem/1.3 var(--sans);
+  white-space: nowrap;
+}
+.dm-pill[data-dot] {
+  padding: 0;
+  border: 0;
+  background: none;
+}
+.dm-pill[data-dot]::before {
+  content: '';
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+.dm-banner {
+  margin: 0;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid var(--tone-line);
+  border-radius: var(--ap-r);
+  background: var(--tone-soft);
+  color: var(--tone);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+.dm-banner b {
+  font-weight: 650;
+}
+.dm-figure {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.8rem;
+}
+.dm-figure b {
+  display: block;
+  margin: 0.15rem 0 0.1rem;
+  font: 400 2.25rem/1.05 var(--ap-figure);
+  letter-spacing: -0.022em;
+  font-variant-numeric: tabular-nums;
+}
+.dm-figure[data-dim] b {
+  color: var(--ink-3);
+}
+.dm-figure small {
+  display: block;
+  font: 600 0.76rem/1.3 var(--mono);
+  font-variant-numeric: tabular-nums;
+}
+.dm-kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(5.4rem, 1fr));
+  gap: 1px;
+  border: 1px solid var(--rule-2);
+  border-radius: var(--ap-r);
+  background: var(--rule-2);
+  overflow: hidden;
+}
+.dm-kpis > div {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.4rem 0.6rem;
+  background: var(--paper);
+}
+.dm-kpis b {
+  font: 500 0.88rem/1.1 var(--mono);
+  font-variant-numeric: tabular-nums;
+}
+.dm-kpis [data-tone] b {
+  color: var(--tone);
+}
+.dm-ledger > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.3rem 0;
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink-2);
+  font-size: 0.8rem;
+}
+.dm-ledger b {
+  font: 500 0.78rem/1.3 var(--mono);
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.dm-ledger > div[data-total] {
+  border-bottom: 0;
+  border-top: 1px solid var(--rule-2);
+  color: var(--ink);
+  font-weight: 600;
+}
+.dm-ledger > div[data-total] b {
+  font-size: 1rem;
+  color: var(--hue-ink);
+}
+.dm-tabsrow {
+  display: flex;
+  gap: 1.1rem;
+  padding: 0 0.9rem;
+  border-bottom: 1px solid var(--rule-2);
+  font-size: 0.8rem;
+  color: var(--ink-2);
+}
+.dm-tabsrow span {
+  padding: 0.42rem 0;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+}
+.dm-tabsrow span[data-on] {
+  border-color: var(--hue-ink);
+  color: var(--hue-ink);
+  font-weight: 600;
+}
+.dm-tabsrow[data-seg] {
+  justify-self: start;
+  gap: 0.15rem;
+  padding: 0.2rem;
+  border: 0;
+  border-radius: var(--ap-rc);
+  background: var(--ap-control);
+}
+.dm-tabsrow[data-seg] span {
+  padding: 0.28rem 0.7rem;
+  border: 0;
+  border-radius: calc(var(--ap-rc) - 3px);
+}
+.dm-tabsrow[data-seg] span[data-on] {
+  background: var(--ap-primary);
+  color: var(--ap-on-primary);
+}
+.dm-stepper {
+  display: flex;
+  justify-content: center;
+  gap: 0.3rem;
+  font-size: 0.68rem;
+  color: var(--ink-3);
+}
+.dm-stepper span {
+  display: grid;
+  justify-items: center;
+  gap: 0.25rem;
+  min-width: 4rem;
+}
+.dm-stepper i {
+  display: grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: var(--ap-control);
+  color: var(--ink-3);
+  font-style: normal;
+  font-weight: 700;
+}
+.dm-stepper [data-state='done'] i,
+.dm-stepper [data-state='now'] i {
+  background: var(--ap-primary);
+  color: var(--ap-on-primary);
+}
+.dm-stepper [data-state='now'] i {
+  box-shadow: 0 0 0 4px var(--hue-wash);
+}
+.dm-stepper [data-state='now'] {
+  color: var(--ink);
+  font-weight: 600;
+}
+.dm-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(4.6rem, 1fr));
+  gap: 0.4rem;
+}
+.dm-tile {
+  display: grid;
+  gap: 0.2rem;
+  align-content: start;
+  padding: 0.45rem 0.55rem;
+  border: 1px solid var(--rule-2);
+  border-radius: var(--ap-rc);
+  background: var(--paper);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+}
+.dm-tile b {
+  font: 700 1.2rem/1 var(--sans);
+  color: var(--tone, var(--ink));
+  font-variant-numeric: tabular-nums;
+}
+.dm-tile span {
+  font-size: 0.66rem;
+  line-height: 1.2;
+  color: var(--ink-2);
+}
+.dm-tile[data-on],
+button.dm-tile {
+  border-color: var(--hue-ink);
+  background: var(--hue-wash);
+}
+.dm-gate {
+  display: grid;
+  gap: 0.3rem;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--tone-line);
+  border-left: 3px solid var(--tone);
+  border-radius: var(--ap-rc);
+  background: var(--tone-soft);
+}
+.dm-gate > b {
+  font-weight: 650;
+}
+.dm-gate p {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--ink-2);
+}
+.dm-gate-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.2rem;
+}
+.dm-bubble {
+  justify-self: start;
+  max-width: 88%;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid var(--rule-2);
+  border-radius: 14px;
+  background: var(--paper);
+  font-size: 0.8rem;
+}
+.dm-bubble[data-me] {
+  justify-self: end;
+  border-color: transparent;
+  background: var(--hue-wash);
+}
+.dm-ring {
+  position: relative;
+  flex: none;
+  width: 6.2rem;
+  height: 6.2rem;
+}
+.dm-ring svg {
+  width: 100%;
+  height: 100%;
+}
+.dm-ring circle {
+  fill: none;
+  stroke: var(--ap-control);
+  stroke-width: 6;
+}
+.dm-ring circle + circle {
+  stroke: var(--ok);
+  stroke-linecap: round;
+}
+.dm-ring > span {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  text-align: center;
+}
+.dm-ring b {
+  font: 700 1.15rem/1 var(--sans);
+}
+.dm-ring small {
+  max-width: 4.2rem;
+  font-size: 0.56rem;
+  line-height: 1.2;
+  color: var(--ink-3);
+}
+.dm-meter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.dm-meter i {
+  width: 2.4rem;
+  height: 0.32rem;
+  border-radius: 999px;
+  background: var(--ap-control);
+  overflow: hidden;
+}
+.dm-meter i b {
+  display: block;
+  height: 100%;
+  background: var(--tone);
+}
+.dm-toggle {
+  position: relative;
+  display: inline-block;
+  width: 1.7rem;
+  height: 0.95rem;
+  border-radius: 999px;
+  background: var(--rule-2);
+  vertical-align: middle;
+}
+.dm-toggle::after {
+  content: '';
+  position: absolute;
+  top: 0.1rem;
+  left: 0.1rem;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  background: #fff;
+}
+.dm-toggle[data-on] {
+  background: var(--ap-primary);
+}
+.dm-toggle[data-on]::after {
+  left: 0.85rem;
+}
+/* small helpers used by the scenes */
+.dm-split {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 0.55rem;
+  align-items: start;
+}
+.dm-line {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.6rem;
+}
+.dm-line > :last-child:not(:first-child) {
+  margin-left: auto;
+}
+.dm-key {
+  font: 600 0.72rem/1.3 var(--mono);
+}
+.dm-dim {
+  color: var(--ink-3);
+  font-size: 0.74rem;
+}
+
+/* ——— per-app character ——— */
+/* RealtorLab: one primary action per screen; uppercase mono tags */
+.dm-device[data-app='realtorlab'] .dm-table thead tr {
+  background: color-mix(in srgb, var(--ap-bg) 60%, var(--paper));
+}
+.dm-device[data-app='realtorlab'] .dm-pill:not([data-dot]) {
+  font: 500 0.6rem/1.4 var(--mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.dm-device[data-app='realtorlab'] .dm-pill[data-badge] {
+  padding: 0.3em 0.75em;
+  font: 500 0.7rem/1.3 var(--sans);
+  letter-spacing: 0;
+  text-transform: none;
+}
+/* My Expenses: large rounded panels, heavy headings */
+.dm-device[data-app='myexpenses'] .dm-head b {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+.dm-device[data-app='myexpenses'] .dm-card {
+  border-color: transparent;
+}
+.dm-device[data-app='myexpenses'] .dm-btn {
+  min-height: 2.5rem;
+  font-size: 0.86rem;
+}
+.dm-device[data-app='myexpenses'] .dm-chips span {
+  border-width: 2px;
+  border-radius: 16px;
+  padding: 0.55rem 0.7rem;
+  font-weight: 600;
+}
+.dm-device[data-app='myexpenses'] .ap-brand::before {
+  content: '';
+  display: inline-block;
+  width: 1.15rem;
+  height: 1.15rem;
+  margin-right: 0.4rem;
+  border-radius: 22%;
+  background: #2e8b57;
+  vertical-align: -0.2rem;
+}
+/* Command Center: status is a dot and a word, keys are mono, corners are small */
+.dm-device[data-app='commandcenter'] .dm-pill:not([data-dot]) {
+  border-radius: 4px;
+  font-family: var(--mono);
+  font-size: 0.64rem;
+}
+.dm-device[data-app='commandcenter'] .ap-brand i {
+  font-style: normal;
+  color: var(--hue-ink);
+}
+.dm-device[data-app='commandcenter'] .ap-rail .ap-nav[data-on] {
+  box-shadow: inset 2px 0 0 var(--ap-primary);
+  color: var(--ink);
+}
+.dm-device[data-app='commandcenter'] .dm-tile b {
+  font-size: 1.3rem;
+}
+/* GYST: big rounded controls, a heavy tight wordmark */
+.dm-device[data-app='gyst'] .ap-brand {
+  font-weight: 750;
+  font-size: 1.15rem;
+  letter-spacing: -0.065em;
+}
+.dm-device[data-app='gyst'] .dm-head b {
+  font: 700 1.3rem/1.15 var(--sans);
+  letter-spacing: -0.035em;
+}
+.dm-device[data-app='gyst'] .dm-bars i b,
+.dm-device[data-app='gyst'] .dm-progress i b {
+  background: var(--ok);
+}
+
+/* a nav item that is the next thing to click */
+button.ap-nav {
+  border: 0;
+  background: var(--hue-wash);
+  color: var(--hue-ink);
+  font: inherit;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+.ap-tabbar button.ap-nav {
+  text-align: center;
+  border-radius: 8px;
+}
+.ap-rail button.ap-nav {
+  padding: 0.3rem 0.45rem;
+  border-radius: var(--ap-rc);
+}
+@container (max-width: 34rem) {
+  .dm-table [data-wide] {
+    display: none;
+  }
+}
+/* category tiles and option cards */
+.dm-cats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+.dm-cat {
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.55rem 0.65rem;
+  border: 2px solid var(--rule-2);
+  border-radius: var(--ap-r);
+  background: var(--paper);
+  color: inherit;
+  font: 600 0.8rem/1.2 var(--sans);
+  text-align: left;
+}
+.dm-cat i {
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 10px;
+  background: var(--ap-control);
+}
+button.dm-cat {
+  border-color: #2e8b57;
+  background: #f3faf7;
+}
+button.dm-cat i {
+  background: var(--hue-wash);
+}
+.dm-opt {
+  display: grid;
+  gap: 0.1rem;
+  padding: 0.45rem 0.65rem;
+  border: 1px solid var(--rule-2);
+  border-radius: var(--ap-rc);
+  background: var(--paper);
+  font-size: 0.8rem;
+}
+.dm-opt[data-on] {
+  border-color: var(--hue-ink);
+  background: var(--hue-wash);
+}
+.dm-opt[data-dashed] {
+  border-style: dashed;
+  background: transparent;
+}
+.dm-opt small {
+  color: var(--ink-3);
+  font-size: 0.72rem;
+}
+/* a printed sheet: client documents are always light */
+.dm-sheet {
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid #e9e2d6;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #15202b;
+  box-shadow: 0 14px 30px -18px rgba(21, 32, 43, 0.45);
+  --paper: #ffffff;
+  --ink: #15202b;
+  --ink-2: #41505e;
+  --ink-3: #4e5c6a;
+  --rule: #f0eae0;
+  --rule-2: #e9e2d6;
+  --hue-ink: #17553e;
+  --hue-wash: #e2f1e9;
+  --warn: #8a6110;
+  --warn-soft: #fbf0d5;
+  --warn-line: #ead7a2;
+  --ok: #17553e;
+  --ok-soft: #e2f1e9;
+  --ok-line: #bedfcd;
+}
+.dm-sheet h4 {
+  margin: 0;
+  font: 600 1rem/1.2 var(--sans);
+  letter-spacing: -0.02em;
+}
+.dm-eyebrow {
+  margin: 0;
+  font: var(--lab);
+  text-transform: var(--lab-case);
+  letter-spacing: var(--lab-track);
+  color: var(--ink-3);
+}
+/* a dialog over the page */
+.dm-dialog {
+  display: grid;
+  gap: 0.5rem;
+  align-self: center;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid var(--rule-2);
+  border-radius: calc(var(--ap-r) + 4px);
+  background: var(--paper);
+  box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.5);
+}
+.dm-dialog > b {
+  font: 650 0.95rem/1.2 var(--sans);
+}
+.dm-saved {
+  display: grid;
+  justify-items: center;
+  gap: 0.2rem;
+  text-align: center;
+}
+.dm-saved i {
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  background: var(--ok-soft);
+  color: var(--ok);
+  font: 700 1.2rem/1 var(--sans);
+  font-style: normal;
+}
+.dm-saved b {
+  font: 700 1.2rem/1.2 var(--sans);
+}
+.dm-big {
+  font: 700 1.6rem/1.1 var(--sans);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.dm-navy {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 20px;
+  background: #0b1831;
+  color: #ffffff;
+  font-size: 0.8rem;
+}
+.dm-navy b {
+  display: block;
+  font-weight: 650;
+}
+.dm-work {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.8rem;
+  font: 600 0.66rem/1.4 var(--mono);
+  letter-spacing: 0.04em;
+  color: var(--ink-3);
+}
+.dm-work [data-s='done'] {
+  color: var(--ok);
+}
+.dm-work [data-s='now'] {
+  color: var(--hue-ink);
+}
+
+.dm-tile {
+  min-width: 0;
+}
+.dm-screen .dm-tile[data-long] b {
+  font-size: 0.95rem;
+  line-height: 1.26;
+}
+.dm-tabsrow[data-seg] {
+  flex-wrap: wrap;
+  max-width: 100%;
+}
+
+.ap-rail .ap-brand:not(:has(+ small)) {
+  margin-bottom: 0.5rem;
+}
+.dm-device[data-app='commandcenter'] .ap-brand {
+  font-size: 0.86rem;
+}
+.dm-device[data-app='gyst'] .dm-tick {
+  border-radius: 50%;
+}
+
+@container (max-width: 34rem) {
+  .dm-device[data-app='commandcenter'] .dm-tiles {
+    grid-template-columns: repeat(auto-fit, minmax(4.1rem, 1fr));
+  }
+}

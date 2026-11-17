@@ -1,5 +1,5 @@
 import { useMemo, type CSSProperties, type ReactNode } from 'react'
-import type { Motif, Product, Surface } from '../data/products'
+import type { Motif, Product, Surface, Theme } from '../data/products'
 import { realMedia } from './manifest'
 import { schematicSvg, SIZE, type SchematicTone } from './schematic'
 import './media.css'
@@ -14,6 +14,8 @@ export interface ProductMediaProps {
   tone?: SchematicTone
   className?: string
   style?: CSSProperties
+  /** Show the capture from this theme's folder when the product has one. */
+  theme?: Theme
   /** Eager-load above-the-fold captures. */
   priority?: boolean
 }
@@ -22,9 +24,9 @@ export interface ProductMediaProps {
  * One capture slot. Renders the real screenshot when the asset folder has one,
  * otherwise a stamped placeholder schematic. Never invents interface imagery.
  */
-export function ProductMedia({ product, surface, slot = 1, label, tone, className = '', style, priority }: ProductMediaProps) {
+export function ProductMedia({ product, surface, slot = 1, label, tone, className = '', style, priority, theme }: ProductMediaProps) {
   const s = surface ?? product.primarySurface
-  const real = realMedia(product.slug, s, slot)
+  const real = realMedia(product.slug, s, slot, theme)
   const svg = useMemo(
     () => (real ? '' : schematicSvg(product, s, { index: slot, tone, label })),
     [real, product, s, slot, tone, label],
@@ -132,13 +134,6 @@ export function ProductGlyph({ motif, size = 24, className = '' }: { motif: Moti
           <rect x="16.5" y="3.5" width="5" height="5" rx="1" />
           <rect x="16.5" y="15.5" width="5" height="5" rx="1" fill="currentColor" />
           <path d="M7.5 12c4 0 4-6 9-6M7.5 12c4 0 4 6 9 6" />
-        </g>
-      )}
-      {motif === 'dose' && (
-        <g {...common}>
-          <circle cx="12" cy="12" r="8.5" />
-          <path d="M12 3.5v2M20.5 12h-2M12 20.5v-2M3.5 12h2" />
-          <rect x="8" y="10" width="8" height="4" rx="2" transform="rotate(-38 12 12)" />
         </g>
       )}
     </svg>

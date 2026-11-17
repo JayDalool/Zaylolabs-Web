@@ -206,12 +206,15 @@
   white-space: nowrap;
 }
 .dm-screen {
-  height: clamp(21rem, 52vh, 27rem);
+  height: clamp(25rem, 56vh, 27rem);
   padding: 1rem;
   overflow: hidden;
 }
 .dm[data-device='phone'] .dm-screen {
-  height: clamp(26rem, 60vh, 31rem);
+  height: clamp(29.5rem, 66vh, 33rem);
+}
+.dm-theme {
+  margin-left: 0.5rem;
 }
 .dm-scene {
   display: grid;

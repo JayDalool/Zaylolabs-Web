@@ -225,12 +225,8 @@
 .sp-stage[data-stage='in-development']::before {
   background: linear-gradient(90deg, currentColor 50%, transparent 50%);
 }
-.sp-stage[data-stage='internal']::before {
+.sp-stage[data-stage='live']::before {
   background: currentColor;
-  border-radius: 1px;
-}
-.sp-stage[data-stage='prototype']::before {
-  border-style: dashed;
 }
 
 .sp-btn {
@@ -1033,17 +1029,16 @@
   opacity: 1;
 }
 
-/* The app's palette, derived from its hue. `--t-field` is the colour the section becomes.
-   An app's real brand colours can replace the derivation by setting --t-field on the element. */
+/* The app's own palette. `--t-field` is the colour the section becomes and `--t-on` the text on it;
+   both come from the product's `hue` (taken from the app itself). */
 .sp .sp-immersive[data-immersed],
 .sp .sp-immerse-hover:hover,
 .sp .sp-immerse-hover:focus-visible {
   --t-field-auto: color-mix(in oklab, var(--h-ink) 66%, #0b0a07);
-  --t-on: #fbf7ee;
   --paper: var(--t-field, var(--t-field-auto));
   --paper-hi: color-mix(in oklab, var(--t-field, var(--t-field-auto)) 78%, #000);
   --paper-lo: color-mix(in oklab, var(--t-field, var(--t-field-auto)) 88%, #fff);
-  --ink: var(--t-on);
+  --ink: var(--t-on, #fbf7ee);
   --ink-2: color-mix(in srgb, var(--t-on) 86%, var(--t-field, var(--t-field-auto)));
   --ink-3: color-mix(in srgb, var(--t-on) 72%, var(--t-field, var(--t-field-auto)));
   --rule: color-mix(in srgb, var(--t-on) 20%, transparent);

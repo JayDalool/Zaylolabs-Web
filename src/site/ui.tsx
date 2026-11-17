@@ -9,14 +9,14 @@ export const EASE = [0.2, 0.7, 0.2, 1] as const
 export const BASE = ''
 export const HOME = '/'
 
-/** Sets the product hue custom properties for everything inside. */
+/** Sets the product's colours for everything inside: its accents, and the field its sections take on. */
 export function hueVars(p: Product): CSSProperties {
   return {
     '--h-ink': p.hue.ink,
     '--h-bright': p.hue.bright,
     '--h-wash': p.hue.wash,
-    // the app's real colour, when supplied, becomes the field its sections take on
-    ...(p.brandField ? { '--t-field': p.brandField } : null),
+    '--t-field': p.hue.field,
+    '--t-on': p.hue.on,
   } as CSSProperties
 }
 

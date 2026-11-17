@@ -7,9 +7,10 @@
  */
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { useEffect, useState } from 'react'
-import type { Product } from '../../data/products'
+import type { Product, Theme } from '../../data/products'
 import { EASE, SectionHead } from '../ui'
 import './demo.css'
+import './skins.css'
 import { demos, type Demo } from './demos'
 
 const PACE = 3600 // ms per step while playing
@@ -18,6 +19,7 @@ function Player({ demo, product }: { demo: Demo; product: Product }) {
   const reduce = useReducedMotion()
   const [i, setI] = useState(0)
   const [playing, setPlaying] = useState(false)
+  const [theme, setTheme] = useState<Theme>(product.themes[0])
   const n = demo.steps.length
   const step = demo.steps[i]
   const last = i === n - 1
@@ -58,7 +60,7 @@ function Player({ demo, product }: { demo: Demo; product: Product }) {
       </ol>
 
       <div className="dm-stage">
-        <div className="dm-device">
+        <div className="dm-device" data-app={product.slug} data-theme={theme}>
           <div className="dm-chrome" aria-hidden="true">
             {demo.device === 'window' && (
               <span className="dm-dots">
@@ -105,6 +107,15 @@ function Player({ demo, product }: { demo: Demo; product: Product }) {
           <p className="dm-count" aria-live="polite">
             Step {i + 1} of {n}
           </p>
+          {product.themes.length > 1 && (
+            <div className="sp-seg dm-theme" role="group" aria-label={`${product.name} theme`}>
+              {product.themes.map((t) => (
+                <button key={t} type="button" aria-pressed={theme === t} onClick={() => setTheme(t)}>
+                  {t === 'dark' ? 'Dark' : 'Light'}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -129,8 +140,8 @@ export function DemoSection({ product }: { product: Product }) {
           }
         />
         <p className="dm-disclaimer">
-          <b>This is a demo, not the real app.</b> It is an illustration with made-up data, so you can follow how {product.name} is used. Press play, or click the
-          highlighted button inside the window.
+          <b>This is a demo, not the real app.</b> The screens are redrawn from {product.name} in its own colours and wording, with made-up data, so you can follow
+          how it is used. Press play, or click the highlighted control inside the window.
         </p>
         {list.length > 1 && (
           <div className="dm-tabs" role="group" aria-label="Demos">

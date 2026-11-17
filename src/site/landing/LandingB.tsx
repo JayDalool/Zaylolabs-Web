@@ -1,13 +1,13 @@
 /**
  * Landing B — the simple one.
  *
- * One screen: the invitation, one app's screens, and the five apps named along
+ * One screen: the invitation, one app's screens, and the apps named along
  * the bottom. Pointing at an app floods the whole screen with its colours.
  * Below it, every app gets exactly one screen of its own.
  */
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
-import { useEffect, useRef, useState } from 'react'
-import { products, studio } from '../../data/products'
+import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import { featured, products, studio } from '../../data/products'
 import { ProductGlyph } from '../../media/ProductMedia'
 import { BASE, ButtonLink, EASE, hueVars } from '../ui'
 import { AppPose, AppSection } from './shared'
@@ -69,7 +69,7 @@ export default function LandingB() {
               <br />
               <em>We build the software.</em>
             </h1>
-            <p className="sp-lede">{studio.about} Five of our own are below, each shown at its real stage.</p>
+            <p className="sp-lede">{studio.about} Our own are below, shown as they really are.</p>
             <div className="lb-cta">
               <ButtonLink to="/#contact" viewTransition={false}>
                 Start a conversation
@@ -96,7 +96,7 @@ export default function LandingB() {
         </div>
 
         <div className="sp-wrap">
-          <nav className="lb-strip" aria-label="Our products" onMouseLeave={leave}>
+          <nav className="lb-strip" aria-label="Our products" onMouseLeave={leave} style={{ '--n': products.length } as CSSProperties}>
             {products.map((p, i) => (
               <a
                 key={p.slug}
@@ -126,7 +126,7 @@ export default function LandingB() {
         </div>
       </section>
 
-      {products.map((p, i) => (
+      {featured.map((p, i) => (
         <AppSection key={p.slug} product={p} slot={slots[p.slug] ?? 1} onSlot={(n) => setSlots((s) => ({ ...s, [p.slug]: n }))} flip={i % 2 === 1} />
       ))}
     </>

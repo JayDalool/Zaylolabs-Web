@@ -4,42 +4,33 @@
  * viewport height so a whole app fits on the screen at once.
  */
 import type { CSSProperties } from 'react'
-import { products, type Product } from '../../data/products'
+import { Link } from 'react-router-dom'
+import { featured, type Product, type Theme } from '../../data/products'
 import { PhoneFrame, ProductMedia, WindowFrame } from '../../media/ProductMedia'
 import { useImmerse } from '../immerse'
 import { BASE, ButtonLink, hueVars, StageBadge } from '../ui'
 
-export const count = products.length
+/** The apps that get a full screen each on the home page. */
+export const count = featured.length
 
 /** How an app stands: chosen from what it runs on, so a new app needs no code. */
 type Pose = 'desk-phone' | 'phone-desk' | 'desk' | 'phones'
 const poseOf = (p: Product): Pose =>
   p.surfaces.length < 2 ? (p.primarySurface === 'desktop' ? 'desk' : 'phones') : p.primarySurface === 'desktop' ? 'desk-phone' : 'phone-desk'
 
-export function Withheld() {
-  return (
-    <>
-      <span className="app-hatch" aria-hidden="true" />
-      <span className="app-seal">Internal — screens not shown</span>
-    </>
-  )
-}
-
 /** One app's screens, arranged in depth. `slot` is the capture chosen from "What it covers". */
-export function AppPose({ product, slot = 1, flip }: { product: Product; slot?: number; flip?: boolean }) {
+export function AppPose({ product, slot = 1, flip, theme }: { product: Product; slot?: number; flip?: boolean; theme?: Theme }) {
   const pose = poseOf(product)
-  const restricted = product.stage === 'internal'
   const label = product.focus[slot - 1]?.title
   const other = slot === 1 ? 2 : 1
   const win = (s: number, l?: string) => (
     <WindowFrame title={product.name} className="app-win">
-      <ProductMedia product={product} surface="desktop" slot={s} label={l} />
-      {restricted && <Withheld />}
+      <ProductMedia product={product} surface="desktop" slot={s} label={l} theme={theme} />
     </WindowFrame>
   )
   const phone = (s: number, l?: string, extra = '') => (
     <PhoneFrame className={`app-phone ${extra}`}>
-      <ProductMedia product={product} surface="mobile" slot={s} label={l} />
+      <ProductMedia product={product} surface="mobile" slot={s} label={l} theme={theme} />
     </PhoneFrame>
   )
   return (
@@ -72,43 +63,40 @@ export function AppPose({ product, slot = 1, flip }: { product: Product; slot?: 
 /** One app in words: what it is, what it covers, where it stands, and the way in. */
 export function AppCopy({ product, slot, onSlot, heading = 'h2' }: { product: Product; slot: number; onSlot: (n: number) => void; heading?: 'h2' | 'h3' }) {
   const H = heading
-  const restricted = product.stage === 'internal'
+  const at = featured.indexOf(product)
   return (
     <div className="app-copy">
       <p className="sp-mono app-kicker">
-        <span className="app-kicker-n">
-          Product {products.indexOf(product) + 1} of {count}
-        </span>
+        {at >= 0 && (
+          <span className="app-kicker-n">
+            Product {at + 1} of {count}
+          </span>
+        )}
         <span className="sp-mono-dim">{product.discipline}</span>
       </p>
       <H id={`${product.slug}-name`} className="sp-name app-name" style={{ '--n': product.name.length } as CSSProperties}>
         {product.name}
-        {product.alias && <small>/ {product.alias}</small>}
       </H>
       <p className="app-tagline">{product.tagline}</p>
       <p className="app-summary">{product.summary}</p>
       <ul className="app-covers" aria-label="What it covers">
-        {product.focus.map((f, k) =>
-          restricted ? (
-            <li key={f.title}>
-              <div className="app-cover">
-                <b>{f.title}</b>
-                <span>{f.note}</span>
-              </div>
-            </li>
-          ) : (
-            <li key={f.title}>
-              <button type="button" className="app-cover" aria-pressed={slot === k + 1} onClick={() => onSlot(k + 1)}>
-                <b>{f.title}</b>
-                <span>{f.note}</span>
-              </button>
-            </li>
-          ),
-        )}
+        {product.focus.map((f, k) => (
+          <li key={f.title}>
+            <button type="button" className="app-cover" aria-pressed={slot === k + 1} onClick={() => onSlot(k + 1)}>
+              <b>{f.title}</b>
+              <span>{f.note}</span>
+            </button>
+          </li>
+        ))}
       </ul>
       <p className="app-status">
         <StageBadge product={product} />
         <span>{product.availability}</span>
+        {product.stage === 'live' && (
+          <Link className="sp-link app-plans" to={`${BASE}/work/${product.slug}/plans`} viewTransition>
+            Plans
+          </Link>
+        )}
       </p>
       <div className="app-go">
         <ButtonLink to={`${BASE}/work/${product.slug}`}>Open {product.name}</ButtonLink>

@@ -282,53 +282,7 @@ const pipeline: Draw = (b, r) => {
   return out
 }
 
-const dose: Draw = (b) => {
-  let out = ''
-  const R = Math.min(b.w, b.h) * 0.4
-  const cx = b.w > b.h ? b.x + b.w * 0.36 : b.x + b.w / 2
-  const cy = b.w > b.h ? b.y + b.h / 2 : b.y + b.h * 0.36
-  out += `<circle class="i" cx="${n(cx)}" cy="${n(cy)}" r="${n(R)}"/><circle class="l" cx="${n(cx)}" cy="${n(cy)}" r="${n(
-    R * 0.78,
-  )}"/>`
-  for (let t = 0; t < 48; t++) {
-    const a = (t / 48) * Math.PI * 2
-    const r1 = R * (t % 4 === 0 ? 0.86 : 0.93)
-    out += `<line class="${t % 4 === 0 ? 'i' : 'l'}" x1="${n(cx + Math.cos(a) * r1)}" y1="${n(cy + Math.sin(a) * r1)}" x2="${n(
-      cx + Math.cos(a) * R,
-    )}" y2="${n(cy + Math.sin(a) * R)}"/>`
-  }
-  for (const h of [8, 14, 21]) {
-    const a = (h / 24) * Math.PI * 2 - Math.PI / 2
-    out += `<circle class="af" cx="${n(cx + Math.cos(a) * R)}" cy="${n(cy + Math.sin(a) * R)}" r="${n(R * 0.07)}"/>`
-    out += `<line class="d" x1="${n(cx)}" y1="${n(cy)}" x2="${n(cx + Math.cos(a) * R * 0.9)}" y2="${n(
-      cy + Math.sin(a) * R * 0.9,
-    )}"/>`
-  }
-  // capsule
-  const cw = R * 0.62
-  const ch = R * 0.26
-  out += `<g transform="rotate(-38 ${n(cx)} ${n(cy)})"><rect class="ip" x="${n(cx - cw / 2)}" y="${n(cy - ch / 2)}" width="${n(
-    cw,
-  )}" height="${n(ch)}" rx="${n(ch / 2)}"/><path class="af" d="M${n(cx)} ${n(cy - ch / 2)} h${n(cw / 2 - ch / 2)} a${n(
-    ch / 2,
-  )} ${n(ch / 2)} 0 0 1 0 ${n(ch)} h${n(-(cw / 2 - ch / 2))} z"/></g>`
-  // gauze weave
-  const gx = b.w > b.h ? b.x + b.w * 0.68 : b.x + b.w * 0.14
-  const gy = b.w > b.h ? b.y + b.h * 0.2 : b.y + b.h * 0.74
-  const gw = b.w > b.h ? b.w * 0.28 : b.w * 0.72
-  const gh = b.w > b.h ? b.h * 0.6 : b.h * 0.22
-  const step = Math.min(gw, gh) / 9
-  for (let x = gx; x <= gx + gw + 0.1; x += step)
-    out += `<line class="l" x1="${n(x)}" y1="${n(gy)}" x2="${n(x)}" y2="${n(gy + gh)}"/>`
-  for (let y = gy; y <= gy + gh + 0.1; y += step)
-    out += `<path class="l" d="M${n(gx)} ${n(y)} q${n(step / 2)} ${n(-step * 0.22)} ${n(step)} 0 t${n(step)} 0 t${n(
-      step,
-    )} 0 t${n(step)} 0 t${n(step)} 0 t${n(step)} 0 t${n(step)} 0 t${n(step)} 0 t${n(step)} 0" clip-path="none"/>`
-  out += `<rect class="a" x="${n(gx)}" y="${n(gy)}" width="${n(gw)}" height="${n(gh)}"/>`
-  return out
-}
-
-const MOTIFS: Record<Motif, Draw> = { parcel, ledger, weekgrid, pipeline, dose }
+const MOTIFS: Record<Motif, Draw> = { parcel, ledger, weekgrid, pipeline }
 
 export interface SchematicOptions {
   /** 1-based slot number, shown on the plate and used as a seed. */

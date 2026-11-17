@@ -1,11 +1,13 @@
 import { Link, useSearchParams } from 'react-router-dom'
-import { studio } from '../data/products'
+import type { CSSProperties } from 'react'
+import { compact, studio, type Product } from '../data/products'
+import { useImmerse } from './immerse'
 import LandingA from './landing/LandingA'
 import LandingB from './landing/LandingB'
 import { LandingSwitch, type LandingKey } from './landing/LandingSwitch'
 import './landing/landing.css'
 import { useSettle } from './landing/settle'
-import { BASE, Reveal, SectionHead } from './ui'
+import { BASE, ButtonLink, hueVars, Reveal, SectionHead, StageBadge } from './ui'
 
 /* ——————————————————————————— studio ——————————————————————————— */
 
@@ -40,15 +42,15 @@ function Practice() {
 const RULES = [
   {
     title: 'Real interfaces only',
-    body: 'Every image here is either a genuine capture of working software or a placeholder marked as one. No invented mockups.',
+    body: 'Screenshots are genuine captures of the working apps, taken with made-up sample data. Step-by-step demos are redrawn illustrations, and say so.',
   },
   {
     title: 'Status, stated plainly',
-    body: 'In development, internal and prototype mean exactly that. Nothing is presented as more finished or more available than it is.',
+    body: 'Live means running and in use today, with access by invitation until plans are published. Nothing is presented as more available than it is.',
   },
   {
     title: 'Private stays private',
-    body: 'No customer information, credentials or internal operational detail appears in any capture.',
+    body: 'No customer information, credentials or internal operational detail appears in any screenshot or demo.',
   },
 ]
 
@@ -79,6 +81,60 @@ function Rules() {
             </Reveal>
           ))}
         </div>
+      </div>
+    </section>
+  )
+}
+
+/** A product with a smaller presence: a short mention with the way in, not a full screen. */
+function Also({ product }: { product: Product }) {
+  const { ref, on } = useImmerse<HTMLElement>()
+  return (
+    <section
+      ref={ref}
+      id={product.slug}
+      className="also sp-immersive sp-immersive-field"
+      data-hue=""
+      data-immersed={on || undefined}
+      style={{ ...hueVars(product), scrollMarginTop: '4rem' } as CSSProperties}
+      aria-labelledby={`${product.slug}-name`}
+    >
+      <div className="sp-wrap also-grid">
+        <div className="also-copy">
+          <p className="sp-mono app-kicker">
+            <span className="app-kicker-n">Also from the studio</span>
+            <span className="sp-mono-dim">{product.discipline}</span>
+          </p>
+          <h2 id={`${product.slug}-name`} className="sp-name also-name">
+            {product.name}
+          </h2>
+          <p className="app-tagline">{product.tagline}</p>
+          <p className="app-summary">{product.summary}</p>
+          <p className="app-status">
+            <StageBadge product={product} />
+            <span>{product.availability}</span>
+            {product.stage === 'live' && (
+              <Link className="sp-link app-plans" to={`${BASE}/work/${product.slug}/plans`} viewTransition>
+                Plans
+              </Link>
+            )}
+          </p>
+          <div className="app-go">
+            <ButtonLink to={`${BASE}/work/${product.slug}`}>Open {product.name}</ButtonLink>
+            <ButtonLink ghost to={`${BASE}/work/${product.slug}#demo`}>
+              Watch the demo
+            </ButtonLink>
+          </div>
+        </div>
+        <ul className="also-covers" aria-label="What it covers">
+          {product.focus.map((f, i) => (
+            <li key={f.title}>
+              <span className="sp-mono">{String(i + 1).padStart(2, '0')}</span>
+              <b>{f.title}</b>
+              <span>{f.note}</span>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   )
@@ -128,6 +184,9 @@ export default function Home() {
   return (
     <>
       {landing === 'a' ? <LandingA /> : <LandingB />}
+      {compact.map((p) => (
+        <Also key={p.slug} product={p} />
+      ))}
       <Practice />
       <Rules />
       <Contact />
