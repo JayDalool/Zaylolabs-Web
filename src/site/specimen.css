@@ -333,7 +333,7 @@
   text-transform: uppercase;
   margin-left: 0.3em;
   vertical-align: 0.55em;
-  color: var(--ink-3);
+  color: var(--ink-2);
 }
 .sp-nav {
   display: flex;
