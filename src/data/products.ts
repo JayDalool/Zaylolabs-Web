@@ -70,15 +70,15 @@ export const products: Product[] = [
     discipline: 'Real-estate pricing',
     tagline: 'Comparable-sales pricing a REALTOR can defend.',
     summary:
-      'Pricing tools for a licensed REALTOR, built on sold data: a valuation with its range and confidence, a comparative market analysis, a current market evaluation with a seller’s net sheet, and offer guidance for a buyer.',
+      'Pricing tools for a licensed REALTOR in Winnipeg, built on sold data: a valuation with its range and confidence, a CMA, a CME with a seller’s net sheet, and offer guidance for a buyer.',
     stage: 'live',
     stageLabel: 'Live',
     availability: 'Running today. Access is by invitation.',
     focus: [
       { title: 'Valuation', note: 'An estimated value with its range and a confidence level, from comparable sales.' },
       { title: 'CMA', note: 'Comparable sold homes, adjusted line by line, and a suggested list price.' },
-      { title: 'CME', note: 'Area statistics, sold listings and a seller’s net sheet for a listing appointment.' },
-      { title: 'Offer', note: 'What it may take to win against other offers, and where the comparables say to stop.' },
+      { title: 'CME', note: 'Market statistics, sold listings and a seller’s net sheet for a listing appointment.' },
+      { title: 'Offer', note: 'What it may take to win, and where the comparables say to stop.' },
       { title: 'Sold data', note: 'Sold data is imported and reviewed before any of it is used.' },
       { title: 'Client documents', note: 'A summary made for the client, as a PDF or by email.' },
     ],
@@ -97,7 +97,7 @@ export const products: Product[] = [
     discipline: 'Household expenses',
     tagline: 'Snap receipts. Track spending. Stay in sync.',
     summary:
-      'A private expense app for a household. Photograph a receipt and the date and total are read from it for you to check. Everyone adds to one record, and at year end the accountant gets a package with every receipt.',
+      'A private expense app for a household. Photograph a receipt and the date and total are read from it for you to check. The household shares one record, and at year end the accountant gets a package with every receipt.',
     stage: 'live',
     stageLabel: 'Live',
     availability: 'Running today. Access is by invitation.',
@@ -120,17 +120,17 @@ export const products: Product[] = [
     catalog: 'ZL-003',
     name: 'Command Center',
     discipline: 'Engineering control room',
-    tagline: 'AI agents do the engineering. A person approves every merge and every release.',
+    tagline: 'AI agents do the engineering. The decisions that matter wait for a person.',
     summary:
-      'The control room ZayloLabs builds with. It follows every task through planning, building, review and verification, watches the agents, pull requests and checks, and stops at the decisions only a person may make.',
+      'The control room ZayloLabs builds with. It follows every task from plan to release, watches the agents, pull requests and checks, and stops wherever its rules say a person must decide.',
     stage: 'live',
     stageLabel: 'Live',
-    availability: 'In daily use at ZayloLabs. Access is by invitation.',
+    availability: 'In use at ZayloLabs. Access is by invitation.',
     focus: [
       { title: 'My Office', note: 'What is happening across every project, from live data.' },
       { title: 'Engineering', note: 'Every open task by stage, and what is waiting at the release gate.' },
       { title: 'Decisions', note: 'Everything waiting for a person: questions, plans, merges and deploys.' },
-      { title: 'Approval gates', note: 'A reviewed, passing change still waits for a person to accept it.' },
+      { title: 'Approval gates', note: 'Where the rules ask for a person, the work waits for one.' },
       { title: 'Teams', note: 'Which agent sessions are working, idle, or waiting for you.' },
       { title: 'Activity', note: 'A running record of what happened, and when.' },
     ],
@@ -140,6 +140,7 @@ export const products: Product[] = [
     // Engineering HQ tokens — web/app/src/hq/tokens.css
     hue: { name: 'HQ orange', ink: '#b23a0a', bright: '#ff7a45', wash: '#fbe3d6', field: '#0f1012', on: '#ececee' },
     themes: ['dark', 'light'],
+    note: 'Shown in Engineering HQ, the app’s newer interface, which is an opt-in preview inside it today.',
   },
   {
     slug: 'gyst',
@@ -151,7 +152,7 @@ export const products: Product[] = [
       'A personal life tracker, from projects and work to health: tasks, projects broken into missions, training, nutrition, weight and water, and an AI health coach, kept in one place.',
     stage: 'live',
     stageLabel: 'Live',
-    availability: 'Running today as a personal build. Access is by invitation.',
+    availability: 'Running today as a personal build. It is not open to others yet.',
     focus: [
       { title: 'Projects', note: 'Projects broken into missions, with progress you can see.' },
       { title: 'Tasks', note: 'What needs doing today, with repeats and reminders.' },

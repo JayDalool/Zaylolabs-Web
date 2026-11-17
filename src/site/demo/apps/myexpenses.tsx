@@ -39,13 +39,13 @@ const cats = (go: Go) => (
 )
 
 const zip = (
-  <Card title="myfamilyexpenses-the-carter-household-this-year.zip">
+  <Card title="myfamilyexpenses-the-carter-household-year-2026-12-31.zip">
     <Kv k="README.txt" v="what is inside" />
     <Kv k="summary.pdf" v="the report" />
     <Kv k="index.csv · index.xlsx" v="every expense" />
     <Kv k="receipts/" v="168 files" />
     <p className="dm-dim" style={{ margin: '0.3rem 0 0' }}>
-      receipts/2026-03-14_northgate-fresh-market_20.97.jpg
+      receipts/2026-03-14_northgate-fresh-market_20.97_a1b2c3.jpg
     </p>
   </Card>
 )
@@ -59,7 +59,7 @@ export const myexpenses: Demo[] = [
     steps: [
       {
         title: 'Start from the dashboard',
-        note: 'The household keeps one record. Anyone in it can add to it.',
+        note: 'The household keeps one record. Members add to it; a viewer or an accountant can only read.',
         scene: (go) => (
           <ME on="Home">
             <Head sub={`${HOUSE} · March 2026`}>Hi, Maya</Head>
@@ -128,7 +128,7 @@ export const myexpenses: Demo[] = [
       },
       {
         title: 'The receipt is read',
-        note: 'The app reads the receipt itself, on its own server. No outside service sees it.',
+        note: 'The app reads the receipt itself, on the server it runs on.',
         auto: 2600,
         scene: () => (
           <ME on="Expenses">
@@ -161,7 +161,7 @@ export const myexpenses: Demo[] = [
           <ME on="Expenses">
             <Stepper items={WIZARD} at={2} />
             <Banner tone="ok" title="Date and amount detected">
-              Review the values below, then save.
+              No invoice/reference number was found — that’s optional. Review and save.
             </Banner>
             <Cols>
               <Field label="Invoice date" value="2026-03-14" chip="✓ Auto-filled" tone="ok" />
@@ -354,10 +354,10 @@ export const myexpenses: Demo[] = [
       },
       {
         title: 'Open the expense',
-        note: 'Each row says who paid and who entered it.',
+        note: 'Each row says what it was for, when, and who paid.',
         scene: (go) => (
           <ME on="Expenses">
-            <Head sub="Showing 3 of 41 expenses.">Expense history</Head>
+            <Head sub="Showing 3 of 3 expenses.">Expense history</Head>
             <button type="button" className="dm-rowbtn dm-hot" onClick={go}>
               <Row title="INV-88231" meta="Utilities | 2026-03-10 | Paid by Maya" value="$80.62" />
             </button>
@@ -399,8 +399,8 @@ export const myexpenses: Demo[] = [
   },
   {
     id: 'reports',
-    label: 'Monthly report',
-    summary: 'Where the money went this month, by category and by member.',
+    label: 'A report for any period',
+    summary: 'Where the money went over three months, by category, by member and by month.',
     device: 'phone',
     steps: [
       {
@@ -409,8 +409,11 @@ export const myexpenses: Demo[] = [
         scene: (go) => (
           <ME on="Reports">
             <Head sub={HOUSE}>Reports</Head>
-            <Field label="Report period" value="This month" />
-            <Field label="Category" value="All categories" />
+            <Field label="Report period" value="Custom range" />
+            <Cols>
+              <Field label="From" value="2026-01-01" />
+              <Field label="To" value="2026-03-31" />
+            </Cols>
             <Field label="Member (paid by)" value="All members" />
             <Btn go={go} wide>
               Run report
@@ -425,19 +428,19 @@ export const myexpenses: Demo[] = [
           <ME on="Reports">
             <Tiles
               items={[
-                ['$612.40', 'Total spending'],
-                ['14', 'Expense count'],
-                ['$43.74', 'Average expense'],
+                ['$1,970.48', 'Total spending'],
+                ['45', 'Expense count'],
+                ['$43.79', 'Average expense'],
               ]}
             />
             <Card title="Category breakdown">
               <Bars
                 rows={[
-                  ['Groceries', '$231.18', 100],
-                  ['Utilities', '$142.30', 62],
-                  ['Restaurant', '$96.50', 42],
-                  ['Transportation', '$88.42', 38],
-                  ['Medical', '$54.00', 23],
+                  ['Groceries', '$861.34', 100],
+                  ['Restaurant', '$312.20', 36],
+                  ['Medical', '$290.00', 34],
+                  ['Transportation', '$288.46', 33],
+                  ['Utilities', '$218.48', 25],
                 ]}
               />
             </Card>
@@ -448,15 +451,15 @@ export const myexpenses: Demo[] = [
         ),
       },
       {
-        title: 'Who paid, and the months before',
+        title: 'Who paid, month by month',
         note: 'Export the same report as a PDF, a spreadsheet, or a ZIP with every receipt.',
         scene: () => (
           <ME on="Reports">
             <Card title="Member breakdown (paid by)">
               <Bars
                 rows={[
-                  ['Maya Carter', '$371.25', 100],
-                  ['Daniel Carter', '$241.15', 65],
+                  ['Maya Carter', '$1,146.20', 100],
+                  ['Daniel Carter', '$824.28', 72],
                 ]}
               />
             </Card>

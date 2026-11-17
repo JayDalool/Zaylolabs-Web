@@ -12,9 +12,9 @@ import { useImmerse } from './immerse'
 import { BASE, ButtonLink, hueVars, SectionHead, StageBadge, Tag } from './ui'
 
 const STEPS = [
-  { title: 'Ask for access', note: 'Tell us who you are and what you would use it for.' },
-  { title: 'We set up your account', note: 'Access is given by invitation, one account at a time.' },
-  { title: 'Choose a plan when plans open', note: 'Plans and prices have not been published yet. They will appear on this page.' },
+  { title: 'Ask about access', note: 'Tell us who you are and what you would use it for.' },
+  { title: 'We reply', note: 'Access is by invitation, and it is not open to everyone yet. We will say plainly whether it is possible today.' },
+  { title: 'Plans follow', note: 'Plans and prices have not been published yet. They will appear on this page.' },
 ]
 
 export default function Plans() {
@@ -62,7 +62,7 @@ export default function Plans() {
           {product.name} <em>plans.</em>
         </h1>
         <p className="sp-lede" style={{ marginTop: 'clamp(1rem, 2vw, 1.6rem)', maxWidth: '36em' }}>
-          {product.name} is live and in use. Access is by invitation while plans are being set.
+          {product.name} is live and in use, but it is not open for sign-up. Access is by invitation while plans are being set.
         </p>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem', marginTop: '1.6rem' }}>
           <ButtonLink to="/#contact" viewTransition={false}>

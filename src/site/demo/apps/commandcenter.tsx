@@ -2,11 +2,13 @@
 /**
  * Command Center — redrawn from the Engineering HQ interface (hq/pages/Office.tsx,
  * Engineering.tsx, Decisions.tsx, DecisionAnswer.tsx, tickets/GateCard.tsx,
- * components/Merge.tsx). Projects, tasks, pull requests and people are made up.
+ * hq/pages/Teams.tsx). Projects, tasks, pull requests and people are made up.
  * The app's own wording names its agent; here it is written as "the agent".
+ * Engineering HQ is the app's newer interface and is an opt-in preview inside it;
+ * the default interface is the older Classic one.
  */
 import type { ReactNode } from 'react'
-import { Btn, Card, Gate, Head, Kv, Log, Note, Pill, Shell, Table, Tabs, Tiles, Toast, type Go, type Tone } from '../kit'
+import { Btn, Card, Gate, Head, Kv, Log, Pill, Shell, Table, Tabs, Tiles, Toast, type Go, type Tone } from '../kit'
 import type { Demo } from '../types'
 
 const NAV = ['My Office', 'Messages', 'Decisions', 'Teams', 'Company', 'Engineering', 'Revenue', 'Workspace', 'Activity', 'Files']
@@ -61,7 +63,7 @@ const stages = (pick?: number, go?: Go) => (
       ['2', 'Reviewing', 'info'],
       ['1', 'Verifying', 'info'],
       ['2', 'Ready to Merge', 'ok'],
-      ['3', 'Needs you', 'warn'],
+      ['5', 'Needs you', 'warn'],
       ['1', 'Blocked', 'bad'],
     ]}
   />
@@ -71,7 +73,7 @@ export const commandcenter: Demo[] = [
   {
     id: 'task-to-release',
     label: 'From a task to a release',
-    summary: 'One task, from the plan to the release. The agents do the work; a person approves the plan, the merge and the release.',
+    summary: 'One task, from the plan to the release. The agents do the work. This task is flagged for a person, so its plan, its merge and its release each wait for one.',
     device: 'window',
     steps: [
       {
@@ -103,10 +105,10 @@ export const commandcenter: Demo[] = [
       },
       {
         title: 'The plan waits for you',
-        note: 'Nothing is built until a person has read the plan and approved it.',
+        note: 'This task is flagged for approval, so nothing is built until a person has read the plan. Unflagged tasks plan and proceed on their own.',
         scene: (go) => (
           <CC on="Engineering" title="Engineering">
-            {ticketHead('Planning', 'idle')}
+            {ticketHead('Needs you', 'warn')}
             {work(0)}
             <Gate
               tone="violet"
@@ -122,8 +124,7 @@ export const commandcenter: Demo[] = [
                 </>
               }
             >
-              Add an Export button to the invoices table and stream the current filter as CSV. Three files, no schema change. Why you: it adds a new download
-              endpoint.
+              Add an Export button to the invoices table and stream the current filter as CSV. Three files, no schema change.
             </Gate>
           </CC>
         ),
@@ -145,7 +146,7 @@ export const commandcenter: Demo[] = [
         note: 'A reviewed, passing change still waits. Your acceptance covers one exact commit.',
         scene: (go) => (
           <CC on="Engineering" title="Engineering">
-            {ticketHead('Ready to Merge', 'ok')}
+            {ticketHead('Needs you', 'warn')}
             {work(3)}
             <Card title="Development">
               <div className="dm-line">
@@ -179,7 +180,7 @@ export const commandcenter: Demo[] = [
         note: 'Merging is not releasing. Going live is a separate decision.',
         scene: (go) => (
           <CC on="Engineering" title="Engineering">
-            {ticketHead('Verifying', 'info')}
+            {ticketHead('Needs you', 'warn')}
             {work(4)}
             <Gate
               tone="warn"
@@ -201,20 +202,20 @@ export const commandcenter: Demo[] = [
         ),
       },
       {
-        title: 'Done, and on the record',
-        note: 'Every step is in the activity record, with who decided what.',
+        title: 'Approved, and on the record',
+        note: 'Approving does not deploy by itself: the agent prepares the release and waits for your confirmation. Every decision is in the activity record.',
         scene: () => (
           <CC on="Activity" title="Activity">
-            <Tabs seg items={['All', 'Agents', 'Tasks', 'Pull requests', 'CI', 'You']} on={0} />
+            <Tabs seg items={['All', 'Agents', 'Tasks', 'Pull requests', 'CI', 'You', 'Host']} on={0} />
             <Table
               head={['', '', '']}
               rows={[
-                ['11:30', <Pill tone="accent">YOU</Pill>, `Live deploy approved · ${TASK}`],
-                ['11:02', <Pill tone="accent">YOU</Pill>, 'Merge accepted · a41c9e2'],
+                ['11:30', <Pill tone="accent">You</Pill>, `Live deploy approved · ${TASK}`],
+                ['11:02', <Pill tone="accent">You</Pill>, 'Merge accepted · a41c9e2'],
                 ['10:58', <Pill tone="info">CI</Pill>, 'Checks passed on #214'],
-                ['10:41', <Pill tone="info">PRS</Pill>, 'Pull request #214 opened'],
-                ['09:20', <Pill tone="accent">YOU</Pill>, `Plan approved · ${TASK}`],
-                ['09:12', <Pill>TASKS</Pill>, `${TASK} created`],
+                ['10:41', <Pill tone="info">PR</Pill>, 'Pull request #214 opened'],
+                ['09:20', <Pill tone="accent">You</Pill>, `Plan approved · ${TASK}`],
+                ['09:12', <Pill>Task</Pill>, `${TASK} created`],
               ]}
             />
           </CC>
@@ -240,7 +241,7 @@ export const commandcenter: Demo[] = [
               items={[
                 ['5', 'Projects · 4 healthy'],
                 ['7', 'Sessions · 5 working'],
-                ['3', 'Needs you · 1 urgent', 'warn'],
+                ['5', 'Needs you · 1 urgent', 'warn'],
                 ['Degraded', 'Health', 'warn'],
               ]}
             />
@@ -273,7 +274,7 @@ export const commandcenter: Demo[] = [
               />
             </Card>
             <Btn go={go} small>
-              View all 3
+              View all 5
             </Btn>
           </CC>
         ),
@@ -379,96 +380,60 @@ export const commandcenter: Demo[] = [
     ],
   },
   {
-    id: 'merge-ready',
-    label: 'Merge what is ready',
-    summary: 'Reviewed, passing pull requests are merged in order, when you say so. Nothing is released.',
+    id: 'teams',
+    label: 'See who is working',
+    summary: 'Every agent session, what it is on, and which one is waiting for you.',
     device: 'window',
     steps: [
       {
-        title: 'The release gate',
-        note: 'These pull requests are reviewed and passing. They wait here.',
+        title: 'Sessions at a glance',
+        note: 'Each project has seats: a lead, a developer, reviewers. A seat shows who holds it and what they are doing.',
         scene: (go) => (
-          <CC on="Engineering" title="Engineering">
-            <Card title="Release gate · Ready to merge">
+          <CC on="Teams" title="Teams">
+            <Tiles
+              pick={1}
+              go={go}
+              items={[
+                ['7', 'Sessions · 5 working'],
+                ['1', 'Waiting for you', 'warn'],
+                ['4 of 5', 'Leads'],
+                ['1', 'Status unknown'],
+              ]}
+            />
+            <Card title="Atlas · Seats">
               <Table
-                head={['Key', 'Title', '']}
-                wide={[2]}
+                head={['Seat', 'Session', 'On', '']}
+                wide={[1]}
                 rows={[
-                  [key(TASK), `${TITLE} · Pull request #214 · Atlas`, dot('Awaiting merge', 'ok')],
-                  [key('ATL-139'), 'Tidy invoice number formatting · Pull request #211 · Atlas', dot('Awaiting merge', 'ok')],
-                  [key('HBR-84'), 'Show the booking timezone · Pull request #77 · Harbor', dot('Awaiting merge', 'ok')],
+                  ['Lead', 'atlas', '—', dot('Working', 'ok')],
+                  ['Developer', 'atl-147-build', key('ATL-147'), dot('Working', 'ok')],
+                  ['Code reviewer', 'atl-142-review', key(TASK), dot('Idle', 'idle')],
                 ]}
               />
-              <p className="dm-dim" style={{ margin: '0.4rem 0 0' }}>
-                You merge. Nothing on this page merges.
-              </p>
             </Card>
-            <Btn go={go} small>
-              Merge ready
-            </Btn>
           </CC>
         ),
       },
       {
-        title: 'One repository at a time',
-        note: 'Each repository’s agent merges its pull requests in order.',
-        scene: (go) => (
-          <CC on="Engineering" title="Engineering">
-            <div className="dm-dialog">
-              <b>Merge ready</b>
-              <Note>Each repository’s agent merges its PRs one at a time, in this order. Nothing is deployed — that stays Go Live.</Note>
-              <div className="dm-line">
-                <span>
-                  <b>Atlas</b> <span className="dm-dim">2 ready · 0 not mergeable</span>
-                </span>
-                <Btn ghost small>
-                  Merge 2
-                </Btn>
-              </div>
-              <div className="dm-line">
-                <span>
-                  <b>Harbor</b> <span className="dm-dim">1 ready · 0 not mergeable</span>
-                </span>
-                <Btn ghost small>
-                  Merge 1
-                </Btn>
-              </div>
-              <Btn go={go} small>
-                Merge all ready (3)
-              </Btn>
-            </div>
-          </CC>
-        ),
-      },
-      {
-        title: 'Confirm',
-        note: 'A merge is never one click.',
-        scene: (go) => (
-          <CC on="Engineering" title="Engineering">
-            <div className="dm-dialog">
-              <b>Merge 3 PRs in 2 repositories?</b>
-              <div className="dm-line">
-                <Btn go={go} small>
-                  Yes, merge
-                </Btn>
-                <Btn ghost small>
-                  Cancel
-                </Btn>
-              </div>
-            </div>
-          </CC>
-        ),
-      },
-      {
-        title: 'Merged, not released',
-        note: 'The tasks move to Verifying. Going live is still its own approval.',
+        title: 'The one that is waiting',
+        note: 'A session that has asked you something says so, and for how long. A stale feed reads Unknown, never Working.',
         scene: () => (
-          <CC on="Engineering" title="Engineering">
-            {stages()}
-            <Card title="Release gate · Ready to merge">
-              <p className="dm-dim" style={{ margin: 0 }}>
-                Nothing is waiting for your merge.
-              </p>
+          <CC on="Teams" title="Teams">
+            <Card title="Harbor · Seats">
+              <Table
+                head={['Seat', 'Session', 'On', '']}
+                wide={[1]}
+                rows={[
+                  ['Developer', 'hbr-88-build', key('HBR-88'), dot('Waiting for you · 12m', 'warn')],
+                  ['Lead', 'harbor', '—', dot('Working', 'ok')],
+                ]}
+              />
+            </Card>
+            <Card title="Juniper · Seats">
+              <div className="dm-line">
+                <span>Lead</span>
+                {dot('Unknown · feed not live', 'idle')}
+              </div>
             </Card>
           </CC>
         ),

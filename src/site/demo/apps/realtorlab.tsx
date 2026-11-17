@@ -25,6 +25,14 @@ const badge = (word: string, tone: 'ok' | 'warn' | 'bad' = 'ok') => (
     ● {word}
   </span>
 )
+/** A sale that sold over asking is counted at its asking price, and the worksheet says so. */
+const over = (sold: string) => (
+  <>
+    {sold}
+    <br />
+    <small className="dm-dim">counted at its asking price</small>
+  </>
+)
 const DISCLAIMER = 'Decision support for a licensed REALTOR — not a formal appraisal. Not for financing, taxation or litigation.'
 
 const subjectFields = (
@@ -48,7 +56,7 @@ const comparables = (go?: Go) => (
         [<Toggle on />, '209914821', 'Larkfield', '14 Jun 2026', '$418,500', '$334.80', <Meter value={91} />],
         [<Toggle on />, '209913377', 'Larkfield', '02 May 2026', '$405,900', '$329.19', <Meter value={88} />],
         [<Toggle on />, '209915560', 'Larkfield', '21 Jul 2026', '$412,000', '$331.45', <Meter value={84} />],
-        [<Toggle />, '209912204', 'Aspen Hollow', '11 Apr 2026', '$447,000', '$352.60', <Meter value={68} tone="warn" />],
+        [<Toggle />, '209912204', 'Larkfield', '11 Apr 2026', '$447,000', '$352.60', <Meter value={68} tone="warn" />],
       ]}
     />
     {go && (
@@ -203,11 +211,11 @@ export const realtorlab: Demo[] = [
       },
       {
         title: 'Check the sales that count',
-        note: 'The worksheet is yours to correct. Set aside a sale that does not belong.',
+        note: 'The worksheet is yours to correct. A sale that sold over asking is counted at its asking price.',
         scene: (go) => (
           <RL title={SUBJECT} tag="CMA worksheet" tool={1}>
             <Card>
-              <Figure label="As it stands" value="$414,900" side={<Pill tone="info">8 counted</Pill>} />
+              <Figure label="As it stands" value="$414,900" side={<Pill tone="info">8 comparable sales</Pill>} />
             </Card>
             <Card title="Counted · Comparables">
               <Table
@@ -215,14 +223,13 @@ export const realtorlab: Demo[] = [
                 num={[2, 3, 4]}
                 wide={[1, 2]}
                 rows={[
-                  ['209914821', '14 Jun 2026', '$409,900', '$418,500', '$412,500', ''],
-                  ['209913377', '02 May 2026', '$399,900', '$401,000', '$410,000', ''],
+                  ['209913377', '02 May 2026', '$409,900', '$405,900', '$414,900', ''],
                   [
                     '209912204',
                     '11 Apr 2026',
                     '$439,900',
-                    '$447,000',
-                    '$441,000',
+                    over('$447,000'),
+                    '$439,900',
                     <Btn go={go} small ghost>
                       Set aside
                     </Btn>,
@@ -235,11 +242,11 @@ export const realtorlab: Demo[] = [
       },
       {
         title: 'The figure follows your judgement',
-        note: 'The sale you set aside stays on the record, with your reason.',
+        note: 'The CMA is rebuilt without that sale, so the next best sale steps in. Your reason stays on the record.',
         scene: (go) => (
           <RL title={SUBJECT} tag="CMA worksheet" tool={1}>
             <Card>
-              <Figure label="As it stands" value="$409,900" side={<Pill tone="info">7 counted</Pill>} />
+              <Figure label="As it stands" value="$410,900" side={<Pill tone="info">8 comparable sales</Pill>} />
             </Card>
             <Card title="Not counted · Set aside">
               <div className="dm-line">
@@ -260,20 +267,20 @@ export const realtorlab: Demo[] = [
       },
       {
         title: 'The client report',
-        note: 'A suggested list price, the range, and each adjustment line by line.',
+        note: 'The suggested list price is the average of the adjusted prices. Each adjustment is shown line by line.',
         scene: () => (
           <RL title={SUBJECT} tag="Client report" tool={1}>
             <div className="dm-sheet">
               <p className="dm-eyebrow">Comparative market analysis</p>
-              <Figure label="Suggested list price" value="$409,900" sub="RANGE $399,000 – $419,000" />
+              <Figure label="Suggested list price" value="$410,900" sub="RANGE $403,900 – $421,400" />
               <Table
                 head={['MLS', 'Price used', 'Bedrooms', 'Basement', 'Garage', 'Adjusted price']}
                 num={[1, 2, 3, 4, 5]}
                 wide={[2, 4]}
                 rows={[
-                  ['•••4821', '$418,500', '$0', '−$6,000', '$0', '$412,500'],
-                  ['•••3377', '$401,000', '+$5,000', '$0', '+$4,000', '$410,000'],
-                  ['•••5560', '$405,900', '$0', '+$3,000', '$0', '$408,900'],
+                  ['•••4821', '$409,900', '$0', '−$6,000', '$0', '$403,900'],
+                  ['•••3377', '$405,900', '+$5,000', '$0', '+$4,000', '$414,900'],
+                  ['•••5560', '$404,900', '$0', '+$3,000', '$0', '$407,900'],
                 ]}
               />
               <p className="dm-dim">Built from sold listings only. Active and expired listings are not included.</p>
@@ -294,32 +301,33 @@ export const realtorlab: Demo[] = [
         note: 'The net sheet is optional. Leave it blank and the CME prints without it.',
         scene: (go) => (
           <RL title="Current market evaluation" tag="Sold listings only" tool={2}>
-            <Field label="Property address" value={SUBJECT} />
-            <p className="dm-eyebrow">Seller’s net sheet · Optional · Saved with the CME</p>
+            <p className="dm-eyebrow">{SUBJECT} · Seller’s net sheet · Optional · Saved with the CME</p>
             <Cols>
               <Field label="Sale price" value="410,000" type />
-              <Field label="Commission, %" value="4.5" type delay={400} />
-              <Field label="Legal fees" value="1,200" type delay={800} />
+              <Field label="Commission, %" value="4.5" type delay={300} />
+              <Field label="Legal fees" value="1,200" type delay={600} />
+              <Field label="Property tax adjustment" value="640" type delay={900} />
               <Field label="Mortgage payout" value="186,000" type delay={1200} />
+              <Field label="Mortgage penalty" value="1,850" type delay={1500} />
             </Cols>
-            <Btn go={go}>Create CME</Btn>
+            <Btn go={go}>Value and open CME</Btn>
           </RL>
         ),
       },
       {
         title: 'The market, in three figures',
-        note: 'Area statistics come first, then the suggested list price.',
+        note: 'Market statistics come first, then the suggested list price, which is the valuation’s figure.',
         scene: (go) => (
           <RL title={SUBJECT} tag="Current market evaluation" tool={2}>
             <Kpis
               items={[
-                ['Sold in the last 90 days', '23'],
+                ['Sold in the last 30 days', '412'],
                 ['Average days on market', '18'],
-                ['Sold over asking', '9 of 23'],
+                ['Sold over asking', '171 of 412'],
               ]}
             />
             <Card>
-              <Figure label="Suggested list price" value="$409,900" sub="RANGE $399,000 – $419,000" />
+              <Figure label="Suggested list price" value="$412,000" sub="RANGE $396,000 – $428,000" />
             </Card>
             <Btn go={go} small>
               Seller’s net sheet
@@ -401,7 +409,7 @@ export const realtorlab: Demo[] = [
           <RL title={SUBJECT} tag="What to offer" tool={3}>
             <Banner tone="info" title="Compete up to the ceiling, and stop there." />
             <Card title="Walk-away check">
-              <Ledger rows={[['Asking price', '$399,900']]} total={['Most the comparables support', '$428,000']} />
+              <Ledger rows={[]} total={['Most the comparables support', '$428,000']} />
               <p className="dm-dim" style={{ margin: '0.3rem 0 0' }}>
                 A ceiling, not a valuation.
               </p>
@@ -503,23 +511,12 @@ export const realtorlab: Demo[] = [
         title: 'Added, and ready to use',
         note: 'Only now are these sales available to a valuation.',
         scene: () => (
-          <RL on="Sold data" title="Sold data" tag="3 imports">
+          <RL on="Sold data" title="Import" tag="Added">
             <Toast>214 sales added. They are available in valuations now.</Toast>
-            <Kpis
-              items={[
-                ['Sales in your data', '1,714'],
-                ['Sold dates covered', '03 Jan 2025 – 14 Nov 2026'],
-                ['Last import', '16 Nov 2026'],
-              ]}
-            />
-            <Table
-              head={['Started', 'Status', 'Read', 'Added']}
-              num={[2, 3]}
-              rows={[
-                ['16 Nov 2026', <Pill tone="ok">Added</Pill>, '221', '214'],
-                ['02 Sep 2026', <Pill tone="ok">Added</Pill>, '760', '752'],
-              ]}
-            />
+            <div className="dm-line">
+              <Btn>Value a property</Btn>
+              <Btn ghost>Import more data</Btn>
+            </div>
           </RL>
         ),
       },

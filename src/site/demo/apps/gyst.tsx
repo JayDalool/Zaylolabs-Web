@@ -20,7 +20,7 @@ function GY({ on, hot, go, children }: { on: string; hot?: string; go?: Go; chil
 const checklist = (done: boolean, go?: Go) => {
   const first = <Row title="Review pull request" meta="coding · daily · high" tick={done} />
   return (
-    <Card title={done ? 'Today’s checklist · 2 done · 1 left · 0 skipped' : 'Today’s checklist · 1 done · 2 left · 0 skipped'}>
+    <Card title={done ? 'Today’s checklist · 2 done · 1 left' : 'Today’s checklist · 1 done · 2 left'}>
       {go ? (
         <button type="button" className="dm-rowbtn dm-hot" onClick={go}>
           {first}
@@ -28,7 +28,7 @@ const checklist = (done: boolean, go?: Go) => {
       ) : (
         first
       )}
-      <Row title="Book dentist" meta="personal · none · high · due tomorrow" tick={false} fresh={!done} />
+      <Row title="Call the garage" meta="personal · none · high" tick={false} fresh={!done} />
       <Row title="Mobility routine" meta="health · daily · medium" tick />
     </Card>
   )
@@ -43,13 +43,13 @@ export const gyst: Demo[] = [
     steps: [
       {
         title: 'Today',
-        note: 'The day opens on what is due, and nothing else.',
+        note: 'The day opens on what is due today. Quick capture is one key away.',
         scene: (go) => (
           <GY on="Today">
             <div className="dm-line">
-              <Head sub="Monday 16 November">Today</Head>
-              <Btn go={go} small>
-                + Add task
+              <Head sub="Nov 16, 2026">Today</Head>
+              <Btn go={go} small ghost>
+                Search and quick capture · Ctrl K
               </Btn>
             </div>
             <Card>
@@ -58,7 +58,7 @@ export const gyst: Demo[] = [
                 Small steps build the life you want.
               </p>
             </Card>
-            <Card title="Today’s checklist · 1 done · 1 left · 0 skipped">
+            <Card title="Today’s checklist · 1 done · 1 left">
               <Row title="Review pull request" meta="coding · daily · high" tick={false} />
               <Row title="Mobility routine" meta="health · daily · medium" tick />
             </Card>
@@ -67,14 +67,14 @@ export const gyst: Demo[] = [
       },
       {
         title: 'Capture a task in one line',
-        note: 'Type it the way you would say it. “tomorrow” sets the date and “!high” the priority.',
+        note: 'Type it in one line. “!high” sets the priority, and a word like “tomorrow” would set the date.',
         scene: (go) => (
           <GY on="Today">
             <div className="dm-dialog">
               <Tabs seg items={['Go', 'Capture']} on={1} />
-              <Field label="Quick task" value="Book dentist tomorrow !high" type />
+              <Field label="Quick task" value="Call the garage !high" type />
               <Cols>
-                <Field label="Due" value="Tomorrow" />
+                <Field label="Due" value="Nov 16, 2026" />
                 <Field label="Priority" value="High" />
                 <Field label="Category" value="personal" />
               </Cols>
@@ -88,7 +88,7 @@ export const gyst: Demo[] = [
         note: 'The new task is on the list. Finishing a task earns XP.',
         scene: (go) => (
           <GY on="Today">
-            <Head sub="Monday 16 November">Today</Head>
+            <Head sub="Nov 16, 2026">Today</Head>
             {checklist(false, go)}
           </GY>
         ),
@@ -98,10 +98,10 @@ export const gyst: Demo[] = [
         note: 'Every completion counts toward a streak and a level. Next: projects.',
         scene: (go) => (
           <GY on="Today" hot="Projects" go={go}>
-            <Toast>Done · Review pull request · +20 XP</Toast>
+            <Toast>Done · Review pull request · +35 XP</Toast>
             {checklist(true)}
             <div className="dm-line">
-              <Pill tone="violet">Streak: 6 days · level 4 · 1,240 XP</Pill>
+              <Pill tone="violet">Streak: 6 days · level 13 · 1240 XP</Pill>
             </div>
           </GY>
         ),
@@ -120,7 +120,7 @@ export const gyst: Demo[] = [
                   </span>
                   <Pill tone="info">Active</Pill>
                 </div>
-                <Bars rows={[['Next: Order rubber flooring', '60%', 60]]} />
+                <Bars rows={[['Next: Order rubber flooring · Nov 20, 2026', '60%', 60]]} />
               </Card>
             </button>
             <Card>
@@ -128,7 +128,7 @@ export const gyst: Demo[] = [
                 <span>
                   <b>Portfolio site</b> <span className="dm-dim">coding · project</span>
                 </span>
-                <Pill>Upcoming</Pill>
+                <Pill tone="info">Active</Pill>
               </div>
               <Bars rows={[['3 of 8 missions complete', '38%', 38]]} />
             </Card>
@@ -146,10 +146,10 @@ export const gyst: Demo[] = [
         note: 'Each mission has a priority and an XP reward. Next: health.',
         scene: (go) => (
           <GY on="Projects" hot="Health" go={go}>
-            <Head sub="6 of 10 missions done · target 15 Dec · active.">Home gym build</Head>
+            <Head sub="6 of 10 missions done · target Dec 15, 2026 · active.">Home gym build</Head>
             <Progress label="60% complete" />
             <Tabs seg items={['Overview', 'Tasks', 'Roadmap', 'Notes']} on={1} />
-            <Row title="Order rubber flooring" meta="high · 20 XP" tick={false} />
+            <Row title="Order rubber flooring" meta="high · 35 XP" tick={false} />
             <Row title="Mount pull-up bar" meta="medium · 20 XP" tick />
           </GY>
         ),
