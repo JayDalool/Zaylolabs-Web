@@ -1,8 +1,9 @@
 import { lazy, Suspense, useEffect, useState } from 'react'
 import { Link, NavLink, Route, Routes, useLocation } from 'react-router-dom'
-import { products, studio } from '../data/products'
+import { productBySlug, products, studio } from '../data/products'
+import { useCurrentApp } from './immerse'
 import Home from './Home'
-import { BASE, ButtonLink, Logo } from './ui'
+import { BASE, ButtonLink, hueVars, Logo } from './ui'
 import './specimen.css'
 
 const Catalogue = lazy(() => import('./Catalogue'))
@@ -14,6 +15,9 @@ function Header() {
   const [stuck, setStuck] = useState(false)
   const [open, setOpen] = useState(false)
   const { pathname } = useLocation()
+  // On an app's own pages the header is that app's; elsewhere it follows the section on screen.
+  const here = useCurrentApp()
+  const app = productBySlug(pathname.match(/^\/work\/([^/]+)/)?.[1] ?? here ?? undefined)
 
   useEffect(() => {
     const on = () => setStuck(window.scrollY > 8)
@@ -34,7 +38,7 @@ function Header() {
   }, [open])
 
   return (
-    <header className={`sp-header ${stuck || open ? 'is-stuck' : ''}`}>
+    <header className={`sp-header sp-immersive ${stuck || open ? 'is-stuck' : ''}`} data-hue={app ? '' : undefined} data-immersed={app ? '' : undefined} style={app ? hueVars(app) : undefined}>
       <div className="sp-wrap sp-header-in">
         <Logo />
         <button className="sp-menu-btn" aria-expanded={open} aria-controls="sp-nav" aria-label={open ? 'Close menu' : 'Open menu'} onClick={() => setOpen((v) => !v)}>

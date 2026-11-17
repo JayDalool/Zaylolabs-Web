@@ -162,19 +162,6 @@ export function Receipt({ small, shop = 'NORTHGATE FRESH MARKET', total = '20.97
   )
 }
 
-/** The place a receipt photo goes: an in-page uploader, nothing leaves the browser. */
-export function Dropzone({ children }: { children: ReactNode }) {
-  return (
-    <div className="dm-drop">
-      <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true">
-        <path d="M4 10h5l2-3h8l2 3h5v14H4V10Z" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" />
-        <circle cx="15" cy="16.5" r="4.2" fill="none" stroke="currentColor" strokeWidth="1.4" />
-      </svg>
-      {children}
-    </div>
-  )
-}
-
 /** A made-up file chooser. The highlighted file is the one the demo uses. */
 export function Files({ files, pick, go, title = 'Choose a photo' }: { files: [string, string][]; pick: number; go: Go; title?: string }) {
   return (
@@ -206,22 +193,6 @@ export function Progress({ label }: { label: string }) {
       <i>
         <b />
       </i>
-    </div>
-  )
-}
-
-/** A document preview: a title and ruled lines standing in for text. */
-export function Doc({ title, sections }: { title: string; sections: string[] }) {
-  return (
-    <div className="dm-doc">
-      <b>{title}</b>
-      {sections.map((s) => (
-        <div key={s}>
-          <span>{s}</span>
-          <i />
-          <i />
-        </div>
-      ))}
     </div>
   )
 }

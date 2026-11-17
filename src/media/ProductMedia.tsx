@@ -56,26 +56,6 @@ export function ProductMedia({ product, surface, slot = 1, label, tone, classNam
   )
 }
 
-/** Interface video slot: real file when present, otherwise an honest empty state. */
-export function ProductVideo({ product, slot = 1, label, className = '' }: { product: Product; slot?: number; label?: string; className?: string }) {
-  const real = realMedia(product.slug, 'video', slot)
-  if (real) {
-    return (
-      <video className={`zm-media ${className}`} src={real} controls muted playsInline preload="metadata" aria-label={`${product.name} — ${label ?? 'interface video'}`} />
-    )
-  }
-  return (
-    <div className={`zm-media zm-video-empty ${className}`} data-placeholder="true" role="img" aria-label={`Placeholder — no ${product.name} interface video has been added yet`}>
-      <span className="zm-video-play" aria-hidden="true" />
-      <span className="zm-video-note">
-        <b>PLACEHOLDER</b> · video slot — {label ?? 'interface walkthrough'}
-        <br />
-        {product.slug}/video/ is empty
-      </span>
-    </div>
-  )
-}
-
 /** Desktop application window chrome. Styled through --frame-* variables. */
 export function WindowFrame({ title, children, className = '', style }: { title?: string; children: ReactNode; className?: string; style?: CSSProperties }) {
   return (

@@ -1,7 +1,7 @@
 /** Living reference for the Specimen design system. Everything shown is the real component. */
 import type { ReactNode } from 'react'
 import { products } from '../data/products'
-import { PhoneFrame, ProductGlyph, ProductMedia, ProductVideo, WindowFrame } from '../media/ProductMedia'
+import { PhoneFrame, ProductGlyph, ProductMedia, WindowFrame } from '../media/ProductMedia'
 import { BASE, ButtonLink, Fig, FocusList, hueVars, StageBadge, Tag, ZMark } from './ui'
 
 function Block({ title, note, children }: { title: string; note?: string; children: ReactNode }) {
@@ -76,7 +76,6 @@ const ADD_PRODUCT = `// 1 — src/data/products.ts
 // 2 — drop captures in (optional; placeholders render until you do)
 src/assets/products/newproduct/desktop/01-overview.png
 src/assets/products/newproduct/mobile/01-home.png
-src/assets/products/newproduct/video/01-tour.mp4
 
 // 3 — a step-by-step demo: src/site/demo/apps/newproduct.tsx, and its skin in skins.css
 //     (redrawn from the real screens, made-up data, nothing the app cannot do)
@@ -202,7 +201,7 @@ export default function System() {
         </div>
       </Block>
 
-      <Block title="Media kit" note="WindowFrame, PhoneFrame, ProductMedia and ProductVideo. Slots fill from src/assets/products/<slug>/ in filename order.">
+      <Block title="Media kit" note="WindowFrame, PhoneFrame and ProductMedia. Slots fill from src/assets/products/<slug>/ in filename order.">
         <div className="sp-grid" style={{ rowGap: '1.5rem', alignItems: 'end' }} data-hue="">
           <div className="col-span-12 md:col-span-8" data-hue="" style={hueVars(sam)}>
             <WindowFrame title="WindowFrame · ProductMedia desktop">
@@ -215,10 +214,7 @@ export default function System() {
             </PhoneFrame>
           </div>
         </div>
-        <div style={{ border: '1px solid var(--ink)', borderRadius: 'var(--radius)', overflow: 'hidden', maxWidth: '36rem' }}>
-          <ProductVideo product={sam} />
-        </div>
-        <Fig n="S1">Empty slots — stamped placeholders, never fictional screenshots</Fig>
+        <Fig n="S1">Real screenshots where they exist; an empty slot shows a stamped placeholder, never a fictional screen</Fig>
       </Block>
 
       <Block title="Lists" note="A product’s “what it covers” list. The same list drives the screen viewer and the home sections.">

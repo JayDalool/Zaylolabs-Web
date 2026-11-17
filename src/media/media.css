@@ -23,45 +23,6 @@
   display: block;
 }
 
-.zm-video-empty {
-  aspect-ratio: 16 / 9;
-  display: grid;
-  place-items: center;
-  align-content: center;
-  gap: 1.1rem;
-  text-align: center;
-  background: repeating-linear-gradient(
-      135deg,
-      transparent 0 14px,
-      color-mix(in srgb, var(--sch-ink, #1a1915) 5%, transparent) 14px 15px
-    ),
-    var(--sch-paper, #f1ede3);
-  color: var(--sch-ink, #1a1915);
-  font: 500 0.72rem/1.6 var(--sch-font, ui-monospace, Menlo, monospace);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-.zm-video-empty b {
-  color: var(--sch-accent, #e8431c);
-  font-weight: 600;
-}
-.zm-video-play {
-  width: 4rem;
-  height: 4rem;
-  border-radius: 50%;
-  border: 1.5px solid currentColor;
-  position: relative;
-}
-.zm-video-play::after {
-  content: '';
-  position: absolute;
-  left: 54%;
-  top: 50%;
-  translate: -50% -50%;
-  border-left: 1rem solid currentColor;
-  border-block: 0.62rem solid transparent;
-}
-
 .zm-window {
   margin: 0;
   border-radius: var(--frame-radius, 12px);

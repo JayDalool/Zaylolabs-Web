@@ -219,6 +219,8 @@ export default function Catalogue() {
   // Small screens start on the named list: the drawer's tabs only have room for catalogue numbers there.
   const [view, setView] = useState<'drawer' | 'index'>(() => (window.matchMedia('(max-width: 640px)').matches ? 'index' : 'drawer'))
   const list = useMemo(() => products.filter((p) => stage === 'all' || p.stage === stage), [stage])
+  // a filter is only worth showing when the products are at different stages
+  const inUse = stages.filter((s) => products.some((p) => p.stage === s.id))
 
   return (
     <div className="sp-wrap" style={{ paddingBlock: 'clamp(2rem, 5vw, 4.5rem) clamp(4rem, 8vw, 7rem)' }}>
@@ -231,16 +233,22 @@ export default function Catalogue() {
         </h1>
       </Reveal>
       <Reveal delay={0.1} style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem 2rem', justifyContent: 'space-between', alignItems: 'center', marginTop: 'clamp(1.6rem, 4vw, 3rem)' }}>
-        <div className="sp-chips" role="group" aria-label="Filter by stage">
-          <button className="sp-chip" aria-pressed={stage === 'all'} onClick={() => setStage('all')}>
-            All <sup>{products.length}</sup>
-          </button>
-          {stages.map((s) => (
-            <button key={s.id} className="sp-chip" aria-pressed={stage === s.id} onClick={() => setStage(s.id)} title={s.blurb}>
-              {s.label} <sup>{products.filter((p) => p.stage === s.id).length}</sup>
+        {inUse.length > 1 ? (
+          <div className="sp-chips" role="group" aria-label="Filter by stage">
+            <button className="sp-chip" aria-pressed={stage === 'all'} onClick={() => setStage('all')}>
+              All <sup>{products.length}</sup>
             </button>
-          ))}
-        </div>
+            {inUse.map((s) => (
+              <button key={s.id} className="sp-chip" aria-pressed={stage === s.id} onClick={() => setStage(s.id)} title={s.blurb}>
+                {s.label} <sup>{products.filter((p) => p.stage === s.id).length}</sup>
+              </button>
+            ))}
+          </div>
+        ) : (
+          <p className="sp-body" style={{ margin: 0 }}>
+            {inUse[0]?.blurb}
+          </p>
+        )}
         <div className="sp-seg" role="group" aria-label="View">
           <button aria-pressed={view === 'drawer'} onClick={() => setView('drawer')}>
             Drawer
@@ -250,9 +258,6 @@ export default function Catalogue() {
           </button>
         </div>
       </Reveal>
-      <p className="sp-mono sp-mono-dim" style={{ margin: '1.2rem 0 0' }}>
-        {stage === 'all' ? 'Every product, with its actual stage.' : stages.find((s) => s.id === stage)?.blurb}
-      </p>
 
       {view === 'drawer' ? (
         <Drawer list={list} />

@@ -205,8 +205,6 @@ export const studio = {
   name: 'ZayloLabs',
   domain: 'zaylolabs.com',
   line: 'An independent software development studio.',
-  about:
-    'ZayloLabs builds applications, AI-powered tools, business automation and specialised digital solutions — starting with its own products.',
   practice: [
     { title: 'Applications', note: 'Software products designed and built in the studio.' },
     { title: 'AI-powered tools', note: 'Tools where a model does part of the work.' },

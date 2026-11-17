@@ -9,6 +9,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { featured, products, studio } from '../../data/products'
 import { ProductGlyph } from '../../media/ProductMedia'
+import { useReportApp } from '../immerse'
 import { BASE, ButtonLink, EASE, hueVars } from '../ui'
 import { AppPose, AppSection } from './shared'
 
@@ -20,6 +21,7 @@ export default function LandingB() {
   const touched = useRef(false)
   const off = useRef(0)
   const product = products[active]
+  useReportApp(product.slug, lit)
 
   // Once, on arrival: the screen runs through each app's colours, then settles back to paper.
   useEffect(() => {
@@ -69,7 +71,7 @@ export default function LandingB() {
               <br />
               <em>We build the software.</em>
             </h1>
-            <p className="sp-lede">{studio.about} Our own are below, shown as they really are.</p>
+            <p className="sp-lede">We design and build software, starting with our own. Each product below is shown as it really is.</p>
             <div className="lb-cta">
               <ButtonLink to="/#contact" viewTransition={false}>
                 Start a conversation

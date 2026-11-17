@@ -640,10 +640,6 @@
   border-color: var(--rule-2);
   background: var(--paper);
 }
-.dm-screen .dm-drop {
-  padding: 0.9rem 0.8rem;
-  border-color: var(--ap-field-line);
-}
 .dm-screen .dm-log {
   font-size: 0.72rem;
 }
@@ -969,13 +965,6 @@ button.dm-tile {
 }
 .dm-toggle[data-on]::after {
   left: 0.85rem;
-}
-/* small helpers used by the scenes */
-.dm-split {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
-  gap: 0.55rem;
-  align-items: start;
 }
 .dm-line {
   display: flex;

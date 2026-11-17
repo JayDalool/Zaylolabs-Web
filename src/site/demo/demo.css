@@ -520,28 +520,6 @@
   font-size: 0.34rem;
   rotate: -4deg;
 }
-.dm-drop {
-  display: grid;
-  justify-items: center;
-  gap: 0.4rem;
-  padding: 1.4rem 1rem;
-  border: 1.5px dashed var(--rule-2);
-  border-radius: 12px;
-  background: var(--paper);
-  text-align: center;
-  color: var(--ink-2);
-}
-.dm-drop b {
-  color: var(--ink);
-  font-weight: 600;
-}
-.dm-drop span {
-  font-size: 0.84rem;
-}
-.dm-drop .dm-btn {
-  justify-self: center;
-  margin-top: 0.4rem;
-}
 .dm-files {
   display: grid;
   gap: 0.35rem;
@@ -609,36 +587,6 @@ button.dm-file {
   background: var(--hue-ink);
   transform-origin: left;
   animation: dm-grow 1.9s ease-in-out both;
-}
-.dm-doc {
-  display: grid;
-  gap: 0.6rem;
-  padding: 0.9rem 1rem;
-  background: #fbfaf6;
-  color: #15140f;
-  border: 1px solid rgba(21, 20, 15, 0.45);
-  border-radius: 4px;
-  box-shadow: 0 14px 26px -16px rgba(0, 0, 0, 0.5);
-}
-.dm-doc b {
-  font: 400 1.05rem/1.2 var(--serif);
-}
-.dm-doc div {
-  display: grid;
-  gap: 0.25rem;
-}
-.dm-doc span {
-  font: 500 0.56rem/1 var(--mono);
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  color: rgba(21, 20, 15, 0.7);
-}
-.dm-doc i {
-  height: 2px;
-  background: rgba(21, 20, 15, 0.22);
-}
-.dm-doc i:last-child {
-  width: 70%;
 }
 .dm-log {
   display: grid;

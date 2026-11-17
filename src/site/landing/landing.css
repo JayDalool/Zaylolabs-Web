@@ -245,26 +245,6 @@ button.app-cover[aria-pressed='true']::before {
   transform: translateZ(-70px) rotateY(-14deg);
   filter: brightness(0.9);
 }
-.app-hatch {
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(135deg, color-mix(in srgb, var(--paper-hi) 88%, transparent) 0 14px, color-mix(in srgb, var(--paper-hi) 42%, transparent) 14px 28px);
-}
-.app-seal {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  translate: -50% -50%;
-  padding: 0.55em 0.9em;
-  border: 1px solid var(--ink);
-  background: var(--paper);
-  color: var(--ink);
-  font: 500 clamp(0.6rem, 1.7cqw, 0.72rem) / 1 var(--mono);
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
 /* ——— a whole app on one screen ——— */
 .app-screen {
   display: grid;
@@ -557,9 +537,6 @@ button.app-cover[aria-pressed='true']::before {
 }
 .la-sheet .zm-window-body > .zm-media,
 .la-sheet .zm-window-body > .la-bench,
-.la-sheet .app-hatch {
-  border-radius: 0 0 calc(var(--frame-radius) - 1px) calc(var(--frame-radius) - 1px);
-}
 .la-sheet:not([data-front]):hover .zm-window,
 .la-sheet:not([data-front]):focus-visible .zm-window {
   border-color: var(--hue-ink);

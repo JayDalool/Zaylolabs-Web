@@ -8,13 +8,12 @@ src/assets/products/<slug>/desktop/01-overview.webp    # 16:10 (1600×1000)
 src/assets/products/<slug>/mobile/01-home.webp         # ~9:19.5 (640 wide is enough)
 src/assets/products/<slug>/desktop-light/…             # the app's other theme, if it has one
 src/assets/products/<slug>/mobile-light/…
-src/assets/products/<slug>/video/01-tour.mp4           # optional
 ```
 
 - Slugs: `realtorlab`, `myexpenses`, `commandcenter`, `gyst`.
 - Files fill slots in name order, and slot N belongs to the product's Nth
   "what it covers" topic in `src/data/products.ts`. Prefix them `01-`, `02-`, …
-- Formats: png, jpg, webp, avif · mp4, webm. WebP at the sizes above keeps the site light.
+- Formats: png, jpg, webp, avif. WebP at the sizes above keeps the site light.
 - Any slot without a file shows a stamped **PLACEHOLDER** schematic instead.
 
 ## How the current screenshots were made (17 Nov 2026)

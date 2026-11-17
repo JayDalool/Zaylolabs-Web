@@ -88,7 +88,7 @@ function Rules() {
 
 /** A product with a smaller presence: a short mention with the way in, not a full screen. */
 function Also({ product }: { product: Product }) {
-  const { ref, on } = useImmerse<HTMLElement>()
+  const { ref, on } = useImmerse<HTMLElement>(product.slug)
   return (
     <section
       ref={ref}
@@ -154,7 +154,7 @@ function Contact() {
         </div>
         <div className="col-span-12 lg:col-span-4" style={{ display: 'grid', gap: '1.2rem' }}>
           <p className="sp-body">
-            Alongside its own products, ZayloLabs is preparing to take on custom software development: applications, AI-powered tools and business automation.
+            Alongside its own products, ZayloLabs is preparing to take on custom software development.
           </p>
           {studio.contactEmail ? (
             <a className="sp-btn" href={`mailto:${studio.contactEmail}`} style={{ width: 'fit-content' }}>

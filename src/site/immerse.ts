@@ -1,75 +1,86 @@
 /**
  * Immersion — a section that belongs to one app takes on that app's colours
- * while the visitor is in it.
+ * while the visitor is in it, and the site header follows.
  *
- *   mouse     → while the pointer is over the section (with a short settle, so
- *               passing through on the way elsewhere does not flash)
- *   keyboard  → while focus is inside it
- *   touch     → while it is the section crossing the middle of the screen
+ * A section is "in" as soon as it reaches the middle band of the screen, on
+ * every kind of device: the colour arrives with the section while it is still
+ * scrolling in, with no wait for the pointer to move. Keyboard focus inside a
+ * section counts as well. On a mouse the app's light also follows the pointer.
  *
  * The hook only reports on/off and tracks the pointer; all colour lives in CSS
  * (`.sp-immersive[data-immersed]` in specimen.css), driven by the product's hue.
  */
-import { useEffect, useState } from 'react'
-import { useMediaQuery } from '../shared/env'
+import { useEffect, useState, useSyncExternalStore } from 'react'
 
-export function useImmerse<T extends HTMLElement>() {
+/* ——— which app the visitor is in right now (read by the header) ——— */
+// Several places can be "in" an app at once (a section on screen, the hero pointing at the same app).
+// Each reports under its own key; the most recent one still reporting wins.
+const active: { key: symbol; slug: string }[] = []
+let current: string | null = null
+const listeners = new Set<() => void>()
+const subscribe = (l: () => void) => (listeners.add(l), () => void listeners.delete(l))
+function update() {
+  const next = active.at(-1)?.slug ?? null
+  if (next === current) return
+  current = next
+  listeners.forEach((l) => l())
+}
+/** The slug of the app whose section the visitor is in, or null. */
+export const useCurrentApp = () =>
+  useSyncExternalStore(
+    subscribe,
+    () => current,
+    () => null,
+  )
+
+/** Reports an app as the one the visitor is in, for as long as `on` is true. */
+export function useReportApp(slug: string | undefined, on: boolean) {
+  useEffect(() => {
+    if (!slug || !on) return
+    const entry = { key: Symbol(slug), slug }
+    active.push(entry)
+    update()
+    return () => {
+      active.splice(active.indexOf(entry), 1)
+      update()
+    }
+  }, [slug, on])
+}
+
+/** The middle fifth of the screen: a section crossing it is the one the visitor is in. */
+const BAND = '-40% 0px -40% 0px'
+
+export function useImmerse<T extends HTMLElement>(slug?: string) {
   // The element is held in state so the listeners follow it if it is replaced (e.g. one product page to the next).
   const [el, ref] = useState<T | null>(null)
-  const [on, setOn] = useState(false)
-  const canHover = useMediaQuery('(hover: hover) and (pointer: fine)')
+  const [inView, setInView] = useState(false)
+  const [focused, setFocused] = useState(false)
+  const on = inView || focused
 
   useEffect(() => {
     if (!el) return
-    if (!canHover) {
-      const io = new IntersectionObserver(([e]) => setOn(e.isIntersecting), { rootMargin: '-46% 0px -46% 0px' })
-      io.observe(el)
-      return () => io.disconnect()
-    }
-    let timer = 0
-    let hovered = false
-    let focused = false
-    const settle = (delay: number) => {
-      window.clearTimeout(timer)
-      timer = window.setTimeout(() => setOn(hovered || focused), delay)
-    }
-    const enter = () => {
-      hovered = true
-      settle(110)
-    }
-    const leave = () => {
-      hovered = false
-      settle(180)
-    }
-    const focusIn = (e: FocusEvent) => {
-      // only keyboard focus counts; a click inside is already a hover
-      if (!(e.target as HTMLElement).matches?.(':focus-visible')) return
-      focused = true
-      settle(0)
-    }
-    const focusOut = () => {
-      focused = false
-      settle(120)
-    }
+    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting), { rootMargin: BAND })
+    io.observe(el)
+    // only keyboard focus counts; a click inside is already in view
+    const focusIn = (e: FocusEvent) => (e.target as HTMLElement).matches?.(':focus-visible') && setFocused(true)
+    const focusOut = () => setFocused(false)
     const move = (e: PointerEvent) => {
+      if (e.pointerType !== 'mouse') return
       const r = el.getBoundingClientRect()
       el.style.setProperty('--mx', `${Math.round(e.clientX - r.left)}px`)
       el.style.setProperty('--my', `${Math.round(e.clientY - r.top)}px`)
     }
-    el.addEventListener('pointerenter', enter)
-    el.addEventListener('pointerleave', leave)
     el.addEventListener('pointermove', move, { passive: true })
     el.addEventListener('focusin', focusIn)
     el.addEventListener('focusout', focusOut)
     return () => {
-      window.clearTimeout(timer)
-      el.removeEventListener('pointerenter', enter)
-      el.removeEventListener('pointerleave', leave)
+      io.disconnect()
       el.removeEventListener('pointermove', move)
       el.removeEventListener('focusin', focusIn)
       el.removeEventListener('focusout', focusOut)
     }
-  }, [el, canHover])
+  }, [el])
 
+  useReportApp(slug, on)
   return { ref, on }
 }

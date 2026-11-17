@@ -40,7 +40,7 @@ npm run build:single # one self-contained HTML file → dist-single/index.html
 src/
   data/products.ts     single source of truth for products + studio copy
   media/               media kit: ProductMedia, frames, zoom dialog, placeholder schematics
-  assets/products/<slug>/{desktop,mobile,video}/   drop real screenshots here
+  assets/products/<slug>/{desktop,mobile}/   real screenshots
   site/                pages, design system (specimen.css), immersion, screen viewer
   site/landing/        the two landings, the one-screen app sections, scroll settle
   site/demo/           the demo player, its building blocks (kit.tsx), each app's design (skins.css)
@@ -52,8 +52,11 @@ src/
 
 `src/site/immerse.ts` + the IMMERSION block in `src/site/specimen.css`.
 
-- Mouse: while the pointer is over an app's section. Keyboard: while focus is in it.
-  Touch: while it is the section on screen.
+- A section takes its app's colours as soon as it reaches the middle of the screen,
+  on every device, so the colour arrives while the section is still scrolling in.
+  Keyboard focus inside a section counts too.
+- There is one header for every page. It takes the colours of the app the visitor
+  is in: the section on screen on the home page, or the app whose page it is.
 - Product pages are in their app's colours throughout.
 - Colours come from each product's `hue` in `products.ts`, and those values are
   taken from the app's own code: `field` is the ground the section becomes,

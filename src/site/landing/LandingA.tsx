@@ -13,6 +13,7 @@ import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScro
 import { useRef, useState, type CSSProperties } from 'react'
 import { featured as products, studio, type Product } from '../../data/products'
 import { PhoneFrame, ProductMedia, WindowFrame } from '../../media/ProductMedia'
+import { useReportApp } from '../immerse'
 import { BASE, ButtonLink, EASE, hueVars } from '../ui'
 import LandingB from './LandingB'
 import { AppCopy, count } from './shared'
@@ -58,10 +59,12 @@ export default function LandingA() {
     setStep((cur) => (cur === s ? cur : s))
   })
 
-  if (reduce) return <LandingB />
-
   const k = step - 1 // index of the app in front, or -1
   const product = k >= 0 ? products[k] : products[0]
+  useReportApp(product.slug, !reduce && k >= 0)
+
+  if (reduce) return <LandingB />
+
   const goTo = (s: number) => {
     const el = ref.current
     if (!el) return
@@ -107,7 +110,7 @@ export default function LandingA() {
                     <p id="la-h" className="sp-display lb-h" role="heading" aria-level={2}>
                       Software, built <em>layer by layer.</em>
                     </p>
-                    <p className="sp-lede">{studio.about} Scroll, and each layer of the stack becomes one of our apps.</p>
+                    <p className="sp-lede">We design and build software, starting with our own. Scroll, and each layer of the stack becomes one of our apps.</p>
                     <div className="lb-cta">
                       <ButtonLink to="/#contact" viewTransition={false}>
                         Start a conversation

@@ -9,7 +9,7 @@ import { useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { plans, productBySlug } from '../data/products'
 import { useImmerse } from './immerse'
-import { BASE, ButtonLink, hueVars, SectionHead, StageBadge, Tag } from './ui'
+import { BASE, ButtonLink, hueVars, SectionHead } from './ui'
 
 const STEPS = [
   { title: 'Ask about access', note: 'Tell us who you are and what you would use it for.' },
@@ -54,10 +54,6 @@ export default function Plans() {
           <span className="sp-mono-dim">/</span>
           <span style={{ color: 'var(--hue-ink)' }}>Plans</span>
         </nav>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '1.2rem' }}>
-          <Tag>{product.discipline}</Tag>
-          <StageBadge product={product} />
-        </div>
         <h1 className="sp-display" style={{ fontSize: 'clamp(2.6rem, 7vw, 6.5rem)' }}>
           {product.name} <em>plans.</em>
         </h1>
