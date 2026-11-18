@@ -1267,7 +1267,7 @@ button.dm-cat i {
 }
 
 /* On a screen narrower than the drawn screen's layout width, the scene is scaled to fit. */
-.dm-screen .dm-scene {
+.dm-fit {
   width: calc(100% / var(--k, 1));
   height: calc(100% / var(--k, 1));
   transform: scale(var(--k, 1));

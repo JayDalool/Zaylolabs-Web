@@ -342,6 +342,12 @@ button.app-cover[aria-pressed='true']::before {
   min-height: calc(100dvh - 4rem);
   padding-bottom: clamp(0.8rem, 2.2vh, 1.6rem);
 }
+@media (min-width: 600px) and (max-width: 899.98px) {
+  .lb {
+    min-height: 0;
+    row-gap: clamp(1.5rem, 4vh, 3rem);
+  }
+}
 .lb-main {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -509,13 +515,47 @@ button.app-cover[aria-pressed='true']::before {
   background: var(--paper-hi);
 }
 .vw-tabs {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   border-bottom: 1px solid var(--ink);
   background: var(--paper);
 }
+/* an incomplete last row is closed by its last tab, so no cell is left empty */
+.vw-tabs[data-r2='1'] button:last-child {
+  grid-column: span 2;
+}
+@media (min-width: 700px) {
+  .vw-tabs {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .vw-tabs[data-r2='1'] button:last-child {
+    grid-column: auto;
+  }
+  .vw-tabs[data-r3='2'] button:last-child {
+    grid-column: span 2;
+  }
+  .vw-tabs[data-r3='1'] button:last-child {
+    grid-column: span 3;
+  }
+}
+/* all topics on one line once each has room: sooner when there are few */
+@media (min-width: 1100px) {
+  .vw-tabs[data-few] {
+    grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+  }
+  .vw-tabs[data-few] button:last-child {
+    grid-column: auto;
+  }
+}
+@media (min-width: 1340px) {
+  .vw-tabs {
+    grid-template-columns: repeat(var(--n, 6), minmax(0, 1fr));
+  }
+  .vw-tabs button:last-child {
+    grid-column: auto;
+  }
+}
 .vw-tabs button {
-  flex: 1 1 11rem;
   display: flex;
   align-items: center;
   gap: 0.7rem;
@@ -555,7 +595,8 @@ button.app-cover[aria-pressed='true']::before {
 .vw-stage {
   position: relative;
   height: min(60vh, 38rem);
-  padding: clamp(0.8rem, 2.4vh, 1.8rem) clamp(0.8rem, 3vw, 2.5rem);
+  padding: clamp(0.8rem, 2.4vh, 1.8rem) clamp(1.2rem, 4vw, 2.5rem);
+  overflow: hidden;
   background:
     linear-gradient(var(--rule) 1px, transparent 1px) 0 -1px / 100% 2.5rem,
     linear-gradient(90deg, var(--rule) 1px, transparent 1px) -1px 0 / 2.5rem 100%;
@@ -629,10 +670,10 @@ button.app-cover[aria-pressed='true']::before {
 }
 @media (max-width: 700px) {
   .vw-tabs button {
-    flex-basis: 45%;
     min-height: 2.9rem;
-    padding-inline: 0.7rem;
-    font-size: 0.9rem;
+    padding-inline: 0.55rem;
+    gap: 0.45rem;
+    font-size: 0.84rem;
   }
   .vw-stage {
     height: clamp(13rem, 40dvh, 22rem);
@@ -681,8 +722,14 @@ button.app-cover[aria-pressed='true']::before {
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0 clamp(1.5rem, 3vw, 3rem);
   border-top: 1px solid var(--rule-2);
+}
+@media (min-width: 560px) {
+  .also-covers {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 .also-covers li {
   display: grid;
@@ -708,9 +755,14 @@ button.app-cover[aria-pressed='true']::before {
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: 0 clamp(1.5rem, 3vw, 3rem);
   border-top: 1px solid var(--rule-2);
+}
+@media (min-width: 700px) {
+  .pl-steps {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 .pl-steps li {
   padding: 1.4rem 0 1.6rem;

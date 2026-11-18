@@ -6,7 +6,7 @@
  * needs no per-product code, and real screenshots fill it as they are added.
  */
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
-import { useMemo, useState } from 'react'
+import { useMemo, useState, type CSSProperties } from 'react'
 import type { Product, Surface, Theme } from '../data/products'
 import { hasThemeMedia, realMedia } from '../media/manifest'
 import { ZoomDialog } from '../media/ZoomDialog'
@@ -45,7 +45,7 @@ export function Viewer({ product }: { product: Product }) {
       </div>
 
       <div className="vw-frame">
-        <div className="vw-tabs" role="group" aria-label="Topics">
+        <div className="vw-tabs" role="group" aria-label="Topics" style={{ '--n': n } as CSSProperties} data-r2={n % 2} data-r3={n % 3} data-few={n <= 5 || undefined}>
           {product.focus.map((f, k) => (
             <button key={f.title} type="button" aria-pressed={slot === k + 1} onClick={() => setSlot(k + 1)}>
               <span className="vw-n">{k + 1}</span>

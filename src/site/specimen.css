@@ -1065,7 +1065,7 @@
   width: 100%;
   min-height: 2.9rem;
   padding: 0.6rem 0.8rem;
-  border: 1px solid var(--rule-2);
+  border: 1px solid var(--ink-3);
   border-radius: var(--radius);
   background: var(--paper-hi);
   color: var(--ink);
@@ -1392,4 +1392,12 @@
   width: 1px;
   height: 1px;
   overflow: hidden;
+}
+
+/* headings and short lines break into even lines, with no single word left over */
+.sp-display,
+.sp-h2,
+.sp-h3,
+.sp-lede {
+  text-wrap: balance;
 }

@@ -86,6 +86,7 @@ function Player({ demo, product }: { demo: Demo; product: Product }) {
             <span className="dm-badge">Demo · sample data</span>
           </div>
           <div className="dm-screen" ref={screen} style={{ '--k': k } as CSSProperties}>
+            <div className="dm-fit">
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={i}
@@ -98,6 +99,7 @@ function Player({ demo, product }: { demo: Demo; product: Product }) {
                 {step.scene(next)}
               </motion.div>
             </AnimatePresence>
+            </div>
           </div>
         </div>
 
