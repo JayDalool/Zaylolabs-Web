@@ -60,6 +60,10 @@ export interface Product {
   figure?: string
   /** A plain note shown wherever the product appears in detail. */
   note?: string
+  /** What it does, in a few concrete points. Each one is true of the app today. */
+  highlights: { title: string; body: string }[]
+  /** Plain facts a visitor should know before asking for access. */
+  goodToKnow: string[]
 }
 
 export const products: Product[] = [
@@ -89,6 +93,18 @@ export const products: Product[] = [
     hue: { name: 'Pine', ink: '#17553e', bright: '#9fd8bd', wash: '#e2f1e9', field: '#0f3f2d', on: '#f6f2ea' },
     themes: ['light', 'dark'],
     note: 'Decision support for a licensed REALTOR — not a formal appraisal.',
+    highlights: [
+      { title: 'Every figure can be traced', body: 'A valuation lists the comparable sales behind it, how similar each one is, and why any were left out.' },
+      { title: 'Honest about uncertainty', body: 'Each result carries a confidence level. When the evidence is thin it says so, and when the comparables disagree it gives no figure at all.' },
+      { title: 'Your judgement stays in charge', body: 'Switch a sale off, or set it aside with a reason. The figures follow, and the change is recorded.' },
+      { title: 'Documents made for the client', body: 'A summary, a CMA or a CME as a PDF or by email, with listing numbers masked.' },
+    ],
+    goodToKnow: [
+      'Built on Winnipeg sold data, which you import and approve yourself.',
+      'It supports a REALTOR’s pricing decision. It is not an appraisal.',
+      'Also inside: market analytics with a map, rental tools and a mileage logbook.',
+      'Runs in a browser, on desktop and phone, in light and dark.',
+    ],
   },
   {
     slug: 'myexpenses',
@@ -114,6 +130,18 @@ export const products: Product[] = [
     // brand scale — tailwind.config.ts
     hue: { name: 'Sea green', ink: '#1f5d3a', bright: '#d8f3e5', wash: '#d8f3e5', field: '#267246', on: '#ffffff' },
     themes: ['light'],
+    highlights: [
+      { title: 'The receipt fills in the form', body: 'Take a photo. The date, total and invoice number are read from it, and each one shows how sure the reading is.' },
+      { title: 'One record for the household', body: 'Members add expenses from their own phones. Roles decide who can add, who can only look, and who is the accountant.' },
+      { title: 'Year end in one download', body: 'A ZIP with the summary, a spreadsheet of every expense, and every receipt named by date, shop and amount.' },
+      { title: 'Reports for any period', body: 'Totals by category, by member and by month, for today, this month, this year or any dates you choose.' },
+    ],
+    goodToKnow: [
+      'Receipts are read by the app itself, on the server it runs on.',
+      'Made for Canadian dollars and Canadian sales taxes.',
+      'Works for a family or a small company. In a company, each employee sees only their own expenses.',
+      'Exports as PDF, CSV, Excel, or a ZIP with every receipt.',
+    ],
   },
   {
     slug: 'commandcenter',
@@ -141,6 +169,18 @@ export const products: Product[] = [
     hue: { name: 'HQ orange', ink: '#b23a0a', bright: '#ff7a45', wash: '#fbe3d6', field: '#0f1012', on: '#ececee' },
     themes: ['dark', 'light'],
     note: 'Shown in Engineering HQ, the app’s newer interface, which is an opt-in preview inside it today.',
+    highlights: [
+      { title: 'A pipeline, not a chat window', body: 'Every task moves through planning, building, review and verification, and you can see where each one stands.' },
+      { title: 'People hold the approvals', body: 'Where the rules ask for a person — a flagged plan, a merge, a release — the work waits for one.' },
+      { title: 'One place to answer', body: 'Questions from agents, plans, reviews and deploys arrive in one list. Answer in place and the work carries on.' },
+      { title: 'Nothing claimed that is not known', body: 'Status comes from live data. If a feed goes quiet it reads Unknown, never Working.' },
+    ],
+    goodToKnow: [
+      'Built for one person running several software projects with AI agents.',
+      'It watches pull requests and checks, and holds a merge until they pass. It does not run the checks itself.',
+      'Every decision is kept in an activity record.',
+      'Dark and light themes, on desktop and phone.',
+    ],
   },
   {
     slug: 'gyst',
@@ -167,6 +207,12 @@ export const products: Product[] = [
     themes: ['light', 'dark'],
     compact: true,
     figure: 'The Galaxy: every project is a world, sized by its missions. Captured from the app with fictional projects.',
+    highlights: [
+      { title: 'Capture in one line', body: 'Type a task the way you would say it. A word like “tomorrow” sets the date and “!high” sets the priority.' },
+      { title: 'Projects you can see', body: 'Bigger work is broken into missions, with progress on every project and a Galaxy view of all of them.' },
+      { title: 'Health beside the rest', body: 'Food, training, weight and water sit next to tasks and projects, with a coach that answers from your own record.' },
+    ],
+    goodToKnow: ['Built for one person. It is not open to others yet.', 'Runs in a browser as an app, on desktop and phone, in light and dark.'],
   },
 ]
 
@@ -176,39 +222,25 @@ export const featured = products.filter((p) => !p.compact)
 export const compact = products.filter((p) => p.compact)
 
 export const stages: { id: Stage; label: string; blurb: string }[] = [
-  { id: 'live', label: 'Live', blurb: 'Running and in use. Access is by invitation, with plans to follow.' },
+  { id: 'live', label: 'Live', blurb: 'Each one is live and in use. Open one to see its real screens and a step-by-step demo.' },
   { id: 'in-development', label: 'In development', blurb: 'Being built. Not available yet.' },
 ]
 
 /**
- * Plans — what each Live app's Plans page says. No prices are invented here:
- * `tiers` stays empty until the owner supplies plan names and prices, and the
- * page shows clearly marked empty slots instead.
- * TODO(owner): plan names, prices, billing period and what each includes.
- * TODO(launch): attach hosted checkout (Stripe, PayPal) once the company is registered.
+ * The studio. Contact details are the ones the owner gave for the site.
+ * `builds` is what we build for clients; each line points at one of our own
+ * apps as the proof, so nothing here is a claim without something to show.
  */
-export interface PlanTier {
-  name: string
-  price: string
-  period: string
-  includes: string[]
-}
-export const plans: Record<string, { tiers: PlanTier[] }> = {
-  estatelab: { tiers: [] },
-  myexpenses: { tiers: [] },
-  commandcenter: { tiers: [] },
-  gyst: { tiers: [] },
-}
-
-/** What the studio does — wording taken from the company brief, nothing added. */
 export const studio = {
   name: 'ZayloLabs',
   domain: 'zaylolabs.com',
-  line: 'An independent software development studio.',
-  practice: [
-    { title: 'Applications', note: 'Software products designed and built in the studio.' },
-    { title: 'AI-powered tools', note: 'Tools where a model does part of the work.' },
-    { title: 'Business automation', note: 'Repetitive work turned into running systems.' },
-    { title: 'Specialised solutions', note: 'Digital solutions for problems that don’t fit a template.' },
+  line: 'An independent software studio in Winnipeg, Manitoba.',
+  address: ['62 Royal Park Crescent', 'Winnipeg, Manitoba', 'Canada'],
+  phone: { label: '+1 (431) 688-1612', href: 'tel:+14316881612' },
+  builds: [
+    { title: 'Web and phone apps', note: 'Apps that work in a browser and in the hand, for the people who use them every day.', proof: 'myexpenses', proofLine: 'My Expenses reads a receipt from a phone photo.' },
+    { title: 'AI inside real work', note: 'A model does part of the job, and a person decides what matters.', proof: 'commandcenter', proofLine: 'Command Center runs AI agents and waits for a person to approve.' },
+    { title: 'Tools built on your data', note: 'Figures you can trace back to the records behind them.', proof: 'estatelab', proofLine: 'EstateLab prices a home from sold data and shows its working.' },
+    { title: 'Automation', note: 'Repeating work turned into a system that runs by itself, and stops where a person must decide.', proof: 'gyst', proofLine: 'GYST turns one typed line into a dated, prioritised task.' },
   ],
 }

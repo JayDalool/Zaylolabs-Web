@@ -94,7 +94,7 @@ export function AppCopy({ product, slot, onSlot, heading = 'h2' }: { product: Pr
         <span>{product.availability}</span>
         {product.stage === 'live' && (
           <Link className="sp-link app-plans" to={`${BASE}/work/${product.slug}/plans`} viewTransition>
-            Plans
+            Access and pricing
           </Link>
         )}
       </p>

@@ -2,13 +2,14 @@ import { lazy, Suspense, useEffect, useState } from 'react'
 import { Link, NavLink, Route, Routes, useLocation } from 'react-router-dom'
 import { productBySlug, products, studio } from '../data/products'
 import Home from './Home'
+import { NotFound } from './NotFound'
 import { BASE, ButtonLink, hueVars, Logo } from './ui'
 import './specimen.css'
 
 const Catalogue = lazy(() => import('./Catalogue'))
 const ProductPage = lazy(() => import('./ProductPage'))
 const Plans = lazy(() => import('./Plans'))
-const System = lazy(() => import('./System'))
+const Privacy = lazy(() => import('./Privacy'))
 
 /** The app whose own page (or plans page) is open, if any. */
 function useRouteApp() {
@@ -52,7 +53,7 @@ function Header() {
         {/* Close on any link, including ones that stay on the current page (e.g. Contact on the homepage). */}
         <nav id="sp-nav" className={`sp-nav ${open ? 'is-open' : ''}`} aria-label="Primary" onClick={(e) => (e.target as HTMLElement).closest('a') && setOpen(false)}>
           <NavLink to={`${BASE}/work`}>Products</NavLink>
-          <Link to="/#studio">Studio</Link>
+          <Link to="/#custom">Custom software</Link>
           <ButtonLink to="/#contact" viewTransition={false}>Contact</ButtonLink>
         </nav>
       </div>
@@ -68,31 +69,50 @@ function Footer() {
         <p className="sp-footer-word" aria-hidden="true">
           Zaylo<em>Labs</em>
         </p>
-        <div className="sp-grid" style={{ rowGap: '1.5rem', marginTop: 'clamp(2rem,4vw,3.5rem)' }}>
-          <p className="sp-body" style={{ gridColumn: '1 / -1', maxWidth: '30em' }}>
-            {studio.line} {studio.domain}
-          </p>
-          <nav aria-label="Footer" className="sp-mono" style={{ gridColumn: '1 / -1', display: 'flex', flexWrap: 'wrap', gap: '0.6rem 1.8rem' }}>
-            <NavLink className="sp-link" to={`${BASE}/work`} viewTransition>
-              Products
-            </NavLink>
+        <div className="sp-footer-grid">
+          <div>
+            <p className="sp-body">{studio.line}</p>
+            <address className="sp-contact">
+              <a className="sp-link" href={studio.phone.href}>
+                {studio.phone.label}
+              </a>
+              <span>
+                {studio.address.map((l) => (
+                  <span key={l}>{l}</span>
+                ))}
+              </span>
+            </address>
+          </div>
+          <nav aria-label="Products" className="sp-footer-nav">
+            <p className="sp-mono">Products</p>
             {products.map((p) => (
               <NavLink key={p.slug} className="sp-link" to={`${BASE}/work/${p.slug}`} viewTransition>
                 {p.name}
               </NavLink>
             ))}
-            <NavLink className="sp-link" to={`${BASE}/system`} viewTransition>
-              Design system
+          </nav>
+          <nav aria-label="Studio" className="sp-footer-nav">
+            <p className="sp-mono">Studio</p>
+            <Link className="sp-link" to="/#custom">
+              Custom software
+            </Link>
+            <Link className="sp-link" to="/#contact">
+              Contact
+            </Link>
+            <NavLink className="sp-link" to={`${BASE}/privacy`} viewTransition>
+              Privacy
             </NavLink>
-            <span className="sp-mono-dim">Design prototype — not deployed</span>
           </nav>
         </div>
+        <p className="sp-mono sp-mono-dim sp-footer-end">
+          © {new Date().getFullYear()} {studio.name} · {studio.domain}
+        </p>
       </div>
     </footer>
   )
 }
 
-/** Scrolls to #hash targets inside the hash router (e.g. /specimen#contact). */
+/** Scrolls to the #target of a link such as /#contact, also when it leads to another page. */
 function useAnchorScroll() {
   const { hash, pathname } = useLocation()
   useEffect(() => {
@@ -121,8 +141,8 @@ export default function Specimen() {
             <Route path="work" element={<Catalogue />} />
             <Route path="work/:slug" element={<ProductPage />} />
             <Route path="work/:slug/plans" element={<Plans />} />
-            <Route path="system" element={<System />} />
-            <Route path="*" element={<Home />} />
+            <Route path="privacy" element={<Privacy />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
       </main>

@@ -1,89 +1,12 @@
-import { Link } from 'react-router-dom'
 import type { CSSProperties } from 'react'
-import { compact, studio, type Product } from '../data/products'
+import { Link, useSearchParams } from 'react-router-dom'
+import { compact, productBySlug, studio, type Product } from '../data/products'
 import { useImmerse } from './immerse'
 import { InquiryForm } from './inquiry'
 import Landing from './landing/Landing'
 import './landing/landing.css'
 import { useSettle } from './landing/settle'
-import { BASE, ButtonLink, hueVars, Reveal, SectionHead, StageBadge } from './ui'
-
-/* ——————————————————————————— studio ——————————————————————————— */
-
-function Practice() {
-  return (
-    <section id="studio" className="sp-section" style={{ scrollMarginTop: '4rem' }} aria-labelledby="practice-h">
-      <div className="sp-wrap">
-        <SectionHead
-          label="Practice"
-          title={
-            <span id="practice-h">
-              What the lab <em>builds.</em>
-            </span>
-          }
-        />
-        <Reveal>
-          <ol className="sp-practice">
-            {studio.practice.map((s, i) => (
-              <li key={s.title}>
-                <span className="sp-mono sp-signal">{String(i + 1).padStart(2, '0')}</span>
-                <h3>{s.title}</h3>
-                <p>{s.note}</p>
-              </li>
-            ))}
-          </ol>
-        </Reveal>
-      </div>
-    </section>
-  )
-}
-
-const RULES = [
-  {
-    title: 'Real interfaces only',
-    body: 'Screenshots are genuine captures of the working apps, taken with made-up sample data. Step-by-step demos are redrawn illustrations, and say so.',
-  },
-  {
-    title: 'Status, stated plainly',
-    body: 'Live means running and in use today, with access by invitation until plans are published. Nothing is presented as more available than it is.',
-  },
-  {
-    title: 'Private stays private',
-    body: 'No customer information, credentials or internal operational detail appears in any screenshot or demo.',
-  },
-]
-
-function Rules() {
-  return (
-    <section className="sp-section sp-dark" style={{ borderTop: 0 }} aria-labelledby="rules-h">
-      <div className="sp-wrap">
-        <SectionHead
-          label="House rules"
-          title={
-            <span id="rules-h">
-              Three rules for everything <em>shown here.</em>
-            </span>
-          }
-        />
-        <div className="sp-rules">
-          {RULES.map((r, i) => (
-            <Reveal key={r.title} delay={i * 0.08}>
-              <article>
-                <p className="sp-mono sp-signal" style={{ margin: '0 0 1.4rem' }}>
-                  Rule {String(i + 1).padStart(2, '0')}
-                </p>
-                <h3 className="sp-h3" style={{ marginBottom: '0.7rem' }}>
-                  {r.title}
-                </h3>
-                <p className="sp-body">{r.body}</p>
-              </article>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
+import { BASE, ButtonLink, hueVars, Reveal, SectionHead, StageBadge, useTitle } from './ui'
 
 /** A product with a smaller presence: a short mention with the way in, not a full screen. */
 function Also({ product }: { product: Product }) {
@@ -114,7 +37,7 @@ function Also({ product }: { product: Product }) {
             <span>{product.availability}</span>
             {product.stage === 'live' && (
               <Link className="sp-link app-plans" to={`${BASE}/work/${product.slug}/plans`} viewTransition>
-                Plans
+                Access and pricing
               </Link>
             )}
           </p>
@@ -139,7 +62,90 @@ function Also({ product }: { product: Product }) {
   )
 }
 
+/** What the studio builds for clients. Each line points at one of our own apps as the proof. */
+function Custom() {
+  return (
+    <section id="custom" className="sp-section" style={{ scrollMarginTop: '4rem' }} aria-labelledby="custom-h">
+      <div className="sp-wrap">
+        <SectionHead
+          label="Custom software"
+          title={
+            <span id="custom-h">
+              Need software of your own? <em>We build it.</em>
+            </span>
+          }
+        >
+          <p className="sp-lede" style={{ maxWidth: '38em' }}>
+            The studio that builds and runs these apps also builds software for clients. Tell us the problem, and we design and build the software for it.
+          </p>
+        </SectionHead>
+        <Reveal>
+          <ol className="sp-practice">
+            {studio.builds.map((s, i) => (
+              <li key={s.title}>
+                <span className="sp-mono sp-signal">{String(i + 1).padStart(2, '0')}</span>
+                <h3>{s.title}</h3>
+                <p>
+                  {s.note}{' '}
+                  <Link className="sp-link" to={`${BASE}/work/${s.proof}`} viewTransition>
+                    {s.proofLine}
+                  </Link>
+                </p>
+              </li>
+            ))}
+          </ol>
+        </Reveal>
+        <div className="sp-custom-foot">
+          <p className="sp-body">
+            We build with our own {productBySlug('commandcenter')?.name}: AI agents do the engineering, and a person reviews and approves what ships.
+          </p>
+          <ButtonLink to="/?about=custom#contact" viewTransition={false}>
+            Start a project
+          </ButtonLink>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+const REAL = [
+  { title: 'Real screenshots', body: 'Every screenshot is the working app, captured with made-up sample data.' },
+  { title: 'Demos say they are demos', body: 'The step-by-step demos are redrawn from the real screens so you can follow along. Each one is labelled.' },
+  { title: 'No private data', body: 'No customer information appears anywhere on this site.' },
+]
+
+function Real() {
+  return (
+    <section className="sp-section sp-dark" style={{ borderTop: 0 }} aria-labelledby="real-h">
+      <div className="sp-wrap">
+        <SectionHead
+          label="Shown as it is"
+          title={
+            <span id="real-h">
+              What you see here <em>is real.</em>
+            </span>
+          }
+        />
+        <div className="sp-rules">
+          {REAL.map((r, i) => (
+            <Reveal key={r.title} delay={i * 0.08}>
+              <article>
+                <h3 className="sp-h3" style={{ marginBottom: '0.7rem' }}>
+                  {r.title}
+                </h3>
+                <p className="sp-body">{r.body}</p>
+              </article>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 function Contact() {
+  // a link such as /?about=custom#contact opens the form on that topic
+  const about = useSearchParams()[0].get('about') ?? undefined
   return (
     <section id="contact" className="sp-section" style={{ borderTop: 0, scrollMarginTop: '4rem' }} aria-labelledby="contact-h">
       <div className="sp-wrap sp-grid" style={{ rowGap: '2rem', alignItems: 'start' }}>
@@ -151,11 +157,22 @@ function Contact() {
             Have a problem worth <em>building for?</em>
           </h2>
           <p className="sp-body" style={{ marginTop: '1.4rem', maxWidth: '30em' }}>
-            Ask about one of our apps, or tell us what you need built. Alongside its own products, ZayloLabs is preparing to take on custom software development.
+            Ask about one of our apps, or tell us what you need built. We reply by email.
           </p>
+          <address className="sp-contact">
+            <a className="sp-link" href={studio.phone.href}>
+              {studio.phone.label}
+            </a>
+            <span>
+              {studio.name}
+              {studio.address.map((l) => (
+                <span key={l}>{l}</span>
+              ))}
+            </span>
+          </address>
         </div>
         <div className="col-span-12 lg:col-span-5 lg:col-start-8">
-          <InquiryForm kind="contact" />
+          <InquiryForm key={about} kind="contact" about={about} />
         </div>
       </div>
     </section>
@@ -164,14 +181,15 @@ function Contact() {
 
 export default function Home() {
   useSettle()
+  useTitle()
   return (
     <>
       <Landing />
       {compact.map((p) => (
         <Also key={p.slug} product={p} />
       ))}
-      <Practice />
-      <Rules />
+      <Custom />
+      <Real />
       <Contact />
     </>
   )

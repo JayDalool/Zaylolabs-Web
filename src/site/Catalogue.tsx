@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { products, stages, type Product, type Stage } from '../data/products'
 import { PhoneFrame, ProductGlyph, ProductMedia, WindowFrame } from '../media/ProductMedia'
 import { useIsCoarsePointer } from '../shared/env'
-import { BASE, ButtonLink, EASE, FocusList, hueVars, Reveal, StageBadge, Tag } from './ui'
+import { BASE, ButtonLink, EASE, FocusList, hueVars, Reveal, StageBadge, Tag, useTitle } from './ui'
 
 const words = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve']
 const STEP = 30 // px each card behind the front one rises
@@ -215,6 +215,7 @@ function Index({ list }: { list: Product[] }) {
 }
 
 export default function Catalogue() {
+  useTitle('Products')
   const [stage, setStage] = useState<Stage | 'all'>('all')
   // Small screens start on the named list: the drawer's tabs only have room for catalogue numbers there.
   const [view, setView] = useState<'drawer' | 'index'>(() => (window.matchMedia('(max-width: 640px)').matches ? 'index' : 'drawer'))
@@ -229,7 +230,7 @@ export default function Catalogue() {
           Products
         </p>
         <h1 className="sp-display" style={{ fontSize: 'clamp(2.8rem, 8vw, 8rem)' }}>
-          {words[products.length] ?? products.length} products, <em>one drawer.</em>
+          {words[products.length] ?? products.length} apps, <em>side by side.</em>
         </h1>
       </Reveal>
       <Reveal delay={0.1} style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem 2rem', justifyContent: 'space-between', alignItems: 'center', marginTop: 'clamp(1.6rem, 4vw, 3rem)' }}>

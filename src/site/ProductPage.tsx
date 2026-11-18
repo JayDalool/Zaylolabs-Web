@@ -6,12 +6,13 @@
  * the app's colours. A new product needs one catalogue entry, a folder of
  * screenshots, and a demo script.
  */
-import { useEffect, type ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { productBySlug, products, type Product } from '../data/products'
 import { hasRealMedia } from '../media/manifest'
 import { PhoneFrame, ProductMedia, WindowFrame } from '../media/ProductMedia'
-import { BASE, ButtonLink, Fig, hueVars, StageBadge } from './ui'
+import { NotFound } from './NotFound'
+import { BASE, ButtonLink, Fig, hueVars, SectionHead, StageBadge, useTitle } from './ui'
 import { useImmerse } from './immerse'
 import { Viewer } from './Viewer'
 import { DemoSection } from './demo/Demo'
@@ -43,25 +44,11 @@ function OneFigure({ product }: { product: Product }) {
 export default function ProductPage() {
   const { slug } = useParams()
   const product = productBySlug(slug)
-  useEffect(() => {
-    if (product) document.title = `${product.name} — ZayloLabs (prototype)`
-    return () => void (document.title = 'ZayloLabs — design prototype')
-  }, [product])
+  useTitle(product ? `${product.name} — ${product.discipline.toLowerCase()}` : 'Not found')
   // An app's own page is in that app's colours throughout; the hook only tracks the pointer for the light.
   const { ref } = useImmerse<HTMLElement>()
 
-  if (!product) {
-    return (
-      <div className="sp-wrap" style={{ paddingBlock: '6rem', minHeight: '60vh' }}>
-        <h1 className="sp-h2">There is no product at that address.</h1>
-        <p className="sp-body" style={{ marginTop: '1rem' }}>
-          <Link className="sp-link" to={`${BASE}/work`}>
-            Back to all products
-          </Link>
-        </p>
-      </div>
-    )
-  }
+  if (!product) return <NotFound />
 
   const next = products[(products.indexOf(product) + 1) % products.length]
   const facts: [string, ReactNode][] = [
@@ -96,7 +83,7 @@ export default function ProductPage() {
           </ButtonLink>
           {product.stage === 'live' && (
             <ButtonLink ghost to={`${BASE}/work/${product.slug}/plans`}>
-              Plans and access
+              Access and pricing
             </ButtonLink>
           )}
         </div>
@@ -113,10 +100,51 @@ export default function ProductPage() {
           ))}
         </dl>
         {product.note && <p className="sp-product-note">{product.note}</p>}
+        <section className="pp-does" aria-labelledby="does-h">
+          <h2 id="does-h" className="sp-h2">
+            What it <em>does.</em>
+          </h2>
+          <ul className="pp-highlights">
+            {product.highlights.map((h) => (
+              <li key={h.title}>
+                <h3>{h.title}</h3>
+                <p>{h.body}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
         {product.compact ? <OneFigure product={product} /> : <Viewer product={product} />}
       </div>
 
       <DemoSection product={product} />
+
+      <section className="sp-section" aria-labelledby="know-h">
+        <div className="sp-wrap pp-know">
+          <div>
+            <SectionHead
+              label="Good to know"
+              title={
+                <span id="know-h">
+                  Before you <em>ask for it.</em>
+                </span>
+              }
+            />
+            <ul className="pp-know-list">
+              {product.goodToKnow.map((x) => (
+                <li key={x}>{x}</li>
+              ))}
+            </ul>
+          </div>
+          {product.stage === 'live' && (
+            <aside className="pp-access" aria-label={`Access to ${product.name}`}>
+              <StageBadge product={product} />
+              <p className="sp-h3">{product.availability}</p>
+              <p className="sp-body">Pricing is given on request.</p>
+              <ButtonLink to={`${BASE}/work/${product.slug}/plans#access`}>Request access</ButtonLink>
+            </aside>
+          )}
+        </div>
+      </section>
 
       <div className="sp-wrap">
         <Link className="sp-next sp-immerse-hover" to={`${BASE}/work/${next.slug}`} data-hue="" style={hueVars(next)}>

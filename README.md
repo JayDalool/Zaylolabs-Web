@@ -1,15 +1,15 @@
 # ZayloLabs — website
 
-The ZayloLabs studio site, in its design stage. Direction: **Specimen** — a warm
-paper "software lab" where every product is shown as it really is, and each
-app's section takes on that app's own colours while the visitor is in it.
+The ZayloLabs studio site. Direction: **Specimen** — a warm paper "software lab"
+where every product is shown as it really is, and each app's section takes on
+that app's own colours while the visitor is in it.
 
 Four products: **EstateLab**, **My Expenses**, **Command Center** (a full
-section each) and **GYST** (a shorter mention). All are shown as Live, with
-access by invitation and a Plans page each.
+section each) and **GYST** (a shorter mention). All are Live, with access by
+invitation and pricing on request. The studio also builds custom software.
 
-**Not deployed.** Nothing here touches zaylolabs.com, DNS, email or any
-production system.
+**Launch-ready, not yet deployed.** Nothing here touches zaylolabs.com, DNS,
+email or any production system.
 
 ## Run it
 
@@ -20,18 +20,23 @@ npm run dev          # http://localhost:5173
 
 ```bash
 npm run build        # type-check + production build → dist/
-npm run build:single # one self-contained HTML file → dist-single/index.html
+npm run build:single # one self-contained HTML file → dist-single/index.html (for previews)
 ```
 
 ## Pages
 
-| Route (hash) | What |
+| Address | What |
 | --- | --- |
-| `#/` | Home: the landing, one one-screen section per product, studio, contact form |
-| `#/work` | All products: index-card drawer and a plain list |
-| `#/work/<slug>` | A page per product, from one template — fully in that app's colours, with real screenshots and step-by-step demos |
-| `#/work/<slug>/plans` | Plans and access for a Live product: a request-access form, and plans (no prices until they exist) |
-| `#/system` | Design system reference |
+| `/` | Home: the landing, one one-screen section per product, custom software, contact form |
+| `/work` | All products: index-card drawer and a plain list |
+| `/work/<slug>` | A page per product, from one template — in that app's colours, with what it does, real screenshots, step-by-step demos and what to know |
+| `/work/<slug>/plans` | Access and pricing for a Live product: how access works and the request-access form |
+| `/privacy` | What the site does with what a visitor gives it |
+| anything else | A not-found page |
+
+Pages have normal addresses, so the host must answer every address with
+`index.html`. `public/_redirects` does that on static hosts that read it
+(Cloudflare Pages, Netlify).
 
 ## Structure
 
@@ -40,7 +45,7 @@ src/
   data/products.ts     single source of truth for products + studio copy
   media/               media kit: ProductMedia, frames, zoom dialog, placeholder schematics
   assets/products/<slug>/{desktop,mobile}/   real screenshots
-  site/                pages, design system (specimen.css), immersion, screen viewer
+  site/                pages, styles (specimen.css), immersion, screen viewer, forms
   site/landing/        the landing, the one-screen app sections, scroll settle
   site/demo/           the demo player, its building blocks (kit.tsx), each app's design (skins.css)
   site/demo/apps/      the demo scripts, one file per app
@@ -91,22 +96,25 @@ Check every screenshot for customer data, credentials and internal detail first.
 
 - Product wording comes from `products.ts` and was checked against each app's code.
 - No invented customers, statistics, history, awards, prices or capabilities.
-  Plans pages show marked empty slots until real plans exist.
+  Pricing is "on request" until real plans exist.
+- The studio's phone and address are the ones the owner gave for the site (`studio` in `products.ts`).
 - Empty image slots show a stamped placeholder, never a fictional interface.
-- The contact and request-access forms are not connected in the prototype (no
-  `VITE_INQUIRY_ENDPOINT`). They say so plainly and never pretend to have sent.
+- Until `VITE_INQUIRY_ENDPOINT` is set, the contact and request-access forms say plainly
+  that nothing was sent. They never pretend to have sent.
 
 ## Before launch
 
-- Connect the forms: add a small endpoint on the site's host that forwards each inquiry
-  to the studio's inquiries inbox (the owner has named the address; keep it in the
-  endpoint's settings, not in this repository), then build with `VITE_INQUIRY_ENDPOINT`
-  set to it. The payload is described in `src/site/inquiry.tsx`.
-- Add plan names and prices to `plans` in `products.ts`, then attach hosted checkout
-  (Stripe, PayPal) to the Plans pages. This needs the registered company and its accounts.
+- Choose the host and deploy `dist/`. It must answer every address with `index.html`.
+- Connect the forms: add a small endpoint on the host that forwards each inquiry to the
+  studio's inquiries inbox (the owner has named the address; keep it in the endpoint's
+  settings, not in this repository), then build with `VITE_INQUIRY_ENDPOINT` set to it.
+  The payload is described in `src/site/inquiry.tsx`. Until then the forms say they are
+  not switched on and ask the visitor to call.
+- Owner to read `/privacy` before it goes public: it speaks for the studio.
 - Run a proper trademark and domain check on the name EstateLab (a quick web search found no company using it).
-- Switch from hash routing to path routing with pre-rendered pages (search engines, sharing).
-- Remove the `noindex` meta tag and the "design prototype" notes.
+- When plans and prices exist: add them to the access pages and attach hosted checkout
+  (Stripe, PayPal). This needs the registered company and its accounts.
+- Optional, for search engines: pre-render each page to static HTML.
 
 ## History
 

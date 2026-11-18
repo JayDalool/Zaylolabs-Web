@@ -1,6 +1,6 @@
 /** Specimen design-system primitives. Small, composable, no product knowledge. */
 import { motion, useReducedMotion } from 'motion/react'
-import type { CSSProperties, ReactNode } from 'react'
+import { useEffect, type CSSProperties, type ReactNode } from 'react'
 import { Link, type LinkProps } from 'react-router-dom'
 import type { Product } from '../data/products'
 
@@ -8,6 +8,14 @@ export const EASE = [0.2, 0.7, 0.2, 1] as const
 /** Path prefix for site links. Empty: the site is served from the root. */
 export const BASE = ''
 export const HOME = '/'
+
+const SITE = 'ZayloLabs'
+/** Sets the browser tab title for a page: "Page — ZayloLabs", or the site's own title on the home page. */
+export function useTitle(page?: string) {
+  useEffect(() => {
+    document.title = page ? `${page} — ${SITE}` : `${SITE} — software studio in Winnipeg`
+  }, [page])
+}
 
 /** Sets the product's colours for everything inside: its accents, and the field its sections take on. */
 export function hueVars(p: Product): CSSProperties {

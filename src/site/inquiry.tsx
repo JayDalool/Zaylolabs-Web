@@ -8,9 +8,9 @@
  * Nothing is stored in the browser. A form is sent as JSON to the endpoint set at
  * build time in VITE_INQUIRY_ENDPOINT (see .env.example). That endpoint forwards
  * the inquiry to the studio's inbox; the inbox address is kept on the server and
- * never appears in this code or in the page. With no endpoint set (the design
- * prototype) a form says plainly that it is not connected and that nothing was
- * sent — it never pretends to have sent.
+ * never appears in this code or in the page. With no endpoint set, a form says
+ * plainly that nothing was sent and asks the visitor to call — it never pretends
+ * to have sent.
  *
  * What the endpoint receives (POST, application/json):
  *   { kind: 'contact' | 'access', about, name, email, message? }
@@ -94,7 +94,7 @@ export function InquiryForm({ kind, product, about }: { kind: 'contact' | 'acces
       <p className="fm-status" role="status" data-state={state === 'not-connected' || state === 'failed' ? state : undefined}>
         {state === 'not-connected' && (
           <>
-            <b>Nothing was sent.</b> This form is not connected yet: the site is still a design prototype.
+            <b>Nothing was sent.</b> This form is not switched on yet. Please call us instead.
           </>
         )}
         {state === 'failed' && (

@@ -62,20 +62,18 @@ export default function Landing() {
           <div className="lb-copy">
             <p className="sp-mono lb-kicker">
               <span className="sp-signal">{studio.name}</span>
-              <span className="sp-mono-dim">Independent software studio</span>
+              <span className="sp-mono-dim">Independent software studio · Winnipeg</span>
             </p>
             <h1 id="lb-h" className="sp-display lb-h">
-              Bring the problem.
+              Real software,
               <br />
-              <em>We build the software.</em>
+              <em>built and run here.</em>
             </h1>
-            <p className="sp-lede">We design and build software, starting with our own. Each product below is shown as it really is.</p>
+            <p className="sp-lede">These are our own apps, live and in use, shown as they really are. Need software of your own? We build that too.</p>
             <div className="lb-cta">
-              <ButtonLink to="/#contact" viewTransition={false}>
-                Start a conversation
-              </ButtonLink>
-              <ButtonLink ghost to={`${BASE}/work`}>
-                See all products
+              <ButtonLink to={`${BASE}/work`}>See the apps</ButtonLink>
+              <ButtonLink ghost to="/?about=custom#contact" viewTransition={false}>
+                Start a project
               </ButtonLink>
             </div>
           </div>

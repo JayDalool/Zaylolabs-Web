@@ -1,13 +1,14 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { createHashRouter, createMemoryRouter, Outlet, RouterProvider, ScrollRestoration } from 'react-router-dom'
+import { createBrowserRouter, createMemoryRouter, Outlet, RouterProvider, ScrollRestoration } from 'react-router-dom'
 import './styles/index.css'
 
 function Root() {
   return (
     <>
       <Outlet />
-      <ScrollRestoration />
+      {/* A page opened directly starts at the top; going back returns to where you were. */}
+      <ScrollRestoration getKey={(location) => (location.key === 'default' ? location.pathname + location.search : location.key)} />
     </>
   )
 }
@@ -16,11 +17,11 @@ function Loading() {
   return <div style={{ minHeight: '100dvh' }} aria-busy="true" />
 }
 
-// Design stage: hash routing keeps the build portable (any static folder, no server
-// rewrites). The single-file build runs inside sandboxed viewers where the URL cannot
-// carry a route, so it keeps the route in memory instead.
-// TODO(launch): switch to path routing with pre-rendered pages for search engines.
-const createRouter = import.meta.env.MODE === 'single' ? createMemoryRouter : createHashRouter
+// Pages have normal addresses (/work/estatelab). The host must answer every address
+// with index.html; public/_redirects does that on static hosts that read it.
+// The single-file preview runs inside sandboxed viewers where the URL cannot carry
+// a route, so it keeps the route in memory instead.
+const createRouter = import.meta.env.MODE === 'single' ? createMemoryRouter : createBrowserRouter
 const router = createRouter([
   {
     element: <Root />,
