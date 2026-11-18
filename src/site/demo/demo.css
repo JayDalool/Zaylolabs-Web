@@ -40,7 +40,7 @@
   color: var(--paper);
 }
 .dm-tab-main {
-  font: 500 0.62rem/1 var(--mono);
+  font: 500 0.66rem/1 var(--mono);
   letter-spacing: 0.09em;
   text-transform: uppercase;
   padding: 0.25em 0.45em;
@@ -200,7 +200,7 @@
   border: 1px solid var(--hue-ink);
   border-radius: 3px;
   color: var(--hue-ink);
-  font: 500 0.6rem/1 var(--mono);
+  font: 500 0.66rem/1 var(--mono);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   white-space: nowrap;

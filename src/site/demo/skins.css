@@ -1265,3 +1265,15 @@ button.dm-cat i {
     grid-template-columns: repeat(auto-fit, minmax(4.1rem, 1fr));
   }
 }
+
+/* On a screen narrower than the drawn screen's layout width, the scene is scaled to fit. */
+.dm-screen .dm-scene {
+  width: calc(100% / var(--k, 1));
+  height: calc(100% / var(--k, 1));
+  transform: scale(var(--k, 1));
+  transform-origin: 0 0;
+}
+.dm-device[data-app='commandcenter'] .dm-rowbtn.dm-key {
+  padding: 0.3rem 0.45rem;
+  margin: -0.3rem -0.45rem;
+}

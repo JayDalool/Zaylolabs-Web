@@ -328,7 +328,7 @@
   letter-spacing: -0.03em;
 }
 .sp-logo-word small {
-  font: 500 0.6rem/1 var(--mono);
+  font: 500 0.66rem/1 var(--mono);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   margin-left: 0.3em;
@@ -762,6 +762,7 @@
   }
   .sp-table .sp-row-name {
     font-size: 1.25rem;
+    padding-block: 0.6rem;
   }
 }
 .sp-peek {

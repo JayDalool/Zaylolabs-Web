@@ -6,7 +6,7 @@
  * Everything shown is an illustration with made-up data, and says so.
  */
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import type { Product, Theme } from '../../data/products'
 import { EASE, SectionHead } from '../ui'
 import './demo.css'
@@ -14,12 +14,25 @@ import './skins.css'
 import { demos, type Demo } from './demos'
 
 const PACE = 3600 // ms per step while playing
+/** The narrowest a drawn screen is laid out at. On a smaller phone it is scaled down to fit, like a picture, instead of reflowing. */
+const DESIGN = { window: 340, phone: 334 }
 
 function Player({ demo, product }: { demo: Demo; product: Product }) {
   const reduce = useReducedMotion()
   const [i, setI] = useState(0)
   const [playing, setPlaying] = useState(false)
   const [theme, setTheme] = useState<Theme>(product.themes[0])
+  const screen = useRef<HTMLDivElement>(null)
+  const [k, setK] = useState(1)
+  useEffect(() => {
+    const el = screen.current
+    if (!el) return
+    const fit = () => setK(Math.min(1, el.clientWidth / DESIGN[demo.device]))
+    fit()
+    const ro = new ResizeObserver(fit)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [demo.device])
   const n = demo.steps.length
   const step = demo.steps[i]
   const last = i === n - 1
@@ -72,7 +85,7 @@ function Player({ demo, product }: { demo: Demo; product: Product }) {
             <b>{product.name}</b>
             <span className="dm-badge">Demo · sample data</span>
           </div>
-          <div className="dm-screen">
+          <div className="dm-screen" ref={screen} style={{ '--k': k } as CSSProperties}>
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={i}
