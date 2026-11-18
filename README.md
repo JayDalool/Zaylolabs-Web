@@ -67,7 +67,9 @@ src/
 `src/site/inquiry.tsx` holds both forms. **Contact** (home page) asks what the
 inquiry is about (an app, custom software, or a general question), then name,
 email and a message. **Request access** (each Plans page) asks for a name and an
-email for that app. Nothing is stored in the browser.
+email for that app. Nothing is stored in the browser. Both post JSON to the endpoint
+in `VITE_INQUIRY_ENDPOINT` (see `.env.example`); the receiving inbox is configured on
+that endpoint, so its address never appears in the page.
 
 ## Demos (step-by-step walkthroughs)
 
@@ -91,13 +93,15 @@ Check every screenshot for customer data, credentials and internal detail first.
 - No invented customers, statistics, history, awards, prices or capabilities.
   Plans pages show marked empty slots until real plans exist.
 - Empty image slots show a stamped placeholder, never a fictional interface.
-- The contact and request-access forms are not connected yet (`INQUIRY_ENDPOINT` in
-  `src/site/inquiry.tsx` is `null`). They say so plainly and never pretend to have sent.
+- The contact and request-access forms are not connected in the prototype (no
+  `VITE_INQUIRY_ENDPOINT`). They say so plainly and never pretend to have sent.
 
 ## Before launch
 
-- Connect the forms: set `INQUIRY_ENDPOINT` in `src/site/inquiry.tsx` to an address that
-  receives the inquiries and forwards them to the studio's inbox.
+- Connect the forms: add a small endpoint on the site's host that forwards each inquiry
+  to the studio's inquiries inbox (the owner has named the address; keep it in the
+  endpoint's settings, not in this repository), then build with `VITE_INQUIRY_ENDPOINT`
+  set to it. The payload is described in `src/site/inquiry.tsx`.
 - Add plan names and prices to `plans` in `products.ts`, then attach hosted checkout
   (Stripe, PayPal) to the Plans pages. This needs the registered company and its accounts.
 - Run a proper trademark and domain check on the name EstateLab (a quick web search found no company using it).

@@ -5,15 +5,21 @@
  *   contact  what it is about (an app, custom work, or a general question), name, email, message
  *   access   name and email, for one named app
  *
- * Nothing is stored in the browser. A form is sent to INQUIRY_ENDPOINT as JSON.
- * TODO(launch): set INQUIRY_ENDPOINT to the address that receives inquiries
- * (a small mail-forwarding endpoint). Until then a form says plainly that it
- * is not connected and that nothing was sent — it never pretends to have sent.
+ * Nothing is stored in the browser. A form is sent as JSON to the endpoint set at
+ * build time in VITE_INQUIRY_ENDPOINT (see .env.example). That endpoint forwards
+ * the inquiry to the studio's inbox; the inbox address is kept on the server and
+ * never appears in this code or in the page. With no endpoint set (the design
+ * prototype) a form says plainly that it is not connected and that nothing was
+ * sent — it never pretends to have sent.
+ *
+ * What the endpoint receives (POST, application/json):
+ *   { kind: 'contact' | 'access', about, name, email, message? }
+ * `about` is 'general', 'custom' or a product slug. It should answer 2xx on success.
  */
 import { useId, useState, type FormEvent } from 'react'
 import { products, type Product } from '../data/products'
 
-export const INQUIRY_ENDPOINT: string | null = null
+export const INQUIRY_ENDPOINT: string | null = import.meta.env.VITE_INQUIRY_ENDPOINT || null
 
 type State = 'idle' | 'sending' | 'sent' | 'not-connected' | 'failed'
 
