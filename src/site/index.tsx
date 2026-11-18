@@ -1,6 +1,6 @@
-import { lazy, Suspense, useEffect, useState } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { Link, NavLink, Route, Routes, useLocation } from 'react-router-dom'
-import { productBySlug, products, studio } from '../data/products'
+import { productBySlug, products, signIns, studio } from '../data/products'
 import Home from './Home'
 import { NotFound } from './NotFound'
 import { BASE, ButtonLink, hueVars, Logo } from './ui'
@@ -15,6 +15,44 @@ const Privacy = lazy(() => import('./Privacy'))
 function useRouteApp() {
   const { pathname } = useLocation()
   return productBySlug(pathname.match(/^\/work\/([^/]+)/)?.[1])
+}
+
+/** "Sign in" lists the apps people have accounts in; each link goes to that app's own sign-in page. */
+function SignInMenu() {
+  const [open, setOpen] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    if (!open) return
+    const away = (e: PointerEvent) => !ref.current?.contains(e.target as Node) && setOpen(false)
+    const esc = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false)
+    window.addEventListener('pointerdown', away)
+    window.addEventListener('keydown', esc)
+    return () => {
+      window.removeEventListener('pointerdown', away)
+      window.removeEventListener('keydown', esc)
+    }
+  }, [open])
+  if (!signIns.length) return null
+  return (
+    <div className="sp-signin" ref={ref}>
+      <button type="button" className="sp-signin-btn" aria-expanded={open} aria-controls="sp-signin-list" onClick={() => setOpen((v) => !v)}>
+        Sign in
+        <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true" focusable="false">
+          <path d="M1.5 3.5 5 7l3.5-3.5" fill="none" stroke="currentColor" strokeWidth="1.4" />
+        </svg>
+      </button>
+      <ul id="sp-signin-list" className="sp-signin-list" data-open={open || undefined} aria-label="Sign in to an app">
+        {signIns.map((p) => (
+          <li key={p.slug}>
+            <a href={p.signIn} rel="noopener">
+              <b>{p.name}</b>
+              <span>{new URL(p.signIn!).host}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
 }
 
 function Header() {
@@ -54,6 +92,7 @@ function Header() {
         <nav id="sp-nav" className={`sp-nav ${open ? 'is-open' : ''}`} aria-label="Primary" onClick={(e) => (e.target as HTMLElement).closest('a') && setOpen(false)}>
           <NavLink to={`${BASE}/work`}>Products</NavLink>
           <Link to="/#custom">Custom software</Link>
+          <SignInMenu />
           <ButtonLink to="/#contact" viewTransition={false}>Contact</ButtonLink>
         </nav>
       </div>

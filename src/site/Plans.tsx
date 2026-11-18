@@ -95,6 +95,14 @@ export default function Plans() {
             }
           />
           <InquiryForm kind="access" product={product} />
+          {product.signIn && (
+            <p className="sp-body" style={{ marginTop: '1.6rem' }}>
+              Already have an account?{' '}
+              <a className="sp-link" href={product.signIn} rel="noopener">
+                Sign in to {product.name}
+              </a>
+            </p>
+          )}
         </div>
       </section>
     </article>

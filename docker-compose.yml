@@ -1,0 +1,47 @@
+# The ZayloLabs website on the studio's own server.
+#
+#   web      the site itself (nginx). Reachable on this machine at 127.0.0.1:${WEB_PORT},
+#            and by the Cloudflare tunnel on the shared `proxy` network as zaylolabs-web:80.
+#   inquiry  receives the contact and request-access forms and emails them on.
+#            It is reachable only by `web`, never from outside.
+#
+# Settings live in .env (copy .env.example). See DEPLOY.md.
+name: zaylolabs-web
+
+services:
+  web:
+    build: .
+    container_name: zaylolabs-web
+    restart: unless-stopped
+    depends_on:
+      - inquiry
+    ports:
+      - "127.0.0.1:${WEB_PORT:-8510}:80"
+    networks:
+      - default
+      - proxy
+    read_only: true
+    tmpfs:
+      - /var/cache/nginx
+      - /var/run
+      - /tmp
+    logging: &logging
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"
+
+  inquiry:
+    build: ./server
+    container_name: zaylolabs-inquiry
+    restart: unless-stopped
+    env_file: .env
+    networks:
+      - default
+    read_only: true
+    logging: *logging
+
+networks:
+  proxy:
+    external: true
+    name: proxy

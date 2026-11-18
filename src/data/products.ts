@@ -64,6 +64,8 @@ export interface Product {
   highlights: { title: string; body: string }[]
   /** Plain facts a visitor should know before asking for access. */
   goodToKnow: string[]
+  /** Where people who already have an account sign in: the app's own address. */
+  signIn?: string
 }
 
 export const products: Product[] = [
@@ -105,6 +107,8 @@ export const products: Product[] = [
       'Also inside: market analytics with a map, rental tools and a mileage logbook.',
       'Runs in a browser, on desktop and phone, in light and dark.',
     ],
+    // TODO(owner): the app still answers at its old name's address; change this if the address is renamed.
+    signIn: 'https://samvision.zaylolabs.com',
   },
   {
     slug: 'myexpenses',
@@ -142,6 +146,7 @@ export const products: Product[] = [
       'Works for a family or a small company. In a company, each employee sees only their own expenses.',
       'Exports as PDF, CSV, Excel, or a ZIP with every receipt.',
     ],
+    signIn: 'https://expenses.zaylolabs.com',
   },
   {
     slug: 'commandcenter',
@@ -220,6 +225,8 @@ export const productBySlug = (slug: string | undefined) => products.find((p) => 
 /** Products that get a full-screen section on the home page. */
 export const featured = products.filter((p) => !p.compact)
 export const compact = products.filter((p) => p.compact)
+/** Apps that people sign in to at their own address. */
+export const signIns = products.filter((p) => p.signIn)
 
 export const stages: { id: Stage; label: string; blurb: string }[] = [
   { id: 'live', label: 'Live', blurb: 'Each one is live and in use. Open one to see its real screens and a step-by-step demo.' },

@@ -72,9 +72,11 @@ src/
 `src/site/inquiry.tsx` holds both forms. **Contact** (home page) asks what the
 inquiry is about (an app, custom software, or a general question), then name,
 email and a message. **Request access** (each Plans page) asks for a name and an
-email for that app. Nothing is stored in the browser. Both post JSON to the endpoint
-in `VITE_INQUIRY_ENDPOINT` (see `.env.example`); the receiving inbox is configured on
-that endpoint, so its address never appears in the page.
+email for that app. Nothing is stored in the browser. Both post JSON to
+`/api/inquiry`, where `server/inquiry.py` emails them to the studio's inbox. The inbox
+address is a setting on the server (`INQUIRY_TO` in `.env`), so it never appears in
+the page or in this repository. In local development the forms have no endpoint
+unless `VITE_INQUIRY_ENDPOINT` is set, and then say plainly that nothing was sent.
 
 ## Demos (step-by-step walkthroughs)
 
@@ -102,15 +104,20 @@ Check every screenshot for customer data, credentials and internal detail first.
 - Until `VITE_INQUIRY_ENDPOINT` is set, the contact and request-access forms say plainly
   that nothing was sent. They never pretend to have sent.
 
-## Before launch
+## Going live
 
-- Choose the host and deploy `dist/`. It must answer every address with `index.html`.
-- Connect the forms: add a small endpoint on the host that forwards each inquiry to the
-  studio's inquiries inbox (the owner has named the address; keep it in the endpoint's
-  settings, not in this repository), then build with `VITE_INQUIRY_ENDPOINT` set to it.
-  The payload is described in `src/site/inquiry.tsx`. Until then the forms say they are
-  not switched on and ask the visitor to call.
-- Owner to read `/privacy` before it goes public: it speaks for the studio.
+`DEPLOY.md` has the steps for the studio's own server: build and start the two
+containers, fill in the mail settings, and add the address to the Cloudflare tunnel.
+
+- `Dockerfile` + `deploy/nginx.conf` — the site, served by nginx (every page address
+  answers with the app; strict security headers; long caching for built files).
+- `server/inquiry.py` — receives the forms and emails them on. Standard library only.
+  It stores nothing and logs no names, emails or messages.
+- `docker-compose.yml` — both together, on the server's shared `proxy` network.
+
+Still to do before or just after launch:
+
+- Owner to read `/privacy`: it speaks for the studio.
 - Run a proper trademark and domain check on the name EstateLab (a quick web search found no company using it).
 - When plans and prices exist: add them to the access pages and attach hosted checkout
   (Stripe, PayPal). This needs the registered company and its accounts.

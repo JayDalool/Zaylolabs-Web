@@ -13,8 +13,9 @@
  * to have sent.
  *
  * What the endpoint receives (POST, application/json):
- *   { kind: 'contact' | 'access', about, name, email, message? }
- * `about` is 'general', 'custom' or a product slug. It should answer 2xx on success.
+ *   { kind: 'contact' | 'access', about, name, email, message?, website }
+ * `about` is 'general', 'custom' or a product slug. `website` is a hidden field that
+ * people leave empty. The endpoint (server/inquiry.py) answers 2xx on success.
  */
 import { useId, useState, type FormEvent } from 'react'
 import { products, type Product } from '../data/products'
@@ -85,6 +86,11 @@ export function InquiryForm({ kind, product, about }: { kind: 'contact' | 'acces
           <textarea id={`${id}-message`} name="message" rows={4} required />
         </div>
       )}
+      {/* Left empty by people; filled in by automated senders, which the endpoint then drops. */}
+      <div className="fm-trap" aria-hidden="true">
+        <label htmlFor={`${id}-website`}>Website</label>
+        <input id={`${id}-website`} name="website" type="text" tabIndex={-1} autoComplete="off" />
+      </div>
       <div className="fm-foot">
         <button type="submit" className="sp-btn" disabled={state === 'sending'}>
           {state === 'sending' ? 'Sending…' : kind === 'access' ? 'Request access' : 'Send message'}

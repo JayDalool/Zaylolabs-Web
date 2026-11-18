@@ -12,7 +12,7 @@ import { productBySlug, products, type Product } from '../data/products'
 import { hasRealMedia } from '../media/manifest'
 import { PhoneFrame, ProductMedia, WindowFrame } from '../media/ProductMedia'
 import { NotFound } from './NotFound'
-import { BASE, ButtonLink, Fig, hueVars, SectionHead, StageBadge, useTitle } from './ui'
+import { Arrow, BASE, ButtonLink, Fig, hueVars, SectionHead, StageBadge, useTitle } from './ui'
 import { useImmerse } from './immerse'
 import { Viewer } from './Viewer'
 import { DemoSection } from './demo/Demo'
@@ -86,6 +86,12 @@ export default function ProductPage() {
               Access and pricing
             </ButtonLink>
           )}
+          {product.signIn && (
+            <a className="sp-btn sp-btn-ghost" href={product.signIn} rel="noopener">
+              Sign in
+              <Arrow />
+            </a>
+          )}
         </div>
       </header>
 
@@ -141,6 +147,14 @@ export default function ProductPage() {
               <p className="sp-h3">{product.availability}</p>
               <p className="sp-body">Pricing is given on request.</p>
               <ButtonLink to={`${BASE}/work/${product.slug}/plans#access`}>Request access</ButtonLink>
+              {product.signIn && (
+                <p className="sp-body">
+                  Already have an account?{' '}
+                  <a className="sp-link" href={product.signIn} rel="noopener">
+                    Sign in to {product.name}
+                  </a>
+                </p>
+              )}
             </aside>
           )}
         </div>
