@@ -9,7 +9,6 @@ import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { featured, products, studio } from '../../data/products'
 import { ProductGlyph } from '../../media/ProductMedia'
-import { useReportApp } from '../immerse'
 import { BASE, ButtonLink, EASE, hueVars } from '../ui'
 import { AppPose, AppSection } from './shared'
 
@@ -21,7 +20,6 @@ export default function Landing() {
   const touched = useRef(false)
   const off = useRef(0)
   const product = products[active]
-  useReportApp(product.slug, lit)
 
   // Once, on arrival: the screen runs through each app's colours, then settles back to paper.
   useEffect(() => {
@@ -45,17 +43,6 @@ export default function Landing() {
     )
     return () => timers.forEach(window.clearTimeout)
   }, [reduce])
-
-  // Scrolling away ends the arrival sweep: the hero must not keep colouring the header from off screen.
-  useEffect(() => {
-    const stop = () => {
-      if (window.scrollY < 40 || touched.current) return
-      touched.current = true
-      setLit(false)
-    }
-    window.addEventListener('scroll', stop, { passive: true })
-    return () => window.removeEventListener('scroll', stop)
-  }, [])
 
   const point = (i: number) => {
     touched.current = true

@@ -87,7 +87,7 @@ function Rules() {
 
 /** A product with a smaller presence: a short mention with the way in, not a full screen. */
 function Also({ product }: { product: Product }) {
-  const { ref, on } = useImmerse<HTMLElement>(product.slug)
+  const { ref, on } = useImmerse<HTMLElement>()
   return (
     <section
       ref={ref}

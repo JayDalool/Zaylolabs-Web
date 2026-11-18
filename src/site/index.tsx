@@ -1,7 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from 'react'
 import { Link, NavLink, Route, Routes, useLocation } from 'react-router-dom'
 import { productBySlug, products, studio } from '../data/products'
-import { useCurrentApp } from './immerse'
 import Home from './Home'
 import { BASE, ButtonLink, hueVars, Logo } from './ui'
 import './specimen.css'
@@ -21,9 +20,8 @@ function Header() {
   const [stuck, setStuck] = useState(false)
   const [open, setOpen] = useState(false)
   const { pathname } = useLocation()
-  // On an app's own pages the header is that app's; elsewhere it follows the section on screen.
-  const here = useCurrentApp()
-  const app = useRouteApp() ?? productBySlug(here ?? undefined)
+  // One header for every page. It keeps the site's own look, except on an app's own pages, where it is that app's colour.
+  const app = useRouteApp()
 
   useEffect(() => {
     const on = () => setStuck(window.scrollY > 8)

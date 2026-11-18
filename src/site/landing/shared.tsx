@@ -110,7 +110,7 @@ export function AppCopy({ product, slot, onSlot, heading = 'h2' }: { product: Pr
 
 /** A whole app on one screen. It takes the app's colours while the visitor is in it. */
 export function AppSection({ product, slot, onSlot, flip }: { product: Product; slot: number; onSlot: (n: number) => void; flip?: boolean }) {
-  const { ref, on } = useImmerse<HTMLElement>(product.slug)
+  const { ref, on } = useImmerse<HTMLElement>()
   return (
     <section
       ref={ref}

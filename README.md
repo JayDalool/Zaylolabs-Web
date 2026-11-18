@@ -54,8 +54,9 @@ src/
 - A section takes its app's colours as soon as it reaches the middle of the screen,
   on every device, so the colour arrives while the section is still scrolling in.
   Keyboard focus inside a section counts too.
-- There is one header for every page. It takes the colours of the app the visitor
-  is in: the section on screen on the home page, or the app whose page it is.
+- There is one header for every page. It keeps the site's own look on the home page
+  and the general pages, and takes an app's colour only on that app's own pages
+  (its product page and its plans page), where header, page and footer are one colour.
 - Product pages are in their app's colours throughout.
 - Colours come from each product's `hue` in `products.ts`, and those values are
   taken from the app's own code: `field` is the ground the section becomes,
