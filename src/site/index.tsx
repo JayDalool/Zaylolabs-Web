@@ -3,7 +3,7 @@ import { Link, NavLink, Route, Routes, useLocation } from 'react-router-dom'
 import { productBySlug, products, signIns, studio } from '../data/products'
 import Home from './Home'
 import { NotFound } from './NotFound'
-import { BASE, ButtonLink, hueVars, Logo } from './ui'
+import { BASE, ButtonLink, hueVars, Logo, ZMark } from './ui'
 import './specimen.css'
 
 const Catalogue = lazy(() => import('./Catalogue'))
@@ -105,8 +105,14 @@ function Footer() {
   return (
     <footer className="sp-footer sp-immersive" data-hue={app ? '' : undefined} data-immersed={app ? '' : undefined} style={app ? hueVars(app) : undefined}>
       <div className="sp-wrap">
-        <p className="sp-footer-word" aria-hidden="true">
-          Zaylo<em>Labs</em>
+        {/* The same mark as the header, a little larger: the Z in a tile, then the name. */}
+        <p className="sp-footer-brand">
+          <span className="sp-footer-tile">
+            <ZMark size={34} />
+          </span>
+          <span className="sp-footer-name">
+            Zaylo<small>Labs</small>
+          </span>
         </p>
         <div className="sp-footer-grid">
           <div>

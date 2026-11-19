@@ -545,18 +545,35 @@
 /* ——— footer ——— */
 .sp-footer {
   border-top: 1px solid var(--ink);
-  padding-block: clamp(2.5rem, 5vw, 4rem) 5.5rem;
+  padding-block: clamp(2.5rem, 5vw, 4rem) clamp(2rem, 4vw, 3rem);
 }
-.sp-footer-word {
-  font: 340 clamp(4.4rem, 21vw, 21rem) / 0.8 var(--serif);
-  letter-spacing: -0.055em;
-  margin: 0 0 0 -0.04em;
-  padding-bottom: 0.16em;
-  user-select: none;
+.sp-footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin: 0;
 }
-.sp-footer-word em {
-  font-variation-settings: 'SOFT' 100, 'WONK' 1;
-  font-weight: 300;
+.sp-footer-tile {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 3.4rem;
+  height: 3.4rem;
+  border-radius: 0.8rem;
+  background: var(--ink);
+  color: var(--paper);
+}
+.sp-footer-name {
+  font: 460 2.3rem/1 var(--serif);
+  letter-spacing: -0.03em;
+}
+.sp-footer-name small {
+  margin-left: 0.35em;
+  font: 500 0.72rem/1 var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  vertical-align: 1.05em;
+  color: var(--ink-2);
 }
 
 /* ——— catalogue (gallery) ——— */
