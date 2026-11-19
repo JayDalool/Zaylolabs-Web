@@ -242,7 +242,7 @@ export const studio = {
   name: 'ZayloLabs',
   domain: 'zaylolabs.com',
   line: 'An independent software studio in Winnipeg, Manitoba.',
-  address: ['62 Royal Park Crescent', 'Winnipeg, Manitoba', 'Canada'],
+  address: ['Winnipeg, Manitoba', 'Canada'],
   phone: { label: '+1 (431) 688-1612', href: 'tel:+14316881612' },
   builds: [
     { title: 'Web and phone apps', note: 'Apps that work in a browser and in the hand, for the people who use them every day.', proof: 'myexpenses', proofLine: 'My Expenses reads a receipt from a phone photo.' },
