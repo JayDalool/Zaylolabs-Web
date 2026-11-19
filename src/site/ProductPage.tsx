@@ -14,6 +14,7 @@ import { PhoneFrame, ProductMedia, WindowFrame } from '../media/ProductMedia'
 import { NotFound } from './NotFound'
 import { Arrow, BASE, ButtonLink, Fig, hueVars, SectionHead, StageBadge, useTitle } from './ui'
 import { useImmerse } from './immerse'
+import { AppMark } from './AppMark'
 import { Viewer } from './Viewer'
 import { DemoSection } from './demo/Demo'
 
@@ -160,12 +161,13 @@ export default function ProductPage() {
         </div>
       </section>
 
-      <div className="sp-wrap">
-        <Link className="sp-next sp-immerse-hover" to={`${BASE}/work/${next.slug}`} data-hue="" style={hueVars(next)}>
-          <span className="sp-mono">
-            <span style={{ color: 'var(--hue-ink)' }}>Next product</span> <span className="sp-mono-dim">— {next.discipline}</span>
-          </span>
-          <span className="sp-name">{next.name}</span>
+      {/* The way on to the next app: a quiet strip in this page's own colours, with that app's mark and lettering. */}
+      <div className="sp-wrap sp-next-wrap">
+        <Link className="sp-next" to={`${BASE}/work/${next.slug}`} viewTransition>
+          <span className="sp-mono sp-next-label">Next app</span>
+          <AppMark product={next} className="sp-next-mark" />
+          <span className="sp-next-what">{next.discipline}</span>
+          <Arrow size={20} />
         </Link>
       </div>
     </article>
