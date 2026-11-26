@@ -31,7 +31,7 @@ Open `.env` and fill in:
 | Setting | What to put |
 | --- | --- |
 | `INQUIRY_TO` | The inbox that should receive inquiries. |
-| `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASSWORD`, `SMTP_FROM` | The mail account that sends them. My Expenses uses the same names, so copy the values from its `.env`. |
+| `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASSWORD`, `SMTP_FROM` | The mail account that sends them. My Expenses uses the same names. Take the host and token from the ZeptoMail Mail Agent's SMTP page: a token only logs in at its own data centre (`smtp.zeptomail.ca` for ours), and the wrong host answers `535 Authentication Failed`. |
 | `WEB_PORT` | Leave `8510` unless something already uses it. |
 
 `.env` stays on the server. It is ignored by git.
